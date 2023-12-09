@@ -17,6 +17,7 @@ export const createuser = async(dispatch , user)=>{
     try {
              const res = await axios.post("http://localhost:5000/api/user/create/user" , user);
              dispatch(loginSuccess(res.data)); 
+             console.log(res.data);
              
     } catch (error) {
               dispatch(loginFailure());

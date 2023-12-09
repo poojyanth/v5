@@ -165,7 +165,6 @@ export default function Contentpost({ reloadMainpost }) {
 
 
   return (
-    <div>
       <div className='ContentUploadContainer'>
         <div style={{ display: "flex", alignItems: "center", padding: 10 }}>
           <img src={(user.user.profilepicture)?user.user.profilepicture:defaultUser} className="profileimage" alt="" /> 
@@ -192,8 +191,5 @@ export default function Contentpost({ reloadMainpost }) {
           </div>
         </div>
       </div>
-
-      
-    </div>
   )
 }

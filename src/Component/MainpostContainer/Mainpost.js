@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from 'react'
 import Contentpost from '../../Component/ContentpostContainer/Contentpost'
 import Post from '../PostContainer/Post'
+import "./mainpost.css"
 import axios from "axios"
 import { useSelector}  from 'react-redux'
 

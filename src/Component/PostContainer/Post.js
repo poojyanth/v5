@@ -124,9 +124,8 @@ export default function Post(props) {
   return (
     <div className='PostContainer'>
       <div className='SubPostContainer'>
-        <div>
           <div style={{    display: 'flex', alignItems : 'center',
-    justifyContent: 'space-between',    flexDirection: 'row'}}>
+              justifyContent: 'space-between',    flexDirection: 'row'}}>
 
             <div style={{    display: 'flex', alignItems: 'center'}}>
               <img src={(user.user.profilepicture)?user.user.profilepicture:defaultUser} className="PostImage" alt="" />
@@ -136,7 +135,7 @@ export default function Post(props) {
               </div>
             </div>
             {/* <div className="MoreOptions" style={{    margin: '0 5%', fontSize: 'larger', fontWeight: '900'}}>...</div> */}
-            <div className="MoreOptions" >
+            <div className="MoreOptions" style={{margin: '0 1vw', cursor: 'pointer'}}>
               {/* a button onclick navigate to postpage/id */}
               <img src={`${MoreOptions}`} className="iconsforPost" onClick={() => navigate(`/postpage/${props.post._id}`)} alt="" />
 
@@ -150,35 +149,32 @@ export default function Post(props) {
           </video> : ''
           }
         {/* {  props.post.image && <img src={`${props.post.image}`} className="PostImages" alt="" />} */}
-          <div style={{ display: "flex" }}>
-            <div style={{ display: "flex", marginLeft: "10px" }}>
-              <div style={{ display: "flex", alignItems: "center", cursor: "pointer" }}>
-                <img src={`${Like}`} className="iconsforPost" onClick={handleLike} alt="" />
+          <div style={{ display: "flex", width: "100%", justifyContent: 'space-around'}}>
+            
+              <div style={{ display: "flex", alignItems: "center", cursor: "pointer" }} onClick={handleLike}>
+                <img src={`${Like}`} className="iconsforPost"  alt="" />
                 <p style={{ marginLeft: "6px" }}>{count} Likes</p>
               </div>
-              <div style={{ display: "flex", alignItems: "center", marginLeft: 20, cursor: "pointer" }}>
-                <img src={`${CommentIcon}`} onClick={handleshow} className="iconsforPost" alt="" />
+              <div style={{ display: "flex", alignItems: "center", marginLeft: 20, cursor: "pointer" }} onClick={handleshow}>
+                <img src={`${CommentIcon}`}  className="iconsforPost" alt="" />
                 <p style={{ marginLeft: "6px" }}>{props.post.comments.length} Comments</p>
+              </div>            
+              <div style={{ display: "flex", alignItems: "center", cursor: "pointer" }}>
+                <img src={`${Share}`} className="iconsforPost" alt="" />
+                <p style={{ marginLeft: "6px" }}>Share</p>
               </div>
-            </div>
-            <div style={{ display: "flex", alignItems: "center", marginLeft: 200, cursor: "pointer" }}>
-              <img src={`${Share}`} className="iconsforPost" alt="" />
-              <p style={{ marginLeft: "6px" }}>Share</p>
-            </div>
           </div>
           {show === true ?
             <div style={{ padding: '10px' }}>
               <div style={{ display: "flex", alignItems: "center" }}>
-                <img src={`${image3}`} className="PostImage" alt="" />
+              <img src={(user.user.profilepicture)?user.user.profilepicture:defaultUser} className="PostImage" alt="" />
                 <input type="text" className='commentinput' placeholder='Write your thought' onChange={(e) => setcommentwriting(e.target.value)} />
                 <button className='addCommentbtn' onClick={handleComment}>Post</button>
               </div>
               {Comments.map((item) => (
                 <div style={{ alignItems: "center" }}>
                   <div style={{ display: "flex", alignItems: "center" }}>
-                    {item.profile === '' ?
-                      <img src={`${image3}`} className="PostImage" alt="" /> : <img src={`${image3}`} className="PostImage" alt="" />
-                    }
+                  <img src={(user.user.profilepicture)?user.user.profilepicture:defaultUser} className="PostImage" alt="" />
                     <p style={{ marginLeft: "6px", fontSize: 18, marginTop: 6 }}>{item.username}</p>
                   </div>
                   <p style={{ marginLeft: "55px", textAlign: 'start', marginTop: -16 }}>{item.writtencomment}</p>
@@ -189,7 +185,6 @@ export default function Post(props) {
               ))}
             </div> : ''
           }
-        </div>
       </div>
     </div>
 

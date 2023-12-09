@@ -1,5 +1,5 @@
 .ContentUploadContainer{
-    width: 94%;
+    width: calc(100% - 4vw);
     background-color: white;
     margin: auto;
     margin-top: 20px;

@@ -5,9 +5,11 @@
     justify-content: space-between;
     height: 8vh;
     background-color: white;
+    top: 0;
     border-bottom-left-radius: 13px;
     border-bottom-right-radius: 13px;
     align-items: center;
+    position: sticky;
 }
 .searchInputContainer{
     display: flex;

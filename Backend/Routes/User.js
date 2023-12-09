@@ -31,11 +31,12 @@ router.post("/create/user", [
         console.log(req.body);
         // check if user with given email already exists
 
-        // let user = await User.findOne({ email: req.body.email });
-        // if (user) {
-        //     console.log('user already exists');
-        //     return res.status(400).json("A USER WITH THIS EMAIL ALREADY EXISTS , PLEASE LOGIN")
-        // }
+        let user1 = await User.findOne({ email: req.body.email });
+        let user2 = await User.findOne({ username: req.body.username });
+        if (user1 || user2) {
+            console.log('user already exists');
+            return res.status(400).json("A USER WITH THIS EMAIL/USERNAME ALREADY EXISTS , PLEASE LOGIN")
+        }
 
         console.log('user does not exists');
 
@@ -52,11 +53,11 @@ router.post("/create/user", [
             password: securePassword,
             phonenumber: req.body.phonenumber,
             profilepicture: req.body.profilepicture,
-        }).save().then((user) => {
-            console.log(user);
-        });
+        })
 
-        const jwttoken = await jwt.sign({
+        user.save();
+
+        const jwttoken = jwt.sign({
             id:user._id,
             username:user.username
         },SECRETKEY);
@@ -67,6 +68,8 @@ router.post("/create/user", [
         res.status(200).json({ msg: "NEW USER CREATED SUCCESSFULLY", user,jwttoken });
 
     } catch (error) {
+        console.log('error in create user');
+        console.log(error);
         return res.status(400).json("SOME ERROR OCCURED IN try-catch in /create/user route:" + error)
     }
 

@@ -72,6 +72,28 @@ router.get("/get/postID/:id", verifytoken, async (req, res) => {
 
 })
 
+// ROUTE-4 :- FETCH ALL POSTS
+// METHOD USED :- GET
+router.get("/get/allpost",verifytoken, async (req, res) => {
+    
+        try {
+    
+        const user_posts = await Post.find();
+        if(!user_posts){
+            return res.status(400).json("NO POSTS FOUND ...");
+        }
+    
+         console.log(user_posts);
+        return res.status(200).json({post: user_posts});
+        
+        
+            }
+        catch (error) {
+            return res.status(400).json("SOME ERROR OCCURED IN try-catch in /get/post" );
+        }
+
+})
+
 // ROUTE-10 :- FETCH ALL POSTS IN USER PROFILE PAGE
 // METHOD USED :- GET
 router.get("/get/post/:id", async (req, res) => {
