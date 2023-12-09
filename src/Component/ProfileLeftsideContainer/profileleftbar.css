@@ -4,13 +4,17 @@
 }
 
 .NotificationsContainer{
-    width: 18pc;
-    height: max-content;
+    width: 20vw;
+    margin: 1vw auto;
     background-color: white;
-    margin-top: 20px;
+    /* margin-top: 20px; */
     border-radius: 20px;
-    overflow: hidden;
-    /* overflow-y: scroll; */
+}
+
+.containerHead{
+    display: flex;
+    margin: 1px 1vw;
+    justify-content: space-between;
 }
 
 .Profilepageimage{
@@ -25,8 +29,6 @@
     width: 270px;
     height: 100px;
     object-fit: cover;
-
-
 }
 
 .friendimage{

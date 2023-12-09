@@ -7,6 +7,9 @@ import { createuser } from '../../Component/ReduxContainer/apiCall';
 
 export default function Login() {
   const dispatch = useDispatch();
+  if(useSelector((state)=>state.user.user)){
+    window.location.href="/"
+  }
   const {isFetching  , error} = useSelector((state)=>state.user);
   const [email , setemail]= useState('');
   const [password , setPassword] = useState('');

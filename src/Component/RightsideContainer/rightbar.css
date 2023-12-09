@@ -1,9 +1,9 @@
 .rightbar{
-   /* flex: 1; */
+   width: 30vw;
 }
 
 .rightcontainer{
-    width: 20pc;
+    width: 25vw;
     height: max-content;
     /* height: 30vh; */
     background-color: white;

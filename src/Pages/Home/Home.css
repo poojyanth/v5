@@ -4,7 +4,7 @@
 }
 
 .ComponentContainer{
-    width: 80%;
+    width: 99vw;
     margin: auto;
     display: flex;
     justify-content: space-between;

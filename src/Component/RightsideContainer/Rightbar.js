@@ -66,7 +66,7 @@ export default function Rightbar() {
 
       </div>
 
-      <div className='rightcontainer2'>
+      <div className='rightcontainer'>
          <h3 style={{textAlign:"start" , marginLeft:"10px"}}>Suggested for you</h3>
 
 

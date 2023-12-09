@@ -6,12 +6,12 @@
     background-color: white;
     border-bottom-left-radius: 13px;
     border-bottom-right-radius: 13px;
+    align-items: center;
 }
 .searchInputContainer{
     display: flex;
     align-items: center;
     flex: 4;
-    margin-top: 9px;
     background-color: rgb(224, 228, 232);
     padding: 5px;
     border-radius: 10px;
@@ -22,7 +22,14 @@
     flex: 0.22;
 }
 .LogoContainer{
-    flex: 0.2;
+    font-family: 'Montserrat Alternates', sans-serif;
+    font-size: medium;
+    margin: 0 2vw;
+    flex: 0.2 1;
+}
+
+.LogoContainer:hover{
+    cursor: pointer;
 }
 
 .Icons{

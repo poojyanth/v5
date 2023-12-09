@@ -20,53 +20,53 @@ router.post("/create/user", [
     body('phonenumber', 'PHONENUMBER MUST HAVE MINIMUM LENGTH 10').isLength({ min: 10 }),
 ], async (req, res) => {
 
-
-    console.log('create user route');
     // check if any errors in validation
     const errors = validationResult(req); // USE req NOT req.body HERE
     if (!errors.isEmpty()) {
         console.log(errors);
-        console.log(req.body.username)
-        console.log(req.body.email)
-        console.log(req.body.password)
-        console.log(req.body.phonenumber)
         return res.status(400).json({ errors: errors.array() });
     }
 
     try {
+        console.log(req.body);
         // check if user with given email already exists
-        console.log("inside create user route");
-        let user = await User.findOne({ email: req.body.email });
-        if (user) {
-            return res.status(400).json("A USER WITH THIS EMAIL ALREADY EXISTS , PLEASE LOGIN")
-        }
-        else{
+
+        // let user = await User.findOne({ email: req.body.email });
+        // if (user) {
+        //     console.log('user already exists');
+        //     return res.status(400).json("A USER WITH THIS EMAIL ALREADY EXISTS , PLEASE LOGIN")
+        // }
+
+        console.log('user does not exists');
+
         // generate salt for password hashing
         const salt = await bcrypt.genSalt(10);
         const securePassword = await bcrypt.hash(req.body.password, salt);
 
+        console.log(req.body);
+
         // if no user exists -> create new user
-        user = await User.create({
+        const user = await User.create({
             username: req.body.username,
             email: req.body.email,
             password: securePassword,
             phonenumber: req.body.phonenumber,
             profilepicture: req.body.profilepicture,
-        })
+        }).save().then((user) => {
+            console.log(user);
+        });
 
         const jwttoken = await jwt.sign({
             id:user._id,
             username:user.username
         },SECRETKEY);
 
-        await user.save();
+        // await user.save();
         console.log(user);
 
         res.status(200).json({ msg: "NEW USER CREATED SUCCESSFULLY", user,jwttoken });
-    }
 
     } catch (error) {
-        console.log(error);
         return res.status(400).json("SOME ERROR OCCURED IN try-catch in /create/user route:" + error)
     }
 
@@ -78,8 +78,6 @@ router.post("/create/user", [
 router.post("/login", [
     body('email', 'EMAIL MUST HAVE MINIMUM LENGTH 5').isLength({ min: 5 }),
     body('password', 'USERNAME MUST HAVE MINIMUM LENGTH 3').isLength({ min: 3 })], async (req, res) => {
-
-        console.log('login route');
 
         // check if any errors in validation
         const errors = validationResult(req); // USE req NOT req.body HERE
@@ -127,34 +125,53 @@ router.post("/login", [
 // therefore id in "/follow/:id" must be of user-1
 // and user in req.body.user must be id of user-2
 // jwttoken in headers must be of user-2 as he has to login into his account to follow others
-router.put("/follow/:id",verifytoken, async (req, res) => {
+// router.put("/follow/:id",verifytoken, async (req, res) => {
 
-    try {
+//     try {
 
-     const user1 = await User.findById(req.params.id);
-     const user2 = await User.findById(req.body.user);
+//      const user1 = await User.findById(req.params.id);
+//      const user2 = await User.findById(req.body.user);
 
-     if(req.params.id === req.body.user){
-        return res.status(400).json("YOU CANNOT FOLLOW YOURSELF");
-     }
+//      if(req.params.id === req.body.user){
+//         return res.status(400).json("YOU CANNOT FOLLOW YOURSELF");
+//      }
 
 
-     if(user1.followers.includes(user2)){
-        return res.status(400).json("YOU ALREADY FOLLOWS THE USER");
-     }
+//      if(user1.followers.includes(user2)){
+//         return res.status(400).json("YOU ALREADY FOLLOWS THE USER");
+//      }
 
    
-     await user1.updateOne({$push:{followers:req.body.user}})
-     await user2.updateOne({$push:{following:req.params.id}})
+//      await user1.updateOne({$push:{followers:req.body.user}})
+//      await user2.updateOne({$push:{following:req.params.id}})
 
 
-     res.status(200).json("FOLLOWING SUCCESSFULLY");
+//      res.status(200).json("FOLLOWING SUCCESSFULLY");
 
 
-    } catch (error) {
-        return res.status(400).json("SOME ERROR OCCURED IN try-catch in /follow/ "+error );
+//     } catch (error) {
+//         return res.status(400).json("SOME ERROR OCCURED IN try-catch in /follow/ "+error );
+//     }
+
+// })
+
+router.put("/follow/:id" , verifytoken , async(req , res)=>{
+    if(req.params.id !== req.body.user){
+        const user = await User.findById(req.params.id);
+        const otheruser = await User.findById(req.body.user);
+
+        if(!user.followers.includes(req.body.user)){
+            await user.updateOne({$push:{followers:req.body.user}});
+            await otheruser.updateOne({$push:{following:req.params.id}});
+            return res.status(200).json("User has followed");
+        }else{
+            await user.updateOne({$pull:{followers:req.body.user}});
+            await otheruser.updateOne({$pull:{following:req.params.id}});
+            return res.status(200).json("User has Unfollowed");
+        }
+    }else{
+        return res.status(400).json("You can't follow yourself")
     }
-
 })
 
 //Following
@@ -195,8 +212,10 @@ router.get("/followingposts/:id",verifytoken, async (req, res) => {
         })
      )
 
+     const your_posts = await Post.find({user:user2._id});
 
-     res.status(200).json({msg:"THESE ARE ALL POSTS FROM GIVEN USER'S FOLLOWING ACCOUNTS",followingPosts});
+
+     res.status(200).json(your_posts.concat(...followingPosts));
 
 
     } catch (error) {

@@ -2,15 +2,6 @@
    flex: 1;
 }
 
-.rightcontainer{
-    width: 20pc;
-    height: max-content;
-    /* height: 30vh; */
-    background-color: white;
-    margin-top: 20px;
-    border-radius: 15px;
-}
-
 .rightcontainer2{
     width: 20pc;
     /* height: 60vh; */

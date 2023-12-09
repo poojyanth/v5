@@ -6,22 +6,9 @@ const Postschema = new mongoose.Schema({
         type: mongoose.Schema.Types.ObjectId,
         required: true
     },
-    userID:{
-        type: String,
-        required: true
-    },
-    date:{
-        type: String,
-        required: true
-    },
     description: {
         type: String,
-        required: true
     },
-    tag: [{
-        type: String,
-
-    }],
     image: {
         type: String,
     },

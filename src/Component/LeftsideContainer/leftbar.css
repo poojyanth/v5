@@ -1,41 +1,55 @@
 .Leftbar{
-    /* flex:1; */
+    width: 25vw;
 }
+
 .NotificationsContainer{
-    width: 18pc;
-    height: 60vh;
-    background-color: white;
-    margin-top: 20px;
-    border-radius: 20px;
-    overflow: hidden;
-    /* overflow-y: scroll; */
+    height: 50vh;
+    overflow-y: scroll;
+}
+
+.NotificationsContainer::-webkit-scrollbar{
+    display: none;
+}
+
+.notificationItem{
+    display: flex;
+    margin: 0px 5px;
+    align-items: center;
+    justify-content: space-between;
+    flex-direction: row;
+
 }
 
 .notificationimg{
     width:37px;
     height: 37px;
     border-radius: 50%;
-    margin-left: 10px;
 }
 .followinguserimage{
     width: 35px;
     height: 35px;
     border-radius: 50%;
-    margin-left: 40px;
 
+}
+
+.ExploreImageContainer{
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    margin-top: 10px;
+    justify-content: space-evenly;
 }
 
 .likeimage{
     width: 30px;
     height: 30px;
-    margin-left: 43px;
     border-radius: 3px;
 }
 
 .exploreimage{
-    width: 86px;
+    width: 45%;
     margin-left: 4px;
-    height: 150px;
+    height: 100px;
     object-fit: cover;
     border-radius: 4px;
     margin-top: 6px;

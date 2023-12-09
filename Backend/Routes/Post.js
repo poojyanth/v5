@@ -2,51 +2,31 @@ const express = require('express');
 const router = express.Router();
 
 const { body, validationResult } = require('express-validator');
-const { upload } = require("../middleware/multer");
 const Post = require('../Modals/Post');
 const { verifytoken } = require('../middleware/verifytoken');
 
 
 // ROUTE-1 :- CREATE NEW POST
 // METHOD USED :- POST
-// router.post("/createpost",verifytoken, async (req, res) => {
-
-//     try {
-
-//         let {description,image,video}= req.body;
+router.post("/createpost",verifytoken, async (req, res) => {
+    
+    try {
+        console.log(req.body);
+        console.log(req.user);
+        let {description,image,video}= req.body;
   
-//         const newPost = new Post({          
-//             description,image,video,user:req.user.id
-//         })
+        const newPost = new Post({         
+            description,image,video,user:req.user.id
+        }).save();
+ 
+    //    await newPost.save();
+       console.log('New post'+newPost);
+       res.status(200).json({newPost});
 
-//        await newPost.save();
-//        console.log(newPost);
-//        res.status(200).json({newPost});
-
-//     } catch (error) {
-//         return res.status(400).json("SOME ERROR OCCURED IN try-catch in /createnewpost" + error)
-//     }
-
-// })
-
-router.post('/createpost',verifytoken,upload.single('single_input'),(req,res)=>{
-    console.log(req.body);
-    if(!req.file)res.status(404).send("/createpost");
-    else{
-           
-                Post.create({
-                    userId : req.body.duserId,
-                    user : req.body.dusername,
-                    date : new Date(),
-                    image  :  req.fileName,
-                    description  : req.body.description,
-                    Tag : req.body.tag.split(" "),
-                    likes_number : 0,
-                    comments_number : 0,
-                    Shares : 0,                
-                   })
-        
+    } catch (error) {
+        return res.status(400).json("SOME ERROR OCCURED IN try-catch in /createnewpost" + error)
     }
+
 })
 
 

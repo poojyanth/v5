@@ -4,7 +4,7 @@ import Navbar from '../../Component/Navbar/Navbar'
 import Leftbar from '../../Component/LeftsideContainer/Leftbar'
 import MainPost from "../../Component/MainpostContainer/Mainpost"
 import Rightbar from '../../Component/RightsideContainer/Rightbar'
-import { useSelector}  from 'react-redux'
+import {useSelector} from 'react-redux'
 
 export default function Home() {
   if(useSelector((state)=>state.user.user)===null){

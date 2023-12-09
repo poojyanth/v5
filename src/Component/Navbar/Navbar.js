@@ -3,20 +3,25 @@ import "./Navbar.css"
 import searchIcon from "../Images/search.png";
 import Notifications from "../Images/bell.png";
 import Message from "../Images/message.png";
+import defaultUser from "../Images/blank-profile-picture-973460_960_720.webp"
 import Profileimage from "../Images/Profile.png"
 import { Link} from "react-router-dom";
+import { useNavigate } from 'react-router-dom';
 import { useDispatch, useSelector}  from 'react-redux'
 import {logout} from "../ReduxContainer/UserReducer"
 
+
 export default function Navbar() {
 
+  const navigate = useNavigate();
+
+  const handleLogoClick = () => {
+    navigate('/');
+  };
 
   const userDetails = useSelector((state)=>state.user);
-
-
-  let user2 = userDetails.user;
-
-  let id =user2.user._id;
+  let user = userDetails.user;
+  let id =user.user._id;
   console.log(id);
 
 const dispatch = useDispatch();
@@ -27,9 +32,11 @@ const dispatch = useDispatch();
   return (
     <div className='mainNavbar'>
       
-    <div className='LogoContainer'>
-              <p>Social</p>
-    </div>
+
+
+        <div className='LogoContainer' onClick={handleLogoClick}>
+                  <p >Fotoflask</p>
+        </div>
   
     <div>
               <div className='searchInputContainer'>
@@ -42,8 +49,8 @@ const dispatch = useDispatch();
               <img src={`${Message}`} className="Icons" alt="" />
               <Link to={`/profilepage/${id}`}>
               <div style={{display:'flex' , alignItems:'center'}}>
-                        <img src={`${user2.user.profilepicture}`} className="ProfileImage" alt="" />
-                        <p style={{marginLeft:'5px'}}>{user2.user.username}</p>
+                        <img src={(user.user.profilepicture)?user.user.profilepicture:defaultUser} className="ProfileImage" alt="" />
+                        <p style={{marginLeft:'5px'}}>{user.user.username}</p>
               </div>
               </Link>
            

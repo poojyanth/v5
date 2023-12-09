@@ -70,7 +70,7 @@ export default function ProfileRightbar() {
 
   {
     followers.map((item)=>{
-      return <div className='FollowRequest' style={{marginTop:"10px",paddingTop:"5px",paddingBottom:"5px"}}>
+      return <div className='FollowRequest' key={item.others._id} style={{marginTop:"10px",paddingTop:"5px",paddingBottom:"5px"}}>
       <div style={{display:'flex' , alignItems:"center" , marginLeft:10 , cursor:"pointer"}}>
        <img src={`${item.others.profilepicture}`} className="Friendsimage" alt="" />
        <p style={{textAlign:"start"  , marginLeft:"10px"}}>{item.others.username} Started Following You</p>
@@ -80,12 +80,6 @@ export default function ProfileRightbar() {
     })
   }
        
-
-
-          
-          
-          
-          
         </div>
         
 
@@ -98,7 +92,7 @@ export default function ProfileRightbar() {
 suggestions.map((item)=>{
 
 
-return <Follow user_details={item}/>
+return <Follow  key={item._id} user_details={item}/>
 
 })
 }
