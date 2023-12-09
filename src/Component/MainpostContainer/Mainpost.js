@@ -43,7 +43,7 @@ export default function Mainpost() {
     
       {
         
-        posts.map((item)=>{
+        posts.slice().reverse().map((item)=>{
           // return item.map((postdetails)=>{
             return <Post  key={item.id}  post={item}/>
           // })

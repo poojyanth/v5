@@ -3,6 +3,7 @@
     width: 100%;
     margin: auto;
     justify-content: space-between;
+    height: 8vh;
     background-color: white;
     border-bottom-left-radius: 13px;
     border-bottom-right-radius: 13px;
@@ -23,7 +24,8 @@
 }
 .LogoContainer{
     font-family: 'Montserrat Alternates', sans-serif;
-    font-size: medium;
+    font-size:larger;
+    font-weight: 600;
     margin: 0 2vw;
     flex: 0.2 1;
 }

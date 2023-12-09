@@ -50,3 +50,22 @@
     padding-left: 40px;
     padding-right: 40px;
 }
+
+.MoreOptionsMenu {
+    position:inherit;
+    top: 30px; /* Adjust the positioning based on your layout */
+    right: 10px; /* Adjust the positioning based on your layout */
+    background-color: #fff;
+    border: 1px solid #ccc;
+    padding: 5px;
+    border-radius: 5px;
+    z-index: 999;
+    box-shadow: 0 0 5px rgba(0, 0, 0, 0.3);
+  }
+  
+  .MoreOptionsMenu p {
+    cursor: pointer;
+    padding: 5px;
+    margin: 5px 0;
+  }
+  

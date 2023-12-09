@@ -5,6 +5,7 @@ import CommentIcon from "../Images/speech-bubble.png";
 import defaultUser from "../Images/blank-profile-picture-973460_960_720.webp"
 import Share from "../Images/share.png";
 import anotherlikeicon from "../Images/setLike.png"
+import { useNavigate } from 'react-router-dom';
 import MoreOptions from "../Images/more.png"
 import { useSelector } from 'react-redux'
 import axios from "axios"
@@ -13,6 +14,7 @@ import "./post.css"
 export default function Post(props) {
   const userDetails2 = useSelector((state) => state.user);
   let user = userDetails2.user;
+  const navigate = useNavigate();
   let id = user.user._id;
 
 
@@ -31,7 +33,7 @@ export default function Post(props) {
     getuserdetails();
   }, [])
 
-  const myUserId = "656762a5c43095cb8ad3dc3c";
+  const myUserId = userDetails2.user.user._id;
 
   const [Like, setLike] = useState(props.post.likes.includes(myUserId) ? anotherlikeicon : LikeIcon);
   const [count, setCount] = useState(props.post.likes.length);
@@ -41,12 +43,6 @@ export default function Post(props) {
   const [show, setshow] = useState(false);
 
   console.log(props.post);
-
-
-
-
-
-
 
   console.log(userDetails);
 
@@ -129,14 +125,22 @@ export default function Post(props) {
     <div className='PostContainer'>
       <div className='SubPostContainer'>
         <div>
-          <div style={{ display: 'flex', alignItems: "center" }}>
-            <img src={(user.user.profilepicture)?user.user.profilepicture:defaultUser} className="PostImage" alt="" />
+          <div style={{    display: 'flex', alignItems : 'center',
+    justifyContent: 'space-between',    flexDirection: 'row'}}>
 
-            <div>
+            <div style={{    display: 'flex', alignItems: 'center'}}>
+              <img src={(user.user.profilepicture)?user.user.profilepicture:defaultUser} className="PostImage" alt="" />
+              <div>
               <p style={{ marginLeft: '5px', textAlign: "start" }}>{userDetails.username}</p>
               <p style={{ fontSize: "11px", textAlign: "start", marginLeft: 5, marginTop: -13, color: "#aaa" }}>Following by suman</p>
+              </div>
             </div>
-            <img src={`${MoreOptions}`} style={{ marginRight: 16 }} className="moreicons" alt="" />
+            {/* <div className="MoreOptions" style={{    margin: '0 5%', fontSize: 'larger', fontWeight: '900'}}>...</div> */}
+            <div className="MoreOptions" >
+              {/* a button onclick navigate to postpage/id */}
+              <img src={`${MoreOptions}`} className="iconsforPost" onClick={() => navigate(`/postpage/${props.post._id}`)} alt="" />
+
+            </div>  
           </div>
           <p style={{ textAlign: 'start', width: "96%", marginLeft: 20, marginTop: 0 }}>{props.post.description}</p>
       

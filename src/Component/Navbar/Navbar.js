@@ -22,7 +22,6 @@ export default function Navbar() {
   const userDetails = useSelector((state)=>state.user);
   let user = userDetails.user;
   let id =user.user._id;
-  console.log(id);
 
 const dispatch = useDispatch();
   const handleLogOut=()=>{

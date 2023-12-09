@@ -1,6 +1,6 @@
 const express = require('express');
 const router = express.Router();
-
+const User = require('../Modals/User');
 const { body, validationResult } = require('express-validator');
 const Post = require('../Modals/Post');
 const { verifytoken } = require('../middleware/verifytoken');
@@ -43,12 +43,32 @@ router.get("/get/post",verifytoken, async (req, res) => {
      }
 
     //  console.log(user_posts);
-     res.status(200).json(user_posts);
+     res.status(200).json({post: user_posts});
 
 
     } catch (error) {
         return res.status(400).json("SOME ERROR OCCURED IN try-catch in /get/post" );
     }
+
+})
+
+
+// ROUTE-3 :- FETCH A POST BY POST ID
+// METHOD USED :- GET
+router.get("/get/postID/:id", verifytoken, async (req, res) => {
+        try {
+        console.log(req.params.id);
+        const user_posts = await Post.findById(req.params.id);
+        if(!user_posts){
+            return res.status(400).json("NO POSTS FOUND ...");
+        }
+
+        console.log(user_posts);
+        //  console.log(user_posts);
+        res.status(200).json(user_posts);   
+        } catch (error) {
+            return res.status(400).json("SOME ERROR OCCURED IN try-catch in /get/post" );
+        }
 
 })
 

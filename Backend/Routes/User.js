@@ -280,6 +280,7 @@ router.delete("/delete/:id",verifytoken, async (req, res) => {
 // GET USER DETAILS FOR A POST
 
 router.get("/post/user/details/:id",async(req,res)=>{
+    console.log('post get'+req.params.id);
     try{
     const user = await User.findById(req.params.id);
     if(!user){
@@ -290,6 +291,26 @@ router.get("/post/user/details/:id",async(req,res)=>{
     // others contain username,profilpicture
     res.status(200).send(others);
 }catch(error){
+    return res.status(400).send("SOME ERROR IN TRY_ CATCH (get user for a post)")
+}
+
+})
+
+// GET USER DETAILS WITH USERID
+
+router.get("/user/details/:id",async(req,res)=>{
+    try{
+    const user = await User.findById(req.params.id);
+    if(!user){
+        req.status(400).send("CAN'T GET USER FOR A POST");
+    }
+    const {email,password,phonenumber,...others}= user._doc;
+    // remaining details will be stores in others variable
+    // others contain username,profilpicture
+    console.log(others);
+    res.status(200).send({User: others});
+}catch(error){
+
     return res.status(400).send("SOME ERROR IN TRY_ CATCH (get user for a post)")
 }
 
