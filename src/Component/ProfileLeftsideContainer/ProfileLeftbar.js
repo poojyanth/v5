@@ -12,7 +12,7 @@ export default function ProfileLeftbar({profileid}) {
 
   console.log("PROFILE ID :"+profileid);
   const userDetails = useSelector((state)=>state.user);
-
+  const Backendport = process.env.REACT_APP_BACKEND_PORT;
   let user = userDetails.user;
   let id =user.user._id;
   let username = user.user.username;
@@ -28,7 +28,7 @@ export default function ProfileLeftbar({profileid}) {
   useEffect(()=>{
     const getuserdetails =async()=>{
       try{
-      const details = await axios.get(`http://localhost:5000/api/user/post/user/details/${profileid}`);
+      const details = await axios.get(`http://localhost:${Backendport}/api/user/post/user/details/${profileid}`);
       setUser_Details(details.data);
       }catch(error){
         console.log("ERROR OCCURED IN CATCH BLOCK"+error)
@@ -45,7 +45,7 @@ console.log(user_details);
   useEffect(()=>{
     const getfollowings=async()=>{
     try{   
-        const response = await axios.get(`http://localhost:5000/api/user/get/followings/${id}`)
+        const response = await axios.get(`http://localhost:${Backendport}/api/user/get/followings/${id}`)
         // console.log("RESS :"+response)
         setFollowings(response.data);
         }catch(error){
@@ -66,7 +66,7 @@ console.log(user_details);
   const [Follow,setUnFollow] = useState([user.user.following.includes(profileid) ? "UnFollow" : "Follow" ]);
 
 // const handleFollow=async()=>{
-//   await fetch(`http://localhost:5000/api/user/follow/${id}`,{method:"PUT" ,
+//   await fetch(`http://localhost:${Backendport}/api/user/follow/${id}`,{method:"PUT" ,
 //   headers:{
 //     'Content-Type':'application/json',
 //     jwttoken:jwt_here
@@ -76,10 +76,10 @@ console.log(user_details);
  
 const handleFollow = async()=>{
   if(Follow === "Follow"){
-    await fetch(`http://localhost:5000/api/user/follow/${profileid}` , {method:'PUT', headers:{'Content-Type':"application/JSON" , jwttoken:jwt_here} , body:JSON.stringify({user:`${user.user._id}`})})
+    await fetch(`http://localhost:${Backendport}/api/user/follow/${profileid}` , {method:'PUT', headers:{'Content-Type':"application/JSON" , jwttoken:jwt_here} , body:JSON.stringify({user:`${user.user._id}`})})
     setUnFollow("UnFollow")
   }else{
-    await fetch(`http://localhost:5000/api/user/follow/${profileid}` , {method:'PUT', headers:{'Content-Type':"application/JSON" , jwttoken:jwt_here} , body:JSON.stringify({user:`${user.user._id}`})})
+    await fetch(`http://localhost:${Backendport}/api/user/follow/${profileid}` , {method:'PUT', headers:{'Content-Type':"application/JSON" , jwttoken:jwt_here} , body:JSON.stringify({user:`${user.user._id}`})})
     setUnFollow("Follow")
   }
 }

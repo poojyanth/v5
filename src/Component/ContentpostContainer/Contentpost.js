@@ -14,6 +14,7 @@ import Mainpost from '../MainpostContainer/Mainpost';
 
 
 export default function Contentpost({ reloadMainpost }) {
+  const Backendport = process.env.REACT_APP_BACKEND_PORT;
   const userDetails = useSelector((state)=>state.user);
   let user = userDetails.user;
   const navigate = useNavigate();
@@ -79,7 +80,7 @@ export default function Contentpost({ reloadMainpost }) {
     // Handle successful uploads on complete
     // For instance, get the download URL: https://firebasestorage.googleapis.com/...
     getDownloadURL(uploadTask.snapshot.ref).then(async(downloadURL) => {
-      await fetch("http://localhost:5000/api/post/createpost", {
+      await fetch(`http://localhost:${Backendport}/api/post/createpost`, {
         method: "POST",
         headers: {
           'Content-Type': 'application/JSON',
@@ -128,7 +129,7 @@ export default function Contentpost({ reloadMainpost }) {
       // Handle successful uploads on complete
       // For instance, get the download URL: https://firebasestorage.googleapis.com/...
       getDownloadURL(uploadTask.snapshot.ref).then(async(downloadURL) => {
-        await fetch("http://localhost:5000/api/post/createpost",{method:"POST",
+        await fetch(`http://localhost:${Backendport}/api/post/createpost`,{method:"POST",
         headers:{
           'Content-Type':'application/json',
           jwttoken:jwt_here 
@@ -143,7 +144,7 @@ export default function Contentpost({ reloadMainpost }) {
   );
 
     }else {
-      fetch("http://localhost:5000/api/post/createpost", {
+      fetch(`http://localhost:${Backendport}/api/post/createpost`, {
         method: "POST",
         headers: {
           'Content-Type': 'application/json',

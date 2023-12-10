@@ -12,6 +12,7 @@ export default function Rightbar() {
   const userDetails = useSelector((state)=>state.user);
   let user = userDetails.user;
   let id =user.user._id;
+  const Backendport = process.env.REACT_APP_BACKEND_PORT;
 
   //const jwt_here="eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjY1Njc2MmE1YzQzMDk1Y2I4YWQzZGMzYyIsInVzZXJuYW1lIjoiU0FJUEFWQU4iLCJpYXQiOjE3MDEzMjA0OTR9.3YHs-mLthGHdMRVS7SVWC0-yyhbF3CgEemL_ucXBnpU"
   const[suggestions,setSuggestions] = useState([]);
@@ -19,7 +20,7 @@ export default function Rightbar() {
   useEffect(()=>{
     const getsuggestions =async()=>{
       try{
-      const details = await axios.get(`http://localhost:5000/api/user/all/user/${id}`,{
+      const details = await axios.get(`http://localhost:${Backendport}/api/user/all/user/${id}`,{
       });
       setSuggestions(details.data);
       }catch(error){

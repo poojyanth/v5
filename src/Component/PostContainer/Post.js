@@ -12,6 +12,7 @@ import axios from "axios"
 import "./post.css"
 
 export default function Post(props) {
+  const Backendport = process.env.REACT_APP_BACKEND_PORT;
   const userDetails2 = useSelector((state) => state.user);
   let user = userDetails2.user;
   const navigate = useNavigate();
@@ -23,7 +24,7 @@ export default function Post(props) {
   useEffect(() => {
     const getuserdetails = async () => {
       try {
-        const details = await axios.get(`http://localhost:5000/api/user/post/user/details/${props.post.user}`);
+        const details = await axios.get(`http://localhost:${Backendport}/api/user/post/user/details/${props.post.user}`);
         setUserDetails(details.data);
       } catch (error) {
         console.log("ERROR OCCURED IN CATCH BLOCK" + error)
@@ -73,7 +74,7 @@ export default function Post(props) {
 
   const handleLike = async () => {
     if (Like === LikeIcon) {
-      await fetch(`http://localhost:5000/api/post/${props.post._id}/like`,
+      await fetch(`http://localhost:${Backendport}/api/post/${props.post._id}/like`,
         {
           method: "PUT",
           headers: {
@@ -96,7 +97,7 @@ export default function Post(props) {
       //  setLike(anotherlikeicon);
       //   setCount(count + 1);
     } else {
-      await fetch(`http://localhost:5000/api/post/${props.post._id}/like`,
+      await fetch(`http://localhost:${Backendport}/api/post/${props.post._id}/like`,
         {
           method: "PUT",
           headers: {

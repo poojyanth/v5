@@ -4,7 +4,7 @@ import followed from "../Images/followed.png"
 import { useSelector}  from 'react-redux'
 export default function Follow(props) {
 
-  
+  const Backendport = process.env.REACT_APP_BACKEND_PORT;
   const userDetails = useSelector((state)=>state.user);
   let user = userDetails.user;
   let id =user.user._id;
@@ -15,7 +15,7 @@ export default function Follow(props) {
     
     const handleFollow=async(clicked_user_id)=>{
          console.log(clicked_user_id)
-         await fetch(`http://localhost:5000/api/user/follow/${clicked_user_id}`,{method:"PUT" ,
+         await fetch(`http://localhost:${Backendport}/api/user/follow/${clicked_user_id}`,{method:"PUT" ,
          headers:{
            'Content-Type':'application/json',
            jwttoken:jwt_here
