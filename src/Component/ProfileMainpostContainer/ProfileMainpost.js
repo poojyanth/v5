@@ -5,10 +5,8 @@ import image3 from "../Images/image3.jpg";
 import "./profilemainpost.css"
 import { useLocation } from 'react-router-dom';
 import axios from "axios"
-export default function ProfileMainpost() {
+export default function ProfileMainpost({profileid}) {
 
-  let location = useLocation();
-  let loc_id =location.pathname.split("/")[2];
 
  //const jwt_here="eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjY1Njc2MmE1YzQzMDk1Y2I4YWQzZGMzYyIsInVzZXJuYW1lIjoiU0FJUEFWQU4iLCJpYXQiOjE3MDEzMjA0OTR9.3YHs-mLthGHdMRVS7SVWC0-yyhbF3CgEemL_ucXBnpU"
 const [posts,setPosts] = useState([]);
@@ -16,7 +14,7 @@ const [posts,setPosts] = useState([]);
 useEffect(()=>{
   const getposts = async()=>{   
     try{
-      const response = await axios.get(`http://localhost:5000/api/post/get/post/${loc_id}`,{
+      const response = await axios.get(`http://localhost:5000/api/post/get/post/${profileid}`,{
       });
 
       setPosts(response.data);  // include particularly .followingPosts 
@@ -26,12 +24,12 @@ useEffect(()=>{
   }
   }
 getposts();
-},[])
+},[profileid])
 
 console.log(posts);
 
   return (
-    <div className='mainPostContainer'>
+    <div className='mainPostContainer ProfilePageMainPost'>
 
       <div>
         <img src={`${image3}`} className="profileCoverimage" alt="" />

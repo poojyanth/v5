@@ -9,3 +9,19 @@
     display: flex;
     justify-content: space-between;
 }
+
+.Leftbar,
+.rightbar {
+    /* Define the desired width for the left and right bars */
+    position: sticky;
+    top: 9vh;
+    border-radius: 15px;
+    height: 90vh;
+    margin: 0 1vw;
+    overflow-y: auto;
+    
+}
+
+.Leftbar::-webkit-scrollbar, .rightbar::-webkit-scrollbar {
+    display: none;
+}

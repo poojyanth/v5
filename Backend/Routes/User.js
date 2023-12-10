@@ -283,9 +283,9 @@ router.delete("/delete/:id",verifytoken, async (req, res) => {
 // GET USER DETAILS FOR A POST
 
 router.get("/post/user/details/:id",async(req,res)=>{
-    console.log('post get'+req.params.id);
     try{
     const user = await User.findById(req.params.id);
+    console.log("UserID requested"+req.params.id);
     if(!user){
         req.status(400).send("CAN'T GET USER FOR A POST");
     }
@@ -310,7 +310,6 @@ router.get("/user/details/:id",async(req,res)=>{
     const {email,password,phonenumber,...others}= user._doc;
     // remaining details will be stores in others variable
     // others contain username,profilpicture
-    console.log(others);
     res.status(200).send({User: others});
 }catch(error){
 

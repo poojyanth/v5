@@ -7,7 +7,7 @@ import Follow from '../RightsideContainer/Follow';
 
 // import addfriend from "../Images/add-user.png";
 
-export default function ProfileRightbar() {
+export default function ProfileRightbar({profileid}) {
 
   // const myUserId="656762a5c43095cb8ad3dc3c";
 

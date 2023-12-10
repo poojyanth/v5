@@ -10,6 +10,7 @@
     border-bottom-right-radius: 13px;
     align-items: center;
     position: sticky;
+    z-index: 999;
 }
 .searchInputContainer{
     display: flex;

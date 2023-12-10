@@ -4,6 +4,7 @@ import image3 from "../Images/image3.jpg";
 import axios from "axios";
 import {useEffect,useState} from 'react';
 import {useSelector}  from 'react-redux'
+import { Link} from "react-router-dom";
 
 export default function Leftbar() {
   const userDetails = useSelector((state)=>state.user);
@@ -37,11 +38,13 @@ console.log(posts);
 
   return (
     <div className='Leftbar'>
+      
     <div className='NotificationsContainer'>
               <div className='containerHead'>
-                        <p >Notifications</p>
-                        <p style={{ color: "#aaa" }}>See all</p>
+                                  <p >Notifications</p>
+                                  <p style={{ color: "#aaa" }}>See all</p>
               </div>
+              <div className='ScrollContainerDisNone'>
               <div className='notificationItem' >
                         <img src={`${image3}`} className="notificationimg" alt="" />
                         <p style={{ color:"#aaa" , fontSize:13 , width:"120px" , textAlign:"start"}}>Madan like your post</p>
@@ -68,6 +71,8 @@ console.log(posts);
                         <p style={{ color:"#aaa" , fontSize:13 , width:"120px" , textAlign:"start"}}>Madan like your post</p>
                         <img src={`${image3}`} className="likeimage" alt="" />
               </div>
+              </div>
+
             
        
     </div>
@@ -75,10 +80,10 @@ console.log(posts);
     <div className='NotificationsContainer'>
               <div className='containerHead'>
                         <p >Explore</p>
-                        <p style={{ color: "#aaa" }}>See all</p>
+                        <Link to="/explorepage" style={{ color: "#aaa", textDecoration: 'none' }}><p >See all</p></Link>
               </div>
               
-              <div className='ExploreImageContainer'>
+              <div className='ExploreImageContainer ScrollContainerDisNone'>
                 {           
                   posts.map((item)=>{
                     // return item.map((postdetails)=>{

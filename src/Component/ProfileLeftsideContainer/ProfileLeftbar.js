@@ -5,13 +5,14 @@ import axios from "axios"
 import { useSelector}  from 'react-redux'
 import { useLocation } from 'react-router-dom';
 import { Link} from "react-router-dom";
+import Profilecover from "../Images/default-cover-4.jpeg"
+import defaultUser from "../Images/blank-profile-picture-973460_960_720.webp"
 
-export default function ProfileLeftbar() {
+export default function ProfileLeftbar({profileid}) {
 
-  let location = useLocation();
-  let loc_id =location.pathname.split("/")[2];
-
+  console.log("PROFILE ID :"+profileid);
   const userDetails = useSelector((state)=>state.user);
+
   let user = userDetails.user;
   let id =user.user._id;
   let username = user.user.username;
@@ -23,19 +24,19 @@ export default function ProfileLeftbar() {
   // const myUserId="656762a5c43095cb8ad3dc3c";
 
   const [user_details,setUser_Details] = useState([]);
-
+ 
   useEffect(()=>{
     const getuserdetails =async()=>{
       try{
-      const details = await axios.get(`http://localhost:5000/api/user/post/user/details/${loc_id}`);
+      const details = await axios.get(`http://localhost:5000/api/user/post/user/details/${profileid}`);
       setUser_Details(details.data);
       }catch(error){
         console.log("ERROR OCCURED IN CATCH BLOCK"+error)
       }
     }
-
+    // alert("PROFILE ID :"+profileid);
     getuserdetails();
-  },[])
+  },[profileid])
 
 console.log(user_details);
 
@@ -62,7 +63,7 @@ console.log(user_details);
   let profilepic = user_details?.profilepicture;
 
  
-  const [Follow,setUnFollow] = useState([user.user.following.includes(loc_id) ? "UnFollow" : "Follow" ]);
+  const [Follow,setUnFollow] = useState([user.user.following.includes(profileid) ? "UnFollow" : "Follow" ]);
 
 // const handleFollow=async()=>{
 //   await fetch(`http://localhost:5000/api/user/follow/${id}`,{method:"PUT" ,
@@ -75,10 +76,10 @@ console.log(user_details);
  
 const handleFollow = async()=>{
   if(Follow === "Follow"){
-    await fetch(`http://localhost:5000/api/user/follow/${loc_id}` , {method:'PUT', headers:{'Content-Type':"application/JSON" , jwttoken:jwt_here} , body:JSON.stringify({user:`${user.user._id}`})})
+    await fetch(`http://localhost:5000/api/user/follow/${profileid}` , {method:'PUT', headers:{'Content-Type':"application/JSON" , jwttoken:jwt_here} , body:JSON.stringify({user:`${user.user._id}`})})
     setUnFollow("UnFollow")
   }else{
-    await fetch(`http://localhost:5000/api/user/follow/${loc_id}` , {method:'PUT', headers:{'Content-Type':"application/JSON" , jwttoken:jwt_here} , body:JSON.stringify({user:`${user.user._id}`})})
+    await fetch(`http://localhost:5000/api/user/follow/${profileid}` , {method:'PUT', headers:{'Content-Type':"application/JSON" , jwttoken:jwt_here} , body:JSON.stringify({user:`${user.user._id}`})})
     setUnFollow("Follow")
   }
 }
@@ -92,9 +93,9 @@ const handleFollow = async()=>{
       <div className='NotificationsContainer'>
 
 
-        <img src={`${profilepic}`} className="ProfilepageCover" alt="" />
-        <div style={{ display: 'flex', alignItems: 'center', marginTop: -30 }}>
-          <img src={`${profilepic}`} className="Profilepageimage" alt="" />
+        <img src={`${Profilecover}`} className="ProfilepageCover" alt="" />
+        <div style={{ display: 'flex', alignItems: 'center', marginTop: -20 }}>
+          <img src={(user.user.profilepicture)?user.user.profilepicture:defaultUser} className="Profilepageimage" alt="" />
           <div>
             <p style={{ marginLeft: 6, marginTop: 20, color: "black", textAlign: 'start' }}>{user_details.username}</p>
             <p style={{ marginLeft: 6, color: "black", textAlign: "start", marginTop: -16, fontSize: 11 }}>Software Developer</p>
@@ -113,7 +114,7 @@ const handleFollow = async()=>{
           <h5 style={{ color: "black", marginLeft: 10, fontSize: "14px", marginRight: 30, marginTop: 30, textAlign: "start" }}>User bio</h5>
           <p style={{ color: "black", fontSize: "12px", marginTop: -20, textAlign: "start", marginLeft: "10px" }}>I would rather be despised of who I am, rather than loved by who I am not.</p>
         </div>
-        { user.user._id !== loc_id ? <div onClick={handleFollow}> <button style={{ width: "100%", paddingTop: 7, paddingBottom: 7, border: "none", backgroundColor: "green", color: "white" }}>{Follow}</button></div> : <button style={{ width: "100%", paddingTop: 7, paddingBottom: 7, border: "none", backgroundColor: "green", color: "white" }}>Edit Bio</button> }
+        { user.user._id !== profileid ? <div onClick={handleFollow}> <button style={{ width: "100%", paddingTop: 7, paddingBottom: 7, border: "none", backgroundColor: "green", color: "white" }}>{Follow}</button></div> : <button style={{ width: "100%", paddingTop: 7, paddingBottom: 7, border: "none", backgroundColor: "green", color: "white" }}>Edit Bio</button> }
 
 
 

@@ -1,0 +1,21 @@
+.ExplorePost{
+    display: flex;
+    flex-direction: column;
+    /* margin: 10px; */
+    /* padding: 10px; */
+    border: 1px solid #dbdbdb;
+    border-radius: 3px;
+    background-color: #fff;
+    width: 23vw;
+    height: 23vw;
+    box-sizing: border-box;
+    cursor: pointer;
+    position: relative;
+    object-fit: cover;
+    justify-content: center;
+}
+
+.ExplorePostImage{
+    object-fit: cover;
+    height: inherit;
+}

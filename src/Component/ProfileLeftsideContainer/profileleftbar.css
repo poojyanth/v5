@@ -1,5 +1,5 @@
 .ProfileLeftbar{
-    flex: 1;
+    flex: 0 0 25%;
 
 }
 
@@ -14,6 +14,7 @@
 .containerHead{
     display: flex;
     margin: 1px 1vw;
+    height:8vh;
     justify-content: space-between;
 }
 
@@ -26,7 +27,7 @@
 
 }
 .ProfilepageCover{
-    width: 270px;
+    width: inherit;
     height: 100px;
     object-fit: cover;
 }

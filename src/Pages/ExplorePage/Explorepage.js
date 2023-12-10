@@ -30,18 +30,21 @@ export default function Explorepage() {
 
         useEffect(()=>{
             getExplorePosts();
-            console.log(exploreposts);
+            console.log(exploreposts.post);
         },[])
 
   return (
     <div className='Explorepage'>
         <Navbar/>      
-        <div className= "ComponentContainer">
-        {/* {
-          exploreposts.map((item)=>{
-            return <ExplorePost  key={item.id}  post={item}/>
-          })
-        } */}
+        <div className= "ExploreComponentContainer">
+            <div className="ExplorepageHeader">
+                <p>Explore</p>
+            </div>
+            <div className="ExplorePostContainer">
+                {exploreposts.post?.map((post)=>(
+                    post.image? <ExplorePost post={post} key={post._id}/>: '' 
+                ))}
+            </div>
         </div>
 
     </div>
