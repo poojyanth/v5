@@ -90,7 +90,7 @@ const handleFollow = async()=>{
   return (
     <div className='ProfileLeftbar'>
 
-      <div className='NotificationsContainer'>
+      <div className='NotificationsContainer UserInfo' style={{height: '55vh', display: 'flex', flexDirection: 'column', justifyContent: 'space-between'}}>
 
 
         <img src={`${Profilecover}`} className="ProfilepageCover" alt="" />
@@ -114,7 +114,7 @@ const handleFollow = async()=>{
           <h5 style={{ color: "black", marginLeft: 10, fontSize: "14px", marginRight: 30, marginTop: 30, textAlign: "start" }}>User bio</h5>
           <p style={{ color: "black", fontSize: "12px", marginTop: -20, textAlign: "start", marginLeft: "10px" }}>I would rather be despised of who I am, rather than loved by who I am not.</p>
         </div>
-        { user.user._id !== profileid ? <div onClick={handleFollow}> <button style={{ width: "100%", paddingTop: 7, paddingBottom: 7, border: "none", backgroundColor: "green", color: "white" }}>{Follow}</button></div> : <button style={{ width: "100%", paddingTop: 7, paddingBottom: 7, border: "none", backgroundColor: "green", color: "white" }}>Edit Bio</button> }
+        { user.user._id !== profileid ? <div onClick={handleFollow}> <button style={{ width: "100%", paddingTop: 7, paddingBottom: 7, border: "none", backgroundColor: "green", color: "white", borderBottomRightRadius: '20px', borderBottomLeftRadius: '20px' }}>{Follow}</button></div> : <button style={{ width: "100%", paddingTop: 7, paddingBottom: 7, border: "none", backgroundColor: "green", color: "white", borderBottomRightRadius: '20px', borderBottomLeftRadius: '20px' }}>Edit Bio</button> }
 
 
 
@@ -127,21 +127,20 @@ const handleFollow = async()=>{
           <p style={{ marginLeft: 10 }}>Friends</p>
           <p style={{ marginRight: 10, color: "#aaa" }}>See all</p>
         </div>
-        <div style={{ display: 'flex', flexWrap: "wrap", marginLeft: 5 }}>
+        <div style={{ display: 'flex', flexWrap: "wrap",flexDirection: 'row', justifyContent: 'center' }}>
 
 
-{
-  //he issue you're facing might be because you're not explicitly returning the JSX inside the map function. In arrow functions, if you use curly braces {}, you need to use the return statement explicitly. If you want to use parentheses (), you can skip the return statement.
-followings.map((item)=>(
-  <Link to={`/profilepage/${item.others._id}`} key={item.others._id}>
-  <div style={{ marginLeft: 4, cursor: "pointer" }}>
-  <img src={`${item.others.profilepicture}`} className="friendimage" alt="" />
-  <p style={{ marginTop: -2 }}>{item.others.username}</p>
-</div>
-</Link>
+        {
+          //he issue you're facing might be because you're not explicitly returning the JSX inside the map function. In arrow functions, if you use curly braces {}, you need to use the return statement explicitly. If you want to use parentheses (), you can skip the return statement.
+        followings.map((item)=>(
+          <Link to={`/profilepage/${item.others._id}`} key={item.others._id} style={{width: '30%', cursor: "pointer", margin: '5px', textDecoration: 'none', color: 'black', overflowX: 'clip' }}>
+          
+          <img src={`${(item.others.profilepicture)?item.others.profilepicture:defaultUser}`} className="friendimage" alt="" />
+          <p style={{ marginTop: -2 }}>{item.others.username}</p> 
+        </Link>
 
-))
-}
+        ))
+        }
 
 
 

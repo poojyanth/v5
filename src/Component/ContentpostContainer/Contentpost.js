@@ -47,6 +47,30 @@ export default function Contentpost({ reloadMainpost }) {
     });
   };
 
+  const [imagePreview, setImagePreview] = useState(null); // State to hold image preview URL
+
+  const handleImageChange = (e) => {
+    const selectedFile = e.target.files[0];
+    setFile(selectedFile); // Set the file in state
+
+    if (selectedFile) {
+      const imageUrl = URL.createObjectURL(selectedFile); // Create preview URL
+      setImagePreview(imageUrl); // Set the preview URL in state
+    }
+  };
+
+  const [videoPreview, setVideoPreview] = useState(null); // State to hold video preview URL
+
+  const handleVideoChange = (e) => {
+    const selectedVideo = e.target.files[0];
+    setFile2(selectedVideo); // Set the video file in state
+
+    if (selectedVideo) {
+      const videoUrl = URL.createObjectURL(selectedVideo); // Create preview URL
+      setVideoPreview(videoUrl); // Set the preview URL in state
+    }
+  };
+
   const handlepost =(e) =>{
 
     e.preventDefault();
@@ -90,7 +114,8 @@ export default function Contentpost({ reloadMainpost }) {
       }).then((data) => {
         notifySuccess("IMAGE POST - SUCCESSFULLY UPLOADED"); // Notify success using toast
         reloadMainpost();
-
+        setImagePreview(null); // Clear image preview
+        setVideoPreview(null); // Clear video preview
       }).catch((error) => {
         notifyError("Failed to upload image post"); // Notify error using toast
       });
@@ -137,7 +162,9 @@ export default function Contentpost({ reloadMainpost }) {
         body:JSON.stringify({description:description,image:'',video:downloadURL})
       }).then((data)=>{
         notifySuccess("VIDEO POST - SUCCESSFULLY UPLOADED"); // Notify success using toast
-        window.location.reload(true);
+        reloadMainpost();
+        setImagePreview(null); // Clear image preview
+        setVideoPreview(null); // Clear video preview
       })
       });
     }
@@ -153,7 +180,9 @@ export default function Contentpost({ reloadMainpost }) {
         body: JSON.stringify({ description: description, image: "", video: "" })
       }).then((data) => {
         notifySuccess("TEXT POST - SUCCESSFULLY UPLOADED"); // Notify success using toast
-        window.location.reload(true);
+        reloadMainpost();
+        setImagePreview(null); // Clear image preview
+        setVideoPreview(null); // Clear video preview
       }).catch((error) => {
         notifyError("Failed to upload text post"); // Notify error using toast
       });
@@ -166,31 +195,37 @@ export default function Contentpost({ reloadMainpost }) {
 
 
   return (
-      <div className='ContentUploadContainer'>
-        <div style={{ display: "flex", alignItems: "center", padding: 10 }}>
-          <img src={(user.user.profilepicture)?user.user.profilepicture:defaultUser} className="profileimage" alt="" /> 
-          <input type="text" className='contentWritingpart' placeholder='Write your real thought.....' onChange={(e)=>setDescription(e.target.value)} />
-        </div>
-        <div style={{marginLeft: '10px' }}>
-          {/* {imagePre !== null ? <img src={`${image3}`} style={{width:"410px" , height:'250px' , objectFit:"cover" , borderRadius:'10px'}} alt="" /> : VideoPre !== null ? <video className="PostImages" width="500" height="500" controls >
-           <source src={VideoPre} type="video/mp4"/>
-          </video> : ''
-          } */}
-          <div style={{display:'flex' , justifyContent:'space-between'}}>
-          <div>
-            <label htmlFor='file'>
-              <img src={`${imageIcon}`} className="icons" alt="" />
-              <input type="file" name="file" id="file" style={{display:"none"}} onChange={(e)=>setFile(e.target.files[0])} />
-            </label>
-  
-            <label htmlFor='file2'>
-              <img src={`${VideoIcon}`} className="icons" alt="" />
-              <input type="file" name="file2" id="file2" style={{display:"none"}} onChange={(e)=>setFile2(e.target.files[0])}  />
-            </label>
-          </div>         
-            <button style={{height:"30px" ,marginRight:"12px",marginTop:"40px", paddingLeft:"20px" , paddingRight:"20px" , paddingTop:6 , paddingBottom:6 , border:"none" , backgroundColor:"black" , color:"white" , borderRadius:"5px" , cursor:"pointer"}} onClick={handlepost} >Post</button>
-          </div>
-        </div>
+    <div className='ContentUploadContainer'>
+      <div style={{ display: "flex", alignItems: "center", padding: 10 }}>
+        <img src={(user.user.profilepicture) ? user.user.profilepicture : defaultUser} className="profileimage" alt="" />
+        <input type="text" className='contentWritingpart' placeholder='Write your real thought.....' onChange={(e) => setDescription(e.target.value)} />
       </div>
-  )
+     
+        <div style={{ display: 'flex', justifyContent: 'space-between', flexDirection: 'column' }}>
+          {/* Display image preview if available */}
+        {imagePreview && <img src={imagePreview} style={{ objectFit: 'cover', padding: '6px', borderRadius: '10px' }} alt="Preview" />}
+        {/* Display video preview if available */}
+        {videoPreview && <video width="410" height="auto" controls style={{ marginTop: '20px' }}>
+          <source src={videoPreview} type="video/mp4" />
+          Your browser does not support the video tag.
+        </video>}
+          <div style={{display: 'flex', flexDirection: 'row', justifyContent: 'space-between', margin: '0 5px 5px'}}>
+            <div>
+              <label htmlFor='file'>
+                <img src={`${imageIcon}`} className="icons" alt="" />
+                <input type="file" name="file" id="file" style={{ display: "none" }} onChange={handleImageChange} />
+              </label>
+
+              <label htmlFor='file2'>
+                <img src={`${VideoIcon}`} className="icons" alt="" />
+                <input type="file" name="file2" id="file2" style={{ display: "none" }} onChange={(e) => setFile2(e.target.files[0])} />
+              </label>
+            </div>
+            <button style={{ height: "30px", paddingLeft: "20px", paddingRight: "20px", paddingTop: 6, paddingBottom: 6, border: "none", backgroundColor: "black", color: "white", borderRadius: "5px", cursor: "pointer" }} onClick={handlepost}>Post</button>
+          </div>
+          
+        
+      </div>
+    </div>
+  );
 }

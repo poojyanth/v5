@@ -2,6 +2,7 @@ import React,{useState} from 'react'
 import addfriend from "../Images/add-user.png";
 import followed from "../Images/followed.png"
 import { useSelector}  from 'react-redux'
+import defaultUser from "../Images/blank-profile-picture-973460_960_720.webp"
 export default function Follow(props) {
 
   const Backendport = process.env.REACT_APP_BACKEND_PORT;
@@ -28,7 +29,7 @@ export default function Follow(props) {
     <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between' }}>
   
       <div style={{ display: 'flex', alignItems: "center" }}>
-        <img src={`${props.user_details.profilepicture}`} className="Profileimage" alt="" />
+        <img src={`${(props.user_details.profilepicture)?props.user_details.profilepicture: defaultUser}`} className="Profileimage" alt="" />
         <div>
           <p style={{ marginLeft: "10px" , textAlign:'start' }}>{props.user_details.username}</p>
           <p style={{ marginLeft: "10px" , textAlign:'start' , marginTop:"-16px" , fontSize:"11px" , color:"#aaa" }}>Suggested for you</p>

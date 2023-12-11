@@ -1,0 +1,19 @@
+.ExplorePostContainer{
+    display: grid;
+    width: inherit;
+    grid-template-columns: repeat(4, 23vw);
+    grid-gap: 1vw;
+    grid-template-rows: repeat(4, 23vw);
+    align-items: center;
+    justify-items: center;
+    justify-content: center;
+    align-content: center;
+}   
+
+.ExploreComponentContainer{
+    width: 99vw;
+    margin: auto;
+    display: flex;
+    justify-content: space-between;
+    flex-direction: column;
+}

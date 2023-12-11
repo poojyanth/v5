@@ -6,6 +6,7 @@ import { toast, ToastContainer } from 'react-toastify';
 import Signup from './Pages/Signup/Signup';
 import Explorepage from './Pages/ExplorePage/Explorepage';
 import PostPage from './Pages/PostPage/PostPage';
+import SearchPage from './Pages/SearchPage/SearchPage';
 import { useSelector}  from 'react-redux'
 
 
@@ -39,6 +40,7 @@ function App() {
           <Route exact path="/login" element={user!== null ? <Navigate to={"/"}/> : <Login/>}/>  
           <Route exact path="/postpage/:postid" element={user!== null ? <PostPage/> : <Navigate to={"/login"}/>}/>
           <Route exact path="/explorepage" element={user!== null ? <Explorepage/> : <Navigate to={"/login"}/>}/>
+          <Route exact path="/searchpage/:key" element={user!== null ? <SearchPage/> : <Navigate to={"/login"}/>}/>
           <Route exact path="/*" element={<Navigate to={"/"}/>}/>
         </Routes>
       </Router>

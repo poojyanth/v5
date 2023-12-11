@@ -1,5 +1,6 @@
 import React,{useState,useEffect} from 'react'
 import "./profilerightbar.css"
+import defaultUser from "../Images/blank-profile-picture-973460_960_720.webp"
 import axios from "axios"
 import { useSelector}  from 'react-redux'
 // import image3 from "../Images/image3.jpg";
@@ -73,7 +74,7 @@ export default function ProfileRightbar({profileid}) {
     followers.map((item)=>{
       return <div className='FollowRequest' key={item.others._id} style={{marginTop:"10px",paddingTop:"5px",paddingBottom:"5px"}}>
       <div style={{display:'flex' , alignItems:"center" , marginLeft:10 , cursor:"pointer"}}>
-       <img src={`${item.others.profilepicture}`} className="Friendsimage" alt="" />
+       <img src={`${(item.others.profilepicture)?item.others.profilepicture: defaultUser}`} className="Friendsimage" alt="" />
        <p style={{textAlign:"start"  , marginLeft:"10px"}}>{item.others.username} Started Following You</p>
      </div>
    </div>

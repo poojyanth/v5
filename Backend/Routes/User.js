@@ -203,30 +203,33 @@ router.put("/follow/:id" , verifytoken , async(req , res)=>{
 // user2 is following user1 -> so need to get user1's posts in user2 account (after login )
 // here id in req.params.id and jwttoken are of user2 as he need to login
 // no need of id here as we have jwttoken -> will change it later
-router.get("/followingposts/:id",verifytoken, async (req, res) => {
-
+router.get("/followingposts/:id", verifytoken, async (req, res) => {
     try {
-
-     const user2 = await User.findById(req.params.id);
+      const user2 = await User.findById(req.params.id);
   
-     const followingPosts = await Promise.all(
-        user2.following.map((each_following_user_account)=>{
-            return Post.find({user:each_following_user_account})
+      const followingPosts = await Promise.all(
+        user2.following.map((each_following_user_account) => {
+          return Post.find({ user: each_following_user_account });
         })
-     )
-
-     const your_posts = await Post.find({user:user2._id});
-
-
-     res.status(200).json(your_posts.concat(...followingPosts));
-
-
+      );
+  
+      const your_posts = await Post.find({ user: user2._id });
+  
+      // Combine your_posts and followingPosts into a single array
+      let allPosts = your_posts.concat(...followingPosts);
+  
+      // Sort allPosts by upload date (assuming the date attribute is named 'createdAt')
+      allPosts.sort((a, b) => new Date(b.createdAt) - new Date(a.createdAt));
+  
+      res.status(200).json(allPosts);
     } catch (error) {
-        return res.status(400).json("SOME ERROR OCCURED IN try-catch in /follow/ "+error );
+      return res.status(400).json("SOME ERROR OCCURRED IN try-catch in /follow/ " + error);
     }
-
-})
-
+  });
+  
+  
+  
+  
 
 
 // ROUTE-4 :- UPDATE USER PASSWORD

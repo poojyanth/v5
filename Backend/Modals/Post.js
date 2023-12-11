@@ -19,6 +19,11 @@ const Postschema = new mongoose.Schema({
         type: Array,
         default:0
     },
+    tags: [
+        {
+            type: String,
+        }
+    ],
     dislikes: {
         type: Array,
         default:0
@@ -35,7 +40,11 @@ const Postschema = new mongoose.Schema({
         comment: {
             type: String
         }
-    }]
+    }],
+    createdAt: {
+        type: Date,
+        default: Date.now
+    }
 
 
 

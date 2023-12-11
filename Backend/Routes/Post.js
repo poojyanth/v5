@@ -56,6 +56,7 @@ router.get("/get/post",verifytoken, async (req, res) => {
 // ROUTE-3 :- FETCH A POST BY POST ID
 // METHOD USED :- GET
 router.get("/get/postID/:id", verifytoken, async (req, res) => {
+
         try {
         console.log(req.params.id);
         const user_posts = await Post.findById(req.params.id);
@@ -93,6 +94,86 @@ router.get("/get/allpost",verifytoken, async (req, res) => {
         }
 
 })
+
+// ROUTE-5: FETCH ALL POSTS WITH A KEY
+// METHOD USED :- GET
+router.get("/get/:key", verifytoken, async (req, res) => {
+    try {
+      // Get the current logged-in user
+      const currentUser = req.user.id; // Assuming you've set the user object in the request using middleware
+  
+      // Find the current user details from the User model
+      const user = await User.findById(currentUser);
+  
+      if (!user) {
+        return res.status(400).json("User not found");
+      }
+  
+      // Perform aggregation to merge User and Post data based on userID
+      const mergedData = await Post.aggregate([
+        {
+          $match: {
+            user: { $in: user.following.concat([user._id]) }, // Match posts of following users and current user
+          },
+        },
+        {
+          $lookup: {
+            from: "users", // Collection name for the User model
+            localField: "user",
+            foreignField: "_id",
+            as: "userData",
+          },
+        },
+        {
+          $unwind: "$userData", // Deconstruct the userData array
+        },
+        {
+          $project: {
+            _id: 1,
+            user: 1,
+            description: 1,
+            image: 1,
+            video: 1,
+            likes: 1,
+            dislikes: 1,
+            comments: 1,
+            createdAt: 1,
+            "userData.username": 1,
+            "userData.email": 1,
+            "userData.phonenumber": 1,
+            "userData.followers": 1,
+            "userData.following": 1,
+            "userData.profilepicture": 1,
+          },
+        },
+      ]);
+
+        console.log(mergedData);
+  
+      // Search operation based on description, username, or tags
+      const searchQuery = req.params.key; // Assuming search query is passed through query parameter
+  
+      let searchResults = mergedData;
+  
+      if (searchQuery) {
+        searchResults = mergedData.filter((post) => {
+          return (
+            post.description.toLowerCase().includes(searchQuery.toLowerCase()) ||
+            post.userData.username.toLowerCase().includes(searchQuery.toLowerCase()) ||
+            (post.tags && post.tags.includes(searchQuery.toLowerCase()))
+          );
+        });
+      }
+      
+      console.log(searchQuery);
+      console.log(searchResults);
+      return res.status(200).json({ searchResults });
+    } catch (error) {
+      return res
+        .status(400)
+        .json("Some error occurred in try-catch in /get/allpost");
+    }
+  });
 
 // ROUTE-10 :- FETCH ALL POSTS IN USER PROFILE PAGE
 // METHOD USED :- GET

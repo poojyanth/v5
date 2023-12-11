@@ -61,3 +61,58 @@
     border-radius: 10px;
     background-color: rgb(224, 228, 232);
 }
+
+.NavbarUsername{
+    width: 100px;
+    overflow-x: hidden;
+    font-family: 'Montserrat Alternates', sans-serif;
+    font-size: 15px;
+    font-weight: initial;
+    margin-left: 10px;
+}
+
+.NavbarUsername:hover{
+    cursor: pointer;
+    font-weight: 600;
+}
+
+
+
+.dropdown {
+    position: relative;
+    display: inline-block;
+  }
+  
+  .dropbtn {
+    background-color: #fff;
+    color: black;
+    padding: 8px 12px;
+    font-size: 16px;
+    border: none;
+    cursor: pointer;
+  }
+  
+  .dropdown-content {
+    display: none;
+    position: absolute;
+    background-color: #f9f9f9;
+    right: 0.5vw;
+    min-width: 120px;
+    box-shadow: 0px 8px 16px 0px rgba(0, 0, 0, 0.2);
+    z-index: 1;
+  }
+  
+  .dropdown-content a, .dropdown-content button {
+    color: black;
+    padding: 12px 16px;
+    text-decoration: none;
+    display: block;
+  }
+  
+  .dropdown-content a:hover, .dropdown-content button:hover {
+    background-color: #f1f1f1;
+  }
+  
+  .dropdown:hover .dropdown-content {
+    display: block;
+  }
