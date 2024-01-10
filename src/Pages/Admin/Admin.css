@@ -1,0 +1,118 @@
+.MainComponentAdmin{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.adminContainer{
+    user-select: none;
+    display: flex;
+    width: 80vw;
+    border: 1px solid black;
+    flex-direction: column;
+    border-radius: 10px;
+    height: 70vh;
+    margin: 10px;
+}
+
+.scroll{
+    overflow-y: scroll;
+    height: 100%;
+
+}
+
+.scroll::-webkit-scrollbar {
+    width: 5px;
+}
+
+.scroll::-webkit-scrollbar-track {
+    background: #f1f1f1; 
+}
+
+.scroll::-webkit-scrollbar-thumb {
+    background: #888; 
+}
+
+.scroll::-webkit-scrollbar-thumb:hover {
+    background: #555; 
+}
+
+
+
+.userHeader{
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.userDetails{
+    display: none;
+}
+
+.show>.userDetails{
+    display: flex;
+    flex-direction: column;
+    margin: 0px 10px;
+    align-items: flex-start;
+}
+
+.user{
+    border-bottom: 1px solid black;
+
+}
+
+.user:hover{
+    cursor: pointer;
+}
+
+.userDetail{
+    margin: 5px 0;
+}
+
+.Adminpost{
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: space-around;
+    border-bottom: 1px solid black;
+}
+
+.AdminPostImage{
+    width: 100px;
+    object-fit: scale-down;
+    border: none;
+    /* outline: none; */
+    height: 100px;
+    margin: 10px;
+}
+
+.AdminpostDetails{
+    display: none;
+}
+
+.show .AdminpostDetails{
+    display: flex;
+    flex-direction: column;
+    margin: 0px 10px;
+    align-items: flex-start;
+}
+
+.dropdown-content>.delete:hover{
+    
+    background-color: red;
+}   
+
+.pieChartsContainer{
+    display: flex;
+}
+
+canvas{
+    width: 100px;
+    height: 100px;
+}
+
+.chart-canvas {
+    width: 400px; /* Set the width */
+    height: 400px; /* Set the height */
+  }
+  

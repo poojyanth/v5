@@ -10,6 +10,7 @@ import { useNavigate } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
 import { logout } from "../ReduxContainer/UserReducer";
 import { useHistory } from 'react-router-dom';
+import { flagSet } from '@coreui/icons';
 
 export default function Navbar() {
   const navigate = useNavigate();
@@ -27,7 +28,7 @@ export default function Navbar() {
 
   const handleLogOut = () => {
     dispatch(logout());
-  }
+  } 
 
   const toggleDropdown = () => {
     setShowDropdown(!showDropdown);
@@ -70,7 +71,12 @@ export default function Navbar() {
         </div>
       </div>
       <div className='IconsContainer'>
-        <img src={`${Message}`} className="Icons" alt="" />
+        <Link to="/" style={{ textDecoration: 'none', color: 'black' }}>
+          <img src={`${Message}`} className="Icons" alt="" />
+        </Link>
+        <Link to="/addnewpost" className='Icons' style={{marginBottom: '8px', alignItems: 'center', textDecoration: 'none', color: 'black', fontSize: '25px', display: 'flex'}}>
+          +
+        </Link>
         <Link to={`/profilepage/${id}`} style={{ textDecoration: 'none', color: 'black' }}>
           <div style={{ display: 'flex', alignItems: 'center' }}>
             <img src={(user.user.profilepicture) ? user.user.profilepicture : defaultUser} className="ProfileImage" alt="" />

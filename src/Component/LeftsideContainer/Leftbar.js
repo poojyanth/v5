@@ -1,6 +1,6 @@
 import React from 'react'
 import "./leftbar.css"
-import image3 from "../Images/image3.jpg";
+import image3 from "../Images/SAIPAVAN.jpg";
 import axios from "axios";
 import {useEffect,useState} from 'react';
 import {useSelector}  from 'react-redux'

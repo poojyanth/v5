@@ -38,11 +38,11 @@
 }
 
 .btnforsignup{
-    margin-left: 2%;
+    /* margin-left: 10%; */
     margin-top: 10px;
     border-radius: 10px;
-    padding-left: 180px;
-    padding-right: 202px;
+    padding-left: 50px;
+    padding-right: 50px;
     padding-top: 5px;
     padding-bottom: 5px;
     cursor: pointer;

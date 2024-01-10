@@ -2,6 +2,10 @@
    flex: 0 0 30%;
 }
 
+.Profilerightbar::-webkit-scrollbar{
+    width: 0px;
+}
+
 .rightcontainer2{
     width: 20pc;
     /* height: 60vh; */

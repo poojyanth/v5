@@ -20,7 +20,7 @@ const handleClick = (e)=>{
     <div className='mainContainerForsignup'>
       <div className='submainContainer'>
         <div style={{flex:1 , marginLeft:150  , marginBottom:"170px"}}>
-          <p className='logoText'>Soc<span className='part'>ial</span></p>
+          <p className='logoText'>Foto<span className='part'>flask</span></p>
           <p className='introtext'>Connect with your <span className='part'>family and friends </span></p>
         </div>
         <div style={{flex:3}}>
@@ -28,10 +28,8 @@ const handleClick = (e)=>{
           <input type="email" name="" id="email" placeholder='Email' onChange={(e)=>setemail(e.target.value)} className='inputText' />
           <input type="password" placeholder='******' name="" onChange={(e)=>setPassword(e.target.value)} id="password" className='inputText' />
           <button className='btnforsignup' onClick={handleClick}>Login</button>
-          <Link to={"/forgot/password"}>
-          <p style={{textAlign:'start' , marginLeft:"30.6%" }}>Forgot password</p>
-          </Link>
-          <Link to={"/signup"}>
+
+          <Link to={"/signup"} style={{textDecoration: 'none', color: 'black'}}>
           <p style={{textAlign:'start' , marginLeft:"30.6%" }}>Create New Account</p>
           </Link>
         </div>

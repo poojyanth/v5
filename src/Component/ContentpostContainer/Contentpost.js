@@ -116,6 +116,7 @@ export default function Contentpost({ reloadMainpost }) {
         reloadMainpost();
         setImagePreview(null); // Clear image preview
         setVideoPreview(null); // Clear video preview
+        setDescription(''); // Clear description
       }).catch((error) => {
         notifyError("Failed to upload image post"); // Notify error using toast
       });
@@ -165,6 +166,7 @@ export default function Contentpost({ reloadMainpost }) {
         reloadMainpost();
         setImagePreview(null); // Clear image preview
         setVideoPreview(null); // Clear video preview
+        setDescription(''); // Clear description
       })
       });
     }
@@ -183,6 +185,7 @@ export default function Contentpost({ reloadMainpost }) {
         reloadMainpost();
         setImagePreview(null); // Clear image preview
         setVideoPreview(null); // Clear video preview
+        setDescription(''); // Clear description
       }).catch((error) => {
         notifyError("Failed to upload text post"); // Notify error using toast
       });

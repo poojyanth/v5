@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react'
 import "./rightbar.css"
-import image3 from "../Images/image3.jpg";
+import image3 from "../Images/default-cover-4.jpeg";
 import ads from "../Images/ads.jpg";
 import { useSelector}  from 'react-redux'
 // import addfriend from "../Images/add-user.png";
@@ -14,13 +14,16 @@ export default function Rightbar() {
   let id =user.user._id;
   const Backendport = process.env.REACT_APP_BACKEND_PORT;
 
-  //const jwt_here="eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjY1Njc2MmE1YzQzMDk1Y2I4YWQzZGMzYyIsInVzZXJuYW1lIjoiU0FJUEFWQU4iLCJpYXQiOjE3MDEzMjA0OTR9.3YHs-mLthGHdMRVS7SVWC0-yyhbF3CgEemL_ucXBnpU"
+  const jwt_here="eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjY1Njc2MmE1YzQzMDk1Y2I4YWQzZGMzYyIsInVzZXJuYW1lIjoiU0FJUEFWQU4iLCJpYXQiOjE3MDEzMjA0OTR9.3YHs-mLthGHdMRVS7SVWC0-yyhbF3CgEemL_ucXBnpU"
   const[suggestions,setSuggestions] = useState([]);
 
   useEffect(()=>{
     const getsuggestions =async()=>{
       try{
       const details = await axios.get(`http://localhost:${Backendport}/api/user/all/user/${id}`,{
+        headers:{
+          jwttoken:jwt_here
+        }
       });
       setSuggestions(details.data);
       }catch(error){
@@ -29,8 +32,6 @@ export default function Rightbar() {
     }
     getsuggestions();
   },[])
-
-  console.log(suggestions);
 
 
 
@@ -43,24 +44,24 @@ export default function Rightbar() {
       <div className='rightcontainer'>
 
         <div className='adsContainer'>
-          <img src={`${ads}`} className="adsimg" alt="" />
+          <img src={`${image3}`} className="adsimg" alt="" />
           <div>
-            <p style={{ textAlign: 'start', marginLeft: '10px', marginTop: -20 }}>CodeDemy</p>
-            <p style={{ textAlign: 'start', marginLeft: '10px', fontSize: "12px", marginTop: "-16px" }}>Buy codedemy course</p>
+            <p style={{ textAlign: 'start', marginLeft: '10px', marginTop: -20 }}>Fotoflask</p>
+            <p style={{ textAlign: 'start', marginLeft: '10px', fontSize: "12px", marginTop: "-16px" }}>Ads Go here</p>
           </div>
         </div>
         <div className='adsContainer'>
           <img src={`${image3}`} className="adsimg" alt="" />
           <div>
-            <p style={{ textAlign: 'start', marginLeft: '10px', marginTop: -20 }}>CodeDemy</p>
-            <p style={{ textAlign: 'start', marginLeft: '10px', fontSize: "12px", marginTop: "-16px" }}>Buy codedemy course</p>
+            <p style={{ textAlign: 'start', marginLeft: '10px', marginTop: -20 }}>Fotoflask</p>
+            <p style={{ textAlign: 'start', marginLeft: '10px', fontSize: "12px", marginTop: "-16px" }}>Ads go here</p>
           </div>
         </div>
         <div className='adsContainer'>
           <img src={`${image3}`} className="adsimg" alt="" />
           <div>
-            <p style={{ textAlign: 'start', marginLeft: '10px', marginTop: -20 }}>CodeDemy</p>
-            <p style={{ textAlign: 'start', marginLeft: '10px', fontSize: "12px", marginTop: "-16px" }}>Buy codedemy course</p>
+            <p style={{ textAlign: 'start', marginLeft: '10px', marginTop: -20 }}>Fotoflask</p>
+            <p style={{ textAlign: 'start', marginLeft: '10px', fontSize: "12px", marginTop: "-16px" }}>Ads Go here</p>
           </div>
         </div>
         
@@ -91,7 +92,7 @@ suggestions.map((item)=>{
 //   </div>
 // </div>
 
-return <Follow user_details={item}/>
+return <Follow  key={item._id} user_details={item}/>
 
 })
 }

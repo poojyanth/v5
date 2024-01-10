@@ -3,6 +3,7 @@ const router = express.Router();
 const User = require('../Modals/User');
 const { body, validationResult } = require('express-validator');
 const Post = require('../Modals/Post');
+const Message = require('../Modals/Message');
 const { verifytoken } = require('../middleware/verifytoken');
 
 
@@ -73,6 +74,32 @@ router.get("/get/postID/:id", verifytoken, async (req, res) => {
 
 })
 
+
+router.put("/update/post/:id",verifytoken, async (req, res) => {
+
+    try {
+
+     let post = await Post.findById(req.params.id);
+
+     if(!post){
+        return res.status(400).json("NO SUCH POST FOUND TO UPDATE...");
+     }
+
+     post = await Post.findByIdAndUpdate(req.params.id,{
+        $set:req.body
+     })
+
+     let updated_post = await post.save();
+
+     res.status(200).json(updated_post);
+
+
+    } catch (error) {
+        return res.status(400).json("SOME ERROR OCCURED IN try-catch in /update/post"+error );
+    }
+
+})
+
 // ROUTE-4 :- FETCH ALL POSTS
 // METHOD USED :- GET
 router.get("/get/allpost",verifytoken, async (req, res) => {
@@ -84,7 +111,7 @@ router.get("/get/allpost",verifytoken, async (req, res) => {
             return res.status(400).json("NO POSTS FOUND ...");
         }
     
-         console.log(user_posts);
+        console.log(user_posts);
         return res.status(200).json({post: user_posts});
         
         
@@ -94,6 +121,27 @@ router.get("/get/allpost",verifytoken, async (req, res) => {
         }
 
 })
+
+router.get("/get/allposts", async (req, res) => {
+    
+    try {
+
+    const user_posts = await Post.find();
+    if(!user_posts){
+        return res.status(400).json("NO POSTS FOUND ...");
+    }
+    return res.status(200).json({post: user_posts});
+    
+    
+        }
+    catch (error) {
+        return res.status(400).json("SOME ERROR OCCURED IN try-catch in /get/post" );
+    }
+
+})
+
+
+
 
 // ROUTE-5: FETCH ALL POSTS WITH A KEY
 // METHOD USED :- GET
@@ -157,7 +205,7 @@ router.get("/get/:key", verifytoken, async (req, res) => {
   
       if (searchQuery) {
         searchResults = mergedData.filter((post) => {
-          return (
+          return( 
             post.description.toLowerCase().includes(searchQuery.toLowerCase()) ||
             post.userData.username.toLowerCase().includes(searchQuery.toLowerCase()) ||
             (post.tags && post.tags.includes(searchQuery.toLowerCase()))
@@ -165,9 +213,9 @@ router.get("/get/:key", verifytoken, async (req, res) => {
         });
       }
       
-      console.log(searchQuery);
-      console.log(searchResults);
-      return res.status(200).json({ searchResults });
+    //   console.log(searchQuery);
+    //   console.log(searchResults);
+    return res.status(200).json({post: searchResults});
     } catch (error) {
       return res
         .status(400)
@@ -185,7 +233,7 @@ router.get("/get/post/:id", async (req, res) => {
      }
 
     //  console.log(user_posts);
-     res.status(200).json(user_posts);
+     return res.status(200).json(user_posts);
 
 
     } catch (error) {
@@ -213,7 +261,7 @@ router.put("/update/post/:id",verifytoken, async (req, res) => {
 
      let updated_post = await post.save();
 
-     res.status(200).json(updated_post);
+     return res.status(200).json(updated_post);
 
 
     } catch (error) {
@@ -316,6 +364,75 @@ router.delete("/delete/post/:id",verifytoken,async(req,res)=>{
     return res.status(400).json("SOME ERROR OCCURED IN try-catch in /delete/post "+error );
 
 }
+})
+
+
+
+
+router.post('/msg',verifytoken,async(req,res)=>{
+    try{
+    const {from,to,message} = req.body;
+    const newmessage = await Message.create({
+        message:message,
+        Chatusers:[from,to],
+        Sender:from
+    })
+    return res.status(200).json(newmessage)
+}catch(error){
+    return res.status(500).json("ERROR IN TRY - CATCH IN create message")  
+}
+})
+
+
+// get messages
+
+router.get('/get/chat/msg/:user1Id/:user2Id',async(req,res)=>{
+    try{
+    const from = req.params.user1Id;
+    const to = req.params.user2Id;
+    const newmessage = await Message.find({
+       Chatusers:{
+        $all:[from,to]
+       }
+    }).sort({updatedAt:1});
+
+    const allmessages = newmessage.map((msg)=>{
+        return{
+            myself:msg.Sender.toString()===from,
+            message:msg.message
+        }
+    })
+    return res.status(200).json(allmessages)
+}catch(error){
+    return res.status(500).json("ERROR IN TRY - CATCH IN get meassages"+error)  
+}
+})
+
+
+// FETCH ALL LIKED POSTS OF A PARTICULAR USER
+router.get("/get_all_liked_posts",verifytoken, async (req, res) => {
+
+    try {
+
+     const user = await User.findById(req.user.id);
+
+     const AllLikedPostsOfUser = await Promise.all(
+        user.Likedposts.map((each_post_id)=>{
+            return Post.findById(each_post_id)
+        })
+     )
+
+
+     if(!AllLikedPostsOfUser){
+        return res.status(400).json("NO POSTS FOUND ...");
+     }
+
+     res.status(200).json(AllLikedPostsOfUser);
+
+    } catch (error) {
+        return res.status(400).json("SOME ERROR OCCURED IN try-catch in /get_all_liked_posts" );
+    }
+
 })
 
 

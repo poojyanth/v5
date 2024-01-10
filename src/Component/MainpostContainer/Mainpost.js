@@ -5,6 +5,15 @@ import "./mainpost.css"
 import axios from "axios"
 import { useSelector}  from 'react-redux'
 
+const LoadingAnimation = () => {
+  return (
+<div className="loading-animation">
+      <div className="loading-spinner"></div>
+      <div className="loading-text">Loading...</div>
+    </div>
+  );
+};
+
 export default function Mainpost() {
 
   const userDetails = useSelector((state)=>state.user);
@@ -13,6 +22,7 @@ export default function Mainpost() {
   let id =user.user._id;
   const jwt_here=user.jwttoken
   const [posts,setPosts] = useState([]);
+  const [loading, setLoading] = useState(true); // State to manage loading
 
   const getposts = async()=>{   
     try{
@@ -23,8 +33,9 @@ export default function Mainpost() {
       });
       setPosts(response.data);  // include particularly .followingPosts 
                                               //otherwise it returns an data object
+      setLoading(false);
   }catch(error){
-
+    setLoading(false);
   }
   }
 
@@ -33,6 +44,7 @@ export default function Mainpost() {
   },[])
 
   const reloadMainpost = () => {
+    setLoading(true);
     getposts(); // Reload the posts
   };
 
@@ -43,16 +55,13 @@ export default function Mainpost() {
       <Contentpost reloadMainpost={reloadMainpost} />
 
     
-      {
-        
-        posts.map((item)=>{
-          // return item.map((postdetails)=>{
-            return <Post  key={item.id}  post={item}/>
-          // })
+      {loading ? ( // If loading, display loading animation
+        <LoadingAnimation />
+      ) : (
+        posts.map((item) => {
+          return <Post key={item.id} post={item} />;
         })
-
-
-      }   
+      )}
       
     </div>
     )

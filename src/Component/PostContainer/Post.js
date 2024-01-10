@@ -8,6 +8,7 @@ import anotherlikeicon from "../Images/setLike.png"
 import { useNavigate } from 'react-router-dom';
 import MoreOptions from "../Images/more.png"
 import { useSelector } from 'react-redux'
+import { Link } from 'react-router-dom'
 import axios from "axios"
 import "./post.css"
 
@@ -58,6 +59,7 @@ export default function Post(props) {
 
   const handleComment = () => {
     addComment();
+    document.getElementById(props.post._id+'comment').value = '';
   }
 
   console.log(Comments)
@@ -128,13 +130,15 @@ export default function Post(props) {
           <div style={{    display: 'flex', alignItems : 'center',
               justifyContent: 'space-between',    flexDirection: 'row'}}>
 
+              <Link to={`/profilepage/${userDetails._id}`} style={{textDecoration: 'none', color: 'black', fontWeight: '600'}}>
             <div style={{    display: 'flex', alignItems: 'center'}}>
+
               <img src={(user.user.profilepicture)?user.user.profilepicture:defaultUser} className="PostImage" alt="" />
               <div>
-              <p style={{ marginLeft: '5px', textAlign: "start" }}>{userDetails.username}</p>
-              <p style={{ fontSize: "11px", textAlign: "start", marginLeft: 5, marginTop: -13, color: "#aaa" }}>Following by suman</p>
+                <p style={{ marginLeft: '5px', textAlign: "start" }}>{userDetails.username}</p>
               </div>
             </div>
+              </Link>
             {/* <div className="MoreOptions" style={{    margin: '0 5%', fontSize: 'larger', fontWeight: '900'}}>...</div> */}
             <div className="MoreOptions" style={{margin: '0 1vw', cursor: 'pointer'}}>
               {/* a button onclick navigate to postpage/id */}
@@ -169,7 +173,7 @@ export default function Post(props) {
             <div style={{ padding: '10px' }}>
               <div style={{ display: "flex", alignItems: "center" }}>
               <img src={(user.user.profilepicture)?user.user.profilepicture:defaultUser} className="PostImage" alt="" />
-                <input type="text" className='commentinput' placeholder='Write your thought' onChange={(e) => setcommentwriting(e.target.value)} />
+                <input type="text" id={props.post._id+'comment'} className='commentinput' placeholder='Write your thought' onChange={(e) =>{ setcommentwriting(e.target.value);}} />
                 <button className='addCommentbtn' onClick={handleComment}>Post</button>
               </div>
               {Comments.map((item) => (

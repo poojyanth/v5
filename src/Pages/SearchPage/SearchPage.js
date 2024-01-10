@@ -23,35 +23,31 @@ export default function SearchPage() {
         try{
           const response = await axios.get(`http://localhost:${Backendport}/api/post/get/${encodeURIComponent(key)}`,{
             headers:{
-              jwttoken:jwt_here // must be the attribute name (same name as in headers )-> i.e jwttoken
+              jwttoken:jwt_here 
             }
           });
-          setsearchPosts(response.data);  // include particularly .followingPosts 
-                                                      //otherwise it returns an data object
+          setsearchPosts(response.data);  
       }catch(error){
-    
       }
       }
-
         useEffect(()=>{
             getsearchPosts();
-            console.log(searchPosts.posts);
+            console.log(searchPosts);
         },[key])
 
   return (
     <div className='Explorepage'>
-        <Navbar/>      
+        <Navbar/>
         <div className= "ExploreComponentContainer">
             <div className="ExplorepageHeader">
                 <p>Explore</p>
             </div>
             <div className="ExplorePostContainer">
-                {searchPosts.posts?.map((post)=>(
+                {searchPosts.post?.map((post)=>(
                     post.image? <ExplorePost post={post} key={post._id}/>: '' 
                 ))}
             </div>
         </div>
-
     </div>
   )
 }

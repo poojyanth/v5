@@ -64,7 +64,7 @@ export default function ProfileRightbar({profileid}) {
   return (
 <div className='Profilerightbar'>
 
-      <div className='rightcontainer'>
+      <div className='rightcontainer rightcontainer2'>
 
       <h3>Followers</h3>
 
@@ -87,7 +87,7 @@ export default function ProfileRightbar({profileid}) {
 
       </div>
 
-      <div className='rightcontainer2'>
+      <div className='rightcontainer2 '>
          <h3 style={{textAlign:"start" , marginLeft:"10px"}}>Suggested for you</h3>
 
          {

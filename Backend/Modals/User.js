@@ -27,7 +27,17 @@ const Userschema = new mongoose.Schema({
     },
     profilepicture:{
         type:String
+    },
+    Likedposts:{
+        type:Array,
+    },
+    Stories:{
+        type:Array,
+    }, 
+    StoryDescription:{
+        type:String
     }
+
 
 
 })

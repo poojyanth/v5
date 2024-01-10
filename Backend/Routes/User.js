@@ -81,7 +81,7 @@ router.post("/create/user", [
 router.post("/login", [
     body('email', 'EMAIL MUST HAVE MINIMUM LENGTH 5').isLength({ min: 5 }),
     body('password', 'USERNAME MUST HAVE MINIMUM LENGTH 3').isLength({ min: 3 })], async (req, res) => {
-
+        console.log(req.body);
         // check if any errors in validation
         const errors = validationResult(req); // USE req NOT req.body HERE
         if (!errors.isEmpty()) {
@@ -98,13 +98,14 @@ router.post("/login", [
          const user = await User.findOne({email:req.body.email});
         
         if(!user){
-           res.status(400).json("NO USER EXISTS WITH GIVEN EMAIL ID");
+           return res.status(400).json("NO USER EXISTS WITH GIVEN EMAIL ID");
         }
 
         const comparePassword = await bcrypt.compare(req.body.password,user.password);
 
         if(!comparePassword){
-            res.status(400).json("INCORRECT PASSWORD");
+            console.log("INCORRECT PASSWORD");
+            return res.status(400).json("INCORRECT PASSWORD");
         }
 
         const jwttoken = await jwt.sign({
@@ -112,7 +113,7 @@ router.post("/login", [
             username:user.username
         },SECRETKEY);
 
-        res.status(200).json({msg:"USER FOUND",user,jwttoken});
+        return res.status(200).json({msg:"USER FOUND",user,jwttoken});
     }catch(error){
         return res.status(400).json("SOME ERROR OCCURED IN try-catch in /login route:" + error)
     }
@@ -380,7 +381,7 @@ router.get("/get/followings/:id",async(req,res)=>{
         })
 
 
-        res.status(200).send(followingList)
+        return res.status(200).send(followingList)
     }catch(error){
         
         return res.status(400).send("SOME ERROR OCCURED IN try-catch")
@@ -408,11 +409,136 @@ router.get("/get/followers/:id",async(req,res)=>{
         })
 
 
-        res.status(200).send(FFollowersList)
+        return res.status(200).send(FFollowersList)
 
     }catch(error){
         
         return res.status(400).send("SOME ERROR OCCURED IN try-catch")
     }
 })
+
+
+
+router.put("/likedpost/:id", async (req, res) => {
+    try {
+        const liked_user = await User.findById(req.body.user);
+
+        if (!liked_user) {
+            return res.status(404).send("User not found");
+        }
+
+        console.log(liked_user);
+
+        if (!liked_user.Likedposts.includes(req.params.id)) {
+            await liked_user.updateOne({ $push: { Likedposts: req.params.id } });
+        } else {
+            await liked_user.updateOne({ $pull: { Likedposts: req.params.id } });
+        }
+
+        return res.status(200).send("Update successful");
+    } catch (error) {
+        return res.status(400).send("ERROR IN User.js route likedposts: " + error);
+    }
+});
+
+
+// get users from following who are having stories
+router.get("/get/followings_with_stories/:id",async(req,res)=>{
+    try{
+        const user = await User.findById(req.params.id);
+        
+        const followings = await Promise.all(
+            user.following.map((item)=>{
+                return User.findById(item);
+            })
+        )
+
+        let followingList =[];
+
+        const {email,passsword,phonenumber,followers,following,...others}=user._doc;
+        if(others.Stories.length!==0){
+            followingList.push({others})
+        }
+
+        followings.map((person)=>{
+            const {email,passsword,phonenumber,followers,following,...others}=person._doc;
+            if(others.Stories.length!==0){
+                followingList.push({others})
+            }
+
+        })
+
+        console.log(followingList);
+
+
+        res.status(200).send(followingList)
+
+
+    }catch(error){
+        
+        return res.status(400).send("SOME ERROR OCCURED IN try-catch")
+    }
+})
+
+
+
+
+router.post("/add/story",verifytoken,async(req,res)=>{
+    const user = await User.findById(req.user.id);
+    if(!user){
+        return res.status(400).send("USER NOT FOUND ");
+    }
+    console.log(user);
+
+    if(user.Stories.length==0){
+        await user.updateOne({$push:{Stories:req.body.newstory},
+                             $set:{StoryDescription:req.body.description}})
+      
+        res.status(200).send("STORY ADDED")
+    }else if(user.Stories.length==1){
+        await user.updateOne({$pull:{Stories:user.Stories[0]}})
+        await user.updateOne({$push:{Stories:req.body.newstory},$set:{StoryDescription:req.body.description}})
+        console.log("check story description : "+ user.StoryDescription);
+        res.status(200).send("OLD STORY REMOVED AND NEW STORY ADDED")
+    }
+    else{
+        return res.status(400).send("ONLY ONE STORY IS ALLOWED")
+    }
+})
+
+// get story of a user from his id
+
+router.get("/viewstory/:id",async(req,res)=>{
+    const user = await User.findById(req.params.id);
+    if(!user){
+        return res.status(400).send("USER NOT FOUND TO FETCH STORY")
+    }
+    console.log("user story here : "+user.Stories[0])
+    return res.status(200).json({Image:user.Stories[0],Description:user.StoryDescription});
+})
+
+
+router.get("/get/allusers",async(req,res)=>{
+    console.log("all users route");
+    try{
+        const allUsers = await User.find();
+        let allUsersList =[];
+
+        allUsers.map((person)=>{
+            const {password,...others}=person._doc;
+            allUsersList.push(others)
+
+        })
+        console.log(allUsersList);
+        return res.status(200).json({allUsersList})
+    }catch(error){
+        return res.status(400).send("SOME ERROR OCCURED IN try-catch")
+    }
+})
+
+
+
+
+
+
 module.exports = router;

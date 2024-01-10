@@ -3,6 +3,11 @@
 
 }
 
+.ProfileLeftbar::-webkit-scrollbar{
+    width: 0px;
+}
+
+
 .NotificationsContainer{
     width: 20vw;
     margin: 2vh auto;
