@@ -1,16 +1,14 @@
 import React, { useState } from 'react';
 import "./Navbar.css";
 import searchIcon from "../Images/search.png";
-import Notifications from "../Images/bell.png";
 import Message from "../Images/message.png";
 import defaultUser from "../Images/blank-profile-picture-973460_960_720.webp";
-import Profileimage from "../Images/Profile.png";
 import { Link } from "react-router-dom";
 import { useNavigate } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
 import { logout } from "../ReduxContainer/UserReducer";
-import { useHistory } from 'react-router-dom';
-import { flagSet } from '@coreui/icons';
+import Logo from "../Images/LOGO.svg"
+import { inherits } from 'util';
 
 export default function Navbar() {
   const navigate = useNavigate();
@@ -53,7 +51,8 @@ export default function Navbar() {
   return (
     <div className='mainNavbar'>
       <div className='LogoContainer' onClick={handleLogoClick}>
-        <p >Fotoflask</p>
+        <img src={Logo} className='Logo' height='30rem' alt="" />
+
       </div>
       <div>
         <div className='searchInputContainer'>

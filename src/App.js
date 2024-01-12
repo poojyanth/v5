@@ -11,6 +11,8 @@ import SearchPage from './Pages/SearchPage/SearchPage';
 import SettingsPage from './Pages/SettingsPage/SettingsPage';
 import Chat from './Pages/Chat/Chat';
 import ViewStoryImage from './Component/Storiescontainer/ViewStoryImage';
+import LandingPage from './Pages/LandingPage/LandingPage';
+import LoadingAnimation2 from './Pages/test/test';
 // import Explore from './Component/Explore/Explore';
 import Carousel from './Pages/Reels/Carousel';
 import AdminPage from './Pages/Admin/Admin';
@@ -43,6 +45,7 @@ function App() {
       <Router>
         <Routes>
           <Route exact path="/" element={user!== null ? <Home/>: <Navigate to={"/login"}/>} />
+          <Route exact path="/landingpage" element={<LandingPage/>}/>
           <Route exact path="/profilepage/:id" element={user!== null ? <Profile/>: <Navigate to={"/login"}/>}/>
           <Route exact path="/signup" element={user!== null ? <Navigate to={"/"}/> : <Signup/>}/>
           <Route exact path="/login" element={user!== null ? <Navigate to={"/"}/> : <Login/>}/>  
@@ -54,6 +57,7 @@ function App() {
           <Route exact path="/searchpage/:key" element={user!== null ? <SearchPage/> : <Navigate to={"/login"}/>}/>
           <Route exact path="/settings" element={user!== null ? <SettingsPage /> : <Navigate to={"/login"}/>}/>
           <Route exact path="/*" element={<Navigate to={"/"}/>}/>
+          <Route exact path="/test" element={<LoadingAnimation2 />} />
           <Route exact path="/admin" element={<AdminPage/>}/>
           <Route exact path="/viewstory/:pictureid" element={< ViewStoryImage/>}/>
           {/* <Route exact path="/explore" element={<Explore/>}/> */}
