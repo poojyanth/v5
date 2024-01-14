@@ -1,6 +1,7 @@
 import React, { useState } from 'react'
 import "./contentpost.css"
 import { toast, ToastContainer } from 'react-toastify';
+import {notifySuccess, notifyError, notifyUploading} from "../ToastNotification/Toast.js"
 import 'react-toastify/dist/ReactToastify.css';
 import imageIcon from "../Images/gallery.png"
 import VideoIcon from "../Images/video.png"
@@ -25,27 +26,7 @@ export default function Contentpost({ reloadMainpost }) {
   console.log("JWT TOKEN HEREEEE"+jwt_here)
   const [description,setDescription] = useState(' ' );
 
-  const notifySuccess = (message) => {
-    toast.success(message, {
-      position: toast.POSITION.BOTTOM_RIGHT,
-      autoClose: 3000, // Close the toast after 3 seconds
-      style: {
-        fontSize: '14px', // Adjust font size
-        width: '250px' // Adjust width
-      }
-    });
-  };
 
-  const notifyError = (message) => {
-    toast.error(message, {
-      position: toast.POSITION.BOTTOM_RIGHT,
-      autoClose: 3000, // Close the toast after 3 seconds
-      style: {
-        fontSize: '14px', // Adjust font size
-        width: '250px' // Adjust width
-      }
-    });
-  };
 
   const [imagePreview, setImagePreview] = useState(null); // State to hold image preview URL
 
@@ -81,7 +62,7 @@ export default function Contentpost({ reloadMainpost }) {
     const storageRef = ref(storage,filename);
 
     const uploadTask = uploadBytesResumable(storageRef, file);
-
+    notifyUploading("UPLOADING"); // Notify uploading using toast
     uploadTask.on('state_changed', 
   (snapshot) => {
     // Observe state change events such as progress, pause, and resume
@@ -94,7 +75,10 @@ export default function Contentpost({ reloadMainpost }) {
         break;
       case 'running':
         console.log('Upload is running');
-        break;
+        break; 
+      default:
+        console.log("DEFAULT");
+
     }
   }, 
   (error) => {
@@ -116,7 +100,8 @@ export default function Contentpost({ reloadMainpost }) {
         reloadMainpost();
         setImagePreview(null); // Clear image preview
         setVideoPreview(null); // Clear video preview
-        setDescription(''); // Clear description
+        setDescription(' '); // Clear description
+        document.getElementsByName('Inputdescription').value = '';
       }).catch((error) => {
         notifyError("Failed to upload image post"); // Notify error using toast
       });
@@ -132,6 +117,7 @@ export default function Contentpost({ reloadMainpost }) {
       const storageRef = ref(storage,filename);
   
       const uploadTask = uploadBytesResumable(storageRef, file2);
+      notifyUploading("UPLOADING"); // Notify uploading using toast
   
       uploadTask.on('state_changed', 
     (snapshot) => {
@@ -139,6 +125,7 @@ export default function Contentpost({ reloadMainpost }) {
       // Get task progress, including the number of bytes uploaded and the total number of bytes to be uploaded
       const progress = (snapshot.bytesTransferred / snapshot.totalBytes) * 100;
       console.log('Upload is ' + progress + '% done');
+      
       switch (snapshot.state) {
         case 'paused':
           console.log('Upload is paused');
@@ -146,6 +133,8 @@ export default function Contentpost({ reloadMainpost }) {
         case 'running':
           console.log('Upload is running');
           break;
+        default:
+          console.log("DEFAULT");
       }
     }, 
     (error) => {
@@ -166,7 +155,8 @@ export default function Contentpost({ reloadMainpost }) {
         reloadMainpost();
         setImagePreview(null); // Clear image preview
         setVideoPreview(null); // Clear video preview
-        setDescription(''); // Clear description
+        setDescription(' '); // Clear description
+        document.getElementsByName('Inputdescription').value = '';
       })
       });
     }
@@ -185,7 +175,8 @@ export default function Contentpost({ reloadMainpost }) {
         reloadMainpost();
         setImagePreview(null); // Clear image preview
         setVideoPreview(null); // Clear video preview
-        setDescription(''); // Clear description
+        setDescription(' '); // Clear description
+        document.getElementsByName('Inputdescription').value = '';
       }).catch((error) => {
         notifyError("Failed to upload text post"); // Notify error using toast
       });
@@ -201,7 +192,7 @@ export default function Contentpost({ reloadMainpost }) {
     <div className='ContentUploadContainer'>
       <div style={{ display: "flex", alignItems: "center", padding: 10 }}>
         <img src={(user.user.profilepicture) ? user.user.profilepicture : defaultUser} className="profileimage" alt="" />
-        <input type="text" className='contentWritingpart' placeholder='Write your real thought.....' onChange={(e) => setDescription(e.target.value)} />
+        <input type="text" name='Inputdescription' className='contentWritingpart' placeholder='Write your real thought.....' onChange={(e) => setDescription(e.target.value)} />
       </div>
      
         <div style={{ display: 'flex', justifyContent: 'space-between', flexDirection: 'column' }}>

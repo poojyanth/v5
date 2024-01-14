@@ -13,13 +13,9 @@ const Post = require('../Modals/Post');
 
 // ROUTE-1 :- CREATE NEW USER
 // METHOD USED :- POST
-router.post("/create/user", [
-    body('username', 'USERNAME MUST HAVE MINIMUM LENGTH 3').isLength({ min: 3 }),
-    body('email', 'EMAIL MUST HAVE MINIMUM LENGTH 5').isLength({ min: 5 }),
-    body('password', 'PASSWORD MUST HAVE MINIMUM LENGTH 3').isLength({ min: 3 }),
-    body('phonenumber', 'PHONENUMBER MUST HAVE MINIMUM LENGTH 10').isLength({ min: 10 }),
-], async (req, res) => {
+router.post("/create/user", async (req, res) => {
 
+    console.log(req.body);
     // check if any errors in validation
     const errors = validationResult(req); // USE req NOT req.body HERE
     if (!errors.isEmpty()) {
@@ -327,38 +323,31 @@ router.get("/user/details/:id",async(req,res)=>{
 // i.e :- GET USERS IN SUGGESTED FOR YOU LIST
 // THOSE ARE USERS THAT ARE NOT IN YOUR FOLLOWING LIST (array)
 
-router.get("/all/user/:id",verifytoken,async(req,res)=>{
-    try{
-
+router.get("/all/user/:id", verifytoken, async (req, res) => {
+    try {
         const allUsersInDb = await User.find();
         const current_user = await User.findById(req.params.id);
 
-        const followingsOfCurrent_user = await Promise.all(
-            current_user.following.map((item)=>{
-                return item;
-            })
-        )
+        const followingsOfCurrent_user = current_user.following.map((item) => item.toString());
 
-        let UsersNotFollowed = await allUsersInDb.filter((val)=>{
-            return !followingsOfCurrent_user.find((item)=>{
-                return val._id.toString()===item;
-            })
-        })
+        let UsersNotFollowed = allUsersInDb.filter((val) => {
+            // Exclude the own user account from suggestions
+            return val._id.toString() !== req.params.id &&
+                !followingsOfCurrent_user.includes(val._id.toString());
+        });
 
-        let SuggestedForYouList = await Promise.all(
-            UsersNotFollowed.map((item)=>{
-                const{email,phonenumber,password,followers,following,...others} = item._doc;
-                return others
-            })
-        )
+        let SuggestedForYouList = UsersNotFollowed.map((item) => {
+            const { email, phonenumber, password, followers, following, ...others } = item._doc;
+            return others;
+        });
 
         res.status(200).send(SuggestedForYouList);
-
-    }catch(error){
-        
-        res.status(400).send("SOME ERROR OCCURED IN TRY_CATCH")
+    } catch (error) {
+        console.error(error);
+        res.status(500).send("Internal Server Error");
     }
-})
+});
+
 
 
 // GET FOLLOWING LIST OF LOGGED IN USER

@@ -10,7 +10,7 @@
     height: max-content;
     /* height: 30vh; */
     background-color: white;
-    margin-top: 20px;
+    margin-top: 2vh;
     border-radius: 15px;
 }
 
@@ -19,7 +19,7 @@
     /* height: 60vh; */
     height: max-content;
     background-color: white;
-    margin-top: 20px;
+    margin-top: 2vh;
     border-radius: 15px;
     overflow: hidden;
     /* overflow-y: scroll; */

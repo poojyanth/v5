@@ -323,19 +323,20 @@ router.put("/:id/dislike",verifytoken,async(req,res)=>{
 // METHOD :- PUT
 
 router.put("/comment/post",verifytoken,async(req,res)=>{
-
+    console.log(req.body);
     try{
     const {comment , postId }= req.body;
     const new_comment = {
-        user:req.user.id,
+        user: req.user.id,
         username:req.user.username,
-        comment:comment
+        comment:comment 
     }
     const post = await Post.findById(postId);
     post.comments.push(new_comment);
     await post.save();
    res.status(200).json({msg:"NEW COMMENT ADDED SUCCESSFULLY",post});
 }catch(error){
+    console.log(error);
     return res.status(400).json("SOME ERROR OCCURED IN try-catch in /comment/post "+error );
 }
 })

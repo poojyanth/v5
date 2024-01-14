@@ -1,6 +1,5 @@
 .home{
     background-color: rgb(235, 238, 242);
-    /* height: 100vh; */
 }
 
 .ComponentContainer{
@@ -14,7 +13,7 @@
 .rightbar {
     /* Define the desired width for the left and right bars */
     position: sticky;
-    top: 9vh;
+    top: 8vh;
     border-radius: 15px;
     height: 90vh;
     margin: 0 1vw;

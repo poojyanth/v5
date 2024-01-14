@@ -17,7 +17,6 @@ const Postschema = new mongoose.Schema({
     },
     likes: {
         type: Array,
-        default:0
     },
     tags: [
         {
@@ -26,7 +25,6 @@ const Postschema = new mongoose.Schema({
     ],
     dislikes: {
         type: Array,
-        default:0
     },
     comments: [{
         user: {

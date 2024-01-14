@@ -1,6 +1,7 @@
 .PostContainer{
     padding: 1vh 2vw;
     margin: 2vh auto;
+    user-select: none;
 }
 
 .SubPostContainer{
@@ -18,7 +19,7 @@
 .PostImages{
     width: 100%;
     object-fit: cover;
-    border-radius: 10px;
+    border-radius: 2px;
 }
 
 .iconsforPost{
@@ -33,8 +34,9 @@
 
 .commentinput{
     width: 24pc;
-    margin-left: 10px;
+    margin: 0 10px;
     border: none;
+
 
 }
 .addCommentbtn{
@@ -43,7 +45,6 @@
     background-color: black;
     color: white;
     border-radius: 6px;
-    margin-left: 39px;
     cursor: pointer;
 }
 

@@ -9,16 +9,21 @@ import { useNavigate } from 'react-router-dom';
 import MoreOptions from "../Images/more.png"
 import { useSelector } from 'react-redux'
 import { Link } from 'react-router-dom'
+import {notifySuccess, notifyError, ToastContainer} from '../ToastNotification/Toast.js';
 import axios from "axios"
 import "./post.css"
+import { set } from 'mongoose';
+import { rgbParse } from '@kurkle/color';
 
 export default function Post(props) {
   const Backendport = process.env.REACT_APP_BACKEND_PORT;
+  const FrontEndPort = process.env.REACT_APP_FRONTEND_PORT;
   const userDetails2 = useSelector((state) => state.user);
   let user = userDetails2.user;
   const navigate = useNavigate();
   let id = user.user._id;
-
+  
+  const jwt_here = user.jwttoken
 
   const [userDetails, setUserDetails] = useState([]);
 
@@ -52,9 +57,28 @@ export default function Post(props) {
     const comment = {
       "id": `${props.post._id}`,
       "username": `${user.user.username}`,
-      "writtencomment": `${commentwriting}`
+      "comment": `${commentwriting}`
     }
     setComments(Comments.concat(comment));
+    await fetch(`http://localhost:${Backendport}/api/post/comment/post`,
+      {
+        method: "PUT",
+        headers: {
+          'Content-Type': 'application/json',
+          jwttoken: jwt_here
+        }, body: JSON.stringify({ postId:props.post._id, user: user.user, comment: commentwriting })
+      })
+      .then(response => {
+        if (response.ok) {
+          // Update state after successful API call
+          notifySuccess("Comment added successfully"); // Notify success using toast
+        } else {
+          notifyError("Failed to add comment"); // Notify error using toast
+        }
+      })
+      .catch(error => {
+        console.error('Error during comment update:', error);
+      });
   }
 
   const handleComment = () => {
@@ -72,10 +96,11 @@ export default function Post(props) {
     }
   }
 
-  const jwt_here = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjY1NTg0NGFhYTFlZjE1OGM2ZTNjNjdlZCIsInVzZXJuYW1lIjoiVVNFUjIiLCJpYXQiOjE3MDAyODU0NDZ9.Oo2Vo_M0wmya9zQaCkWnVgkoC4jFji_HqgEri_JHgQs"
+  
 
   const handleLike = async () => {
     if (Like === LikeIcon) {
+      setLike(anotherlikeicon);
       await fetch(`http://localhost:${Backendport}/api/post/${props.post._id}/like`,
         {
           method: "PUT",
@@ -94,11 +119,13 @@ export default function Post(props) {
           }
         })
         .catch(error => {
+          setLike(LikeIcon);
           console.error('Error during like update:', error);
         });
       //  setLike(anotherlikeicon);
       //   setCount(count + 1);
     } else {
+      setLike(LikeIcon);
       await fetch(`http://localhost:${Backendport}/api/post/${props.post._id}/like`,
         {
           method: "PUT",
@@ -117,12 +144,42 @@ export default function Post(props) {
           }
         })
         .catch(error => {
+          setLike(anotherlikeicon);
           console.error('Error during like update:', error);
         });
       // setLike(LikeIcon)
       // setCount(count - 1);
     }
   }
+
+  const handleShareClick = (link_postID) => {
+
+    const currentUrl = window.location.href;
+
+    // Create a URL object from the current URL
+    const url = new URL(currentUrl);
+    
+    // Extract the protocol and host (base URL)
+    const baseUrl = `${url.protocol}//${url.host}`;
+    
+    console.log(baseUrl);
+    const linkToCopy = baseUrl+`/postpage/${link_postID}`
+
+    // Copy link to clipboard
+    navigator.clipboard.writeText(linkToCopy)
+      .then(() => {
+        notifySuccess("Link copied to clipboard"); // Notify success using toast
+      })
+      .catch((err) => {
+        notifyError("Failed to copy link to clipboard"); // Notify error using toast
+      });
+  };
+
+  const [expanded, setExpanded] = useState(false);
+
+  const handleExpand = () => {
+    setExpanded(!expanded);
+  };
 
   return (
     <div className='PostContainer'>
@@ -146,13 +203,32 @@ export default function Post(props) {
 
             </div>  
           </div>
-          <p style={{ textAlign: 'start', width: "96%", marginLeft: 20, marginTop: 0 }}>{props.post.description}</p>
+          
       
           {props.post.image !== '' ? 
            <img src={`${props.post.image}`} className="PostImages" alt="" />: props.post.video !== '' ? <video className="PostImages" width="500" height="500" controls >
            <source src={`${props.post.video}`} type="video/mp4"/>
           </video> : ''
           }
+
+          <p style={{
+                  textAlign: 'start',
+                  width: '96%',
+                  margin: '3px',
+                  height: expanded ? 'auto' : '1.5rem',
+                  overflow: 'hidden',
+                  
+                  textOverflow: 'ellipsis',
+                  whiteSpace: expanded ? 'pre-wrap': 'nowrap',
+                  cursor: 'pointer',
+                }} onClick={handleExpand} >
+                <Link to={`/profilepage/` + userDetails._id} style={{ marginRight: '5px',fontWeight: 'bold', textDecoration: 'none', color: 'black' }}>
+                  {userDetails.username}
+                </Link>
+                {props.post.description}
+          </p>
+        
+        
         {/* {  props.post.image && <img src={`${props.post.image}`} className="PostImages" alt="" />} */}
           <div style={{ display: "flex", width: "100%", justifyContent: 'space-around'}}>
             
@@ -164,31 +240,41 @@ export default function Post(props) {
                 <img src={`${CommentIcon}`}  className="iconsforPost" alt="" />
                 <p style={{ marginLeft: "6px" }}>{props.post.comments.length} Comments</p>
               </div>            
-              <div style={{ display: "flex", alignItems: "center", cursor: "pointer" }}>
+              <div style={{ display: "flex", alignItems: "center", cursor: "pointer" }} onClick={() => handleShareClick(props.post._id)}>
                 <img src={`${Share}`} className="iconsforPost" alt="" />
                 <p style={{ marginLeft: "6px" }}>Share</p>
               </div>
           </div>
           {show === true ?
-            <div style={{ padding: '10px' }}>
-              <div style={{ display: "flex", alignItems: "center" }}>
-              <img src={(user.user.profilepicture)?user.user.profilepicture:defaultUser} className="PostImage" alt="" />
-                <input type="text" id={props.post._id+'comment'} className='commentinput' placeholder='Write your thought' onChange={(e) =>{ setcommentwriting(e.target.value);}} />
+          <>
+            <hr style={{border: '1px solid rgba(0, 0, 0, 0.2)'}}/>
+            <div style={{ padding: '10px',maxHeight: '30vh', overflowX: 'hidden',  overflowY: 'scroll' }}>
+              <div style={{ display: "flex", alignItems: "center", margin: '5px 0' }}>
+                <img src={(user.user.profilepicture) ? user.user.profilepicture : defaultUser} className="PostImage" alt="" />
+                <textarea
+                  id={props.post._id + 'comment'}
+                  className='commentinput'
+                  placeholder='Write your thought'
+                  style={{ resize: 'none', minHeight: '30px',  marginLeft: '5px', width: '100%'}}
+                  onChange={(e) => { setcommentwriting(e.target.value); }}
+                />
                 <button className='addCommentbtn' onClick={handleComment}>Post</button>
               </div>
+              <hr style={{border: '1px solid rgba(0, 0, 0, 0.2)', margin: '0'}}/>
               {Comments.map((item) => (
-                <div style={{ alignItems: "center" }}>
-                  <div style={{ display: "flex", alignItems: "center" }}>
-                  <img src={(user.user.profilepicture)?user.user.profilepicture:defaultUser} className="PostImage" alt="" />
-                    <p style={{ marginLeft: "6px", fontSize: 18, marginTop: 6 }}>{item.username}</p>
+                <div style={{ margin: '3px 0' }}>
+                  <div style={{ display: "flex", alignItems: "center", }}>
+                    <img src={(user.user.profilepicture)?user.user.profilepicture:defaultUser} className="PostImage" alt="" />
+                    <div style={{ margin:'5px',   display: 'flex', alignItems: 'center'}}>
+                      <p style={{  fontSize: 15, margin: '5px', textAlign: 'left'}}>
+                        <span><Link to={'/profilepage/'+item.user} style={{textDecoration: 'none', color: 'black', fontWeight: 'bolder'}}>{item.username}</Link></span> {item.comment}</p>
+                    </div>
                   </div>
-                  <p style={{ marginLeft: "55px", textAlign: 'start', marginTop: -16 }}>{item.writtencomment}</p>
-                  <p style={{ marginLeft: "55px", textAlign: 'start', marginTop: -10, color: "#aaa", fontSize: 11 }}>Reply</p>
-
                 </div>
 
               ))}
-            </div> : ''
+            </div>  </>: ''
+           
           }
       </div>
     </div>

@@ -14,7 +14,7 @@
 .Profilerightbar {
     /* Define the desired width for the left and right bars */
     position: sticky;
-    top: 9vh;
+    top: 8vh;
     border-radius: 15px;
     height: 92vh;
     margin: 0 1vw;
@@ -29,5 +29,5 @@
 .mainPostContainer {
     flex: 1; /* Occupy remaining space */
     overflow-y: auto; /* Allow scrolling for the main post container */
-    padding: 20px; /* Adjust padding as needed */
+    padding: 2vh; /* Adjust padding as needed */
 }

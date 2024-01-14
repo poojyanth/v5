@@ -57,7 +57,7 @@ const LoadingAnimation2 = () => {
       t1.to(shutter, { duration: 2, rotation: 1000, ease: 'linear' });
     }
 
-    t1.to(shutter, { duration: 2, rotation: 1000, ease: 'linear' });
+    t1.to(shutter, { duration: 2, rotation: 1200, ease: 'power1.in' });
     t1.to(shutter, { duration: 2, scale: 0.7, x: '-=40', ease: 'power2.inOut' }, "-=25%");
     t1.add(() => {
       gsap.to('.Foto', { duration: 1, opacity: 1, ease: "power1.inOut" });
@@ -83,7 +83,7 @@ const LoadingAnimation2 = () => {
 
   return (
     <div className='loading-container' style={Loadingcontainer}>
-      <div className='shutterPNG'>
+      <div className='shutterPNG' style={{width: '100%', height: '100%', display: 'flex',justifyContent: 'center', alignItems: 'center'}}>
         <img
           ref={shutterRef}
           src={ShutterPNG}
