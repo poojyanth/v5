@@ -1,5 +1,5 @@
 const jwt = require("jsonwebtoken");
-const SECRETKEY = "$@IP@V@N";
+const SECRETKEY = "FOTOFLASK";
 
 const verifytoken=(req,res,next)=>{
 

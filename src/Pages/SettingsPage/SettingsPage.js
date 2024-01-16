@@ -5,36 +5,192 @@ import axios from 'axios'
 import {useSelector} from 'react-redux'
 import { useEffect, useState } from 'react'
 import { useParams } from 'react-router-dom'
+import defaultUser from "../../Component/Images/blank-profile-picture-973460_960_720.webp";
+import { Setting1, Setting2, Setting3 } from '../../Component/Settings/settings'
 
-export default function SettingsPage () {
+const SettingsContainer = {
+  display: 'flex',
+  flexDirection: 'row',
+  justifyContent: 'center',
+  alignItems: 'center',
+  height: '92vh'
+}
 
-    const [setting, setSetting] = useState([]);
+const SettingsHeaders = {
+  display: 'flex',
+  flexDirection: 'column',
+  borderRight: '0.5px solid #c2c2c2',
+  justifyContent: 'center',
+  backgroundColor: 'white',
+  alignItems: 'center',
+  height: '99%',
+  width: '20%',
+}
 
-    if(useSelector((state)=>state.user.user)===null){
-        window.location.href="/login"
-      }
-      else{
+const SettingsContent = {
+  display: 'flex',
+  flexDirection: 'row',
+  justifyContent: 'center',
+  alignItems: 'center',
+  height: '100%',
+  width: '79%',
+}
 
-        const Backendport = process.env.REACT_APP_BACKEND_PORT;
-        
+const SettingsHeaderButton = {
+  width: '100%',
+  height: '10%',
+  border: 'none',
+  borderRadius: '20px',
+  marginBottom: '1px',
+  fontSize: '1em',
+  backgroundColor: 'transparent',
+  fontWeight: 'bold',
+  color: '#000000',
+  transition: 'background-color 0.2s ease',
+  cursor: 'pointer'
+}
 
-      return (
-        <div className='home'>
-            <Navbar/>
+const settingsRightUserDetails = {
+  display: 'flex',
+  flexDirection: 'column',
+  justifyContent: 'space-around',
+  alignItems: 'center',
+  padding: '10px',
+  width: '100%',
+  height: '25%',
+}
+
+const settingsRightButtons = {
+  display: 'flex',
+  flexDirection: 'column',
+  justifyContent: 'flex-start',
+  alignItems: 'center',
+  padding: '10px',
+  width: '100%',
+  height: '75%',
+}
+
+const settings = [ // Assign the array of settings to a variable
+  {
+    name: "Profile",
+    component: Setting1 
+  },
+  {
+    name: "Account",
+    component: Setting2
+  },
+  {
+    name: "CoverPhoto",
+    component: Setting3
+  }
+]
+
+export default function SettingsPage ({match}) {
+  
+  
+  const [setting, setSetting] = useState(0);
+  const userDetails = useSelector((state)=>state.user);
+  const [user, setUser] = useState(userDetails.user);
+  let user1 = userDetails.user;
+  const settingName = useParams(':settingName').settingName;
+
+  // console.log(user)
+
+  useEffect(()=>{
+
+    const buttons = document.querySelectorAll('.SettingsHeaderButton');
+
+    buttons.forEach((button) => {
+      button.style.backgroundColor = 'transparent';
+    });
+    document.getElementById(setting).style.backgroundColor = '#e0e4e8';
+  }, [setting])
+
+
+  useEffect(() => {
+    // Extract the setting name from the URL and set the appropriate setting
+    const settingIndex = settings.findIndex((setting) => setting.name === settingName);
+    if (settingIndex !== -1) {
+      setSetting(settingIndex);
+    }
+  }, [settingName]);
+
+ 
+  if(useSelector((state)=>state.user.user)===null){
+    window.location.href="/login"
+  }
+  else{
+
+
     
-            <div className= "SettingsContainer">
-                <div className="SettingsHeaders">
-                    <button className="SettingsHeaderButton" >Profile</button>
-                </div>
-                <div className='SettingsContent'>
-                <p>Hi</p>
-                <p>Hi</p>
-                <p>Hi</p>
-                </div>
-            </div>
-          
-        </div>
-      )
+    const Backendport = process.env.REACT_APP_BACKEND_PORT;
+    
+    const handleSettingClick = (e) => {
+      e.preventDefault();
+      const selectedSetting = settings[parseInt(e.target.value)].name;
+      setSetting(parseInt(e.target.value));
+      console.log(e.target.value, selectedSetting, setting);
+  
+      // Change the route when a setting is clicked
+      window.history.pushState(null, null, `/settings/${selectedSetting}`);
+    };
+
+    const handleSettingMouseOver = (e) => {
+      e.preventDefault();
+      const buttonValue = parseInt(e.target.value);
+      if (buttonValue === setting) {
+        e.target.style.backgroundColor = '#e0e4e8';
+      } else {
+        e.target.style.backgroundColor = 'transparent';
       }
+    }
+  
+    const handleSettingMouseOut = (e) => {
+      e.preventDefault();
+      const buttonValue = parseInt(e.target.value);
+      if (buttonValue !== setting) {
+        e.target.style.backgroundColor = 'transparent';
+      }
+    }
+  
+ 
+    return (
+      <div className='home'>
+        <Navbar />
+  
+        <div className="SettingsContainer" style={SettingsContainer}>
+          <div className="SettingsHeaders" style={SettingsHeaders}>
+            <div className='settingsRightUserDetails' style={settingsRightUserDetails}> 
+              <img src={(user.user.profilepicture) ? user.user.profilepicture : defaultUser} width='100px' height='100px' alt="" className="SettingsProfilePicture" />
+              <div className='settingsRightUserDetailsText'>        
+                <p className='settingsRightUserDetailsTextUsername' style={{margin: '0'}}>{user.user.username}</p>
+              </div>
+
+            </div>
+            <div className='settingsRightButtons' style={settingsRightButtons}>
+              {
+                settings.map((setting, index) => {
+                  return (
+                    <button 
+                      id={index}
+                      className="SettingsHeaderButton" 
+                      style={SettingsHeaderButton} 
+                      onMouseOver={handleSettingMouseOver}
+                      onMouseOut={handleSettingMouseOut}
+                      value={index} 
+                      onClick={handleSettingClick}>{setting.name}</button>
+                  )
+                })
+              }              
+            </div>
+          </div>
+          <div className="SettingsContent" style={SettingsContent}>
+            {settings[setting].component({user, setUser})} {/* Use () to invoke the component function */}
+          </div>
+        </div>
+  
+      </div>
+    )
+    }
 }
 

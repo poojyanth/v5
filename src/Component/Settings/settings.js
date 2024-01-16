@@ -1,0 +1,395 @@
+import React, { useEffect } from "react";
+import { useDispatch, useSelector } from "react-redux";
+import { logout } from "../ReduxContainer/UserReducer";
+import { useState } from "react";
+import Image from "../Images/blank-profile-picture-973460_960_720.webp";
+import { set } from "mongoose";
+
+const settingsPane = {
+  display: "flex",
+  flexDirection: "column",
+  justifyContent: "center",
+  alignItems: "center",
+  height: "99%",
+  backgroundColor: "white",
+  transition: "background-color 0.01s",
+  width: "99%",
+};
+
+const settingHeader = {
+  display: "flex",
+  flexDirection: "row",
+  justifyContent: "center",
+  alignItems: "center",
+  height: "10%",
+  width: "100%",
+  borderBottom: "0.5px solid #c2c2c2",
+};
+
+const settings = {
+  display: "flex",
+  flexDirection: "column",
+  justifyContent: "center",
+  alignItems: "center",
+  height: "90%",
+  width: "100%",
+};
+
+const settingCSS = {
+  display: "flex",
+  flexDirection: "row",
+  justifyContent: "center",
+  transition: "all 0.01s ease",
+  alignItems: "center",
+  margin: "10px",
+  height: "10%",
+  width: "100%",
+};
+
+const smallIcon = {
+  display: "flex",
+  flexDirection: "row",
+  justifyContent: "center",
+  alignItems: "center",
+  width: "50px",
+  height: "50px",
+  backgroundColor: "transparent",
+  border: "none",
+};
+
+const settingInput = {
+  width: "50%",
+  border: "1.5px solid #c2c2c2",
+  height: "80%",
+  borderRadius: "5px",
+};
+
+const saveButton = {
+  width: "80px",
+  height: "30px",
+  border: "none",
+  borderRadius: "20px",
+  backgroundColor: "rgb(0, 149, 246)",
+  color: "white",
+  fontWeight: "600",
+  margin: "0 1pc",
+  fontSize: "1em",
+  cursor: 'pointer'
+};
+
+export const Setting1 = ({ user, setUser }) => {
+
+  const [username, setUsername] = useState(user.user.username);
+
+
+  const handleSave = () => {
+    setUser({
+      ...user,
+      user: {
+        ...user.user,
+        username: document.getElementById("username").value,
+        firstname: document.getElementById("firstname").value,
+        lastname: document.getElementById("lastname").value,
+        bio: document.getElementById("bio").value,
+      },
+    });
+  }
+
+  return (
+    <div className="settingsPane" style={settingsPane}>
+      <div className="settingHeader" style={settingHeader}>
+        <h1>Profile</h1>
+      </div>
+      <div className="settings" style={settings}>
+        <div className="setting" style={settingCSS}>
+          <label
+            htmlFor="username"
+            style={{ width: "20%", fontWeight: "bold" }}
+          >
+            Username
+          </label>
+          <input
+            type="text"
+            style={settingInput}
+            name="username"
+            editable
+            value={username}
+            onChange={(e) => setUsername(e.target.value)}
+            id="username"
+          />
+          <div className="SettingsmallIcon" style={smallIcon}>
+            <img src={Image} height="80%" alt="" />
+          </div>
+        </div>
+        <div className="setting" style={settingCSS}>
+          <label
+            htmlFor="firstname"
+            style={{ width: "20%", fontWeight: "bold" }}
+          >
+            First Name
+          </label>
+          <input
+            type="text"
+            style={settingInput}
+            name="firstname"
+            id="firstname"
+          />
+          <div className="SettingsmallIcon" style={smallIcon}>
+            <img src={""} height="80%" alt="" />
+          </div>
+        </div>
+        <div className="setting" style={settingCSS}>
+          <label
+            htmlFor="lastname"
+            style={{ width: "20%", fontWeight: "bold" }}
+          >
+            Last Name
+          </label>
+          <input
+            type="text"
+            style={settingInput}
+            name="lastname"
+            id="lastname"
+          />
+          <div className="SettingsmallIcon" style={smallIcon}>
+            <img src={Image} height="80%" alt="" />
+          </div>
+        </div>
+        <div
+          className="setting"
+          style={{
+            display: "flex",
+            flexDirection: "row",
+            justifyContent: "center",
+            alignItems: "center",
+            margin: "10px",
+            minHeight: "10%",
+            width: "100%",
+          }}
+        >
+          <label htmlFor="bio" style={{ width: "20%", fontWeight: "bold" }}>
+            Bio
+          </label>
+          <textarea
+            type="text"
+            style={{
+              width: "50%",
+              minHeight: "50px",
+              border: "1.5px solid #c2c2c2",
+              resize: "vertical",
+              height: "80%",
+              borderRadius: "5px",
+            }}
+            name="bio"
+            id="bio"
+          />
+          <div className="SettingsmallIcon" style={smallIcon}>
+            <img src={Image} height="80%" alt="" />
+          </div>
+        </div>
+      </div>
+      <div
+        className="saveButton"
+        style={{
+          width: "100%",
+          height: "10%",
+          display: "flex",
+          justifyContent: "flex-end",
+          alignItems: "center",
+        }}
+      >
+        <button style={saveButton} onClick={handleSave}>Save</button>
+      </div>
+    </div>
+  );
+};
+
+export const Setting2 = ({ user, setUser }) => {
+
+  const handleSave = () => {
+    // setUser({
+    //   ...user,
+    //   user: {
+    //     ...user.user,
+    //     email: document.getElementById("email").value,
+        
+    //   },
+    // });
+  }
+
+  return (
+    <div className="settingsPane" style={settingsPane}>
+      <div className="settingHeader" style={settingHeader}>
+        <h1>Account</h1>
+      </div>
+      <div className="settings" style={settings}>
+        <div className="setting" style={settingCSS}>
+          <label htmlFor="email" style={{ width: "20%", fontWeight: "bold" }}>
+            Email
+          </label>
+          <input
+            type="text"
+            style={settingInput}
+            readOnly
+            value={user.user.email}
+            name="email"
+            id="email"
+          />
+          <div className="SettingsmallIcon" style={smallIcon}>
+            <img src={Image} height="80%" alt="" />
+          </div>
+        </div>
+        <div className="setting" style={settingCSS}>
+          <label
+            htmlFor="currentpassword"
+            style={{ width: "20%", fontWeight: "bold" }}
+          >
+            Current Password
+          </label>
+          <input
+            type="password"
+            style={settingInput}
+            name="currentpassword"
+            id="currentpassword"
+          />
+          <div className="SettingsmallIcon" style={smallIcon}>
+            <img src={""} height="80%" alt="" />
+          </div>
+        </div>
+        <div className="setting" style={settingCSS}>
+          <label
+            htmlFor="newpassword"
+            style={{ width: "20%", fontWeight: "bold" }}
+          >
+            New Password
+          </label>
+          <input
+            type="password"
+            style={settingInput}
+            name="newpassword"
+            id="newpassword"
+          />
+          <div className="SettingsmallIcon" style={smallIcon}>
+            <img src={Image} height="80%" alt="" />
+          </div>
+        </div>
+        <div className="setting" style={settingCSS}>
+          <label
+            htmlFor="confirmpassword"
+            style={{ width: "20%", fontWeight: "bold" }}
+          >
+            Confirm Password
+          </label>
+          <input
+            type="password"
+            style={settingInput}
+            name="confirmpassword"
+            id="confirmpassword"
+          />
+          <div className="SettingsmallIcon" style={smallIcon}>
+            <img src={Image} height="80%" alt="" />
+          </div>
+        </div>
+      </div>
+      <div
+        className="saveButton"
+        style={{
+          width: "100%",
+          height: "10%",
+          display: "flex",
+          justifyContent: "flex-end",
+          alignItems: "center",
+        }}
+      >
+        <button style={saveButton} onClick={handleSave}>Save</button>
+      </div>
+    </div>
+  );
+};
+
+export const Setting3 = ({ user, setUser }) => {
+  console.log(user);
+  var ImagePreview = user.user.profilepicture ? user.user.profilepicture : Image;
+
+  const handleImageInput = (event) => {
+    if(event.target.files.length === 0) return;
+    ImagePreview = URL.createObjectURL(event.target.files[0]);
+    document.getElementById("ImagePreviewImage").src = ImagePreview;
+  };
+
+  const handleSave = () => {
+    setUser({
+      ...user,
+      user: {
+        ...user.user,
+        profilepicture: ImagePreview,
+      },
+    });
+  }
+
+  return (
+    <div className="settingsPane" style={settingsPane}>
+      <div className="settingHeader" style={settingHeader}>
+        <h1>Profile Photo</h1>
+      </div>
+      <div className="settings" style={settings}>
+        <label
+          htmlFor="profilepicture"
+          style={{ width: "20%", fontWeight: "bold" }}
+        >
+          <div
+            className="ImagePreview"
+            style={{
+              transition: "all 0.01s ease",
+              border: "1.5px solid #c2c2c2",
+              borderRadius: "5px",
+              display: "flex",
+              justifyContent: "center",
+              alignItems: "center",
+            }}
+          >
+            <img
+              id="ImagePreviewImage"
+              src={ImagePreview}
+              height="200px"
+              width="200px"
+              alt=""
+            />
+          </div>
+          <div
+            className="ImageUploadButton"
+            style={{
+              transition: "all 0.01s ease",
+              border: "1.5px solid #c2c2c2",
+              borderRadius: "5px",
+              display: "flex",
+              justifyContent: "center",
+              alignItems: "center",
+            }}
+          >
+            <p>Upload</p>
+          </div>
+        </label>
+        <input
+          type="file"
+          name="profilepicture"
+          onChange={handleImageInput}
+          id="profilepicture"
+          style={{ display: "none" }}
+        />
+      </div>
+      <div
+        className="saveButton"
+        style={{
+          width: "100%",
+          height: "10%",
+          display: "flex",
+          justifyContent: "flex-end",
+          alignItems: "center",
+        }}
+      >
+        <button style={saveButton} onClick={handleSave}>Save</button>
+      </div>
+    </div>
+  );
+};

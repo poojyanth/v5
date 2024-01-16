@@ -11,7 +11,7 @@ export default function Explorepage() {
   const Backendport = process.env.REACT_APP_BACKEND_PORT;
 
     const userDetails = useSelector((state)=>state.user);
-  let user = userDetails.user;
+    let user = userDetails.user;
   let id =user.user._id;
   const jwt_here=user.jwttoken
   const [exploreposts,setExplorePosts] = useState([]);

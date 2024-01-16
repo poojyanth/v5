@@ -55,7 +55,8 @@ function App() {
           <Route exact path="/explorepage" element={user!== null ? <Explorepage/> : <Navigate to={"/login"}/>}/>
           <Route exact path="/addnewpost" element={user!== null ? <AddNewPost/> : <Navigate to={"/login"}/>}/>
           <Route exact path="/searchpage/:key" element={user!== null ? <SearchPage/> : <Navigate to={"/login"}/>}/>
-          <Route exact path="/settings" element={user!== null ? <SettingsPage /> : <Navigate to={"/login"}/>}/>
+          <Route path="/settings/:settingName" element={user!== null ? <SettingsPage /> : <Navigate to={"/login"}/>} />
+          <Route exact path="/settings/*" element={user!== null ? <Navigate to={'/settings/Profile'}/>: <Navigate to={"/login"}/>}/>
           <Route exact path="/*" element={<Navigate to={"/"}/>}/>
           <Route exact path="/test" element={<LoadingAnimation2 />} />
           <Route exact path="/admin" element={<AdminPage/>}/>
