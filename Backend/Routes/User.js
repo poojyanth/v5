@@ -1,9 +1,9 @@
 const express = require('express');
 const router = express.Router();
-
+require('dotenv').config();
 const bcrypt = require('bcryptjs');
 const jwt = require("jsonwebtoken");
-const SECRETKEY = "$@IP@V@N";
+const SECRETKEY = process.env.SECRET_KEY;
 
 const { body, validationResult } = require('express-validator');
 const User = require('../Modals/User');
@@ -103,6 +103,8 @@ router.post("/login", [
             console.log("INCORRECT PASSWORD");
             return res.status(400).json("INCORRECT PASSWORD");
         }
+
+        console.log(SECRETKEY);
 
         const jwttoken = await jwt.sign({
             id:user._id,

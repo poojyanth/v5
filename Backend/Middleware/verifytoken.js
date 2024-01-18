@@ -1,5 +1,6 @@
 const jwt = require("jsonwebtoken");
-const SECRETKEY = "FOTOFLASK";
+require('dotenv').config();
+const SECRETKEY = process.env.SECRET_KEY;
 
 const verifytoken=(req,res,next)=>{
 

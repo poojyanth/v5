@@ -5,7 +5,12 @@ const socket = require('socket.io');
 
 require('dotenv').config();
 
-mongoose.connect("mongodb+srv://poojyanth2004:projectfotoflask@cluster0.q3pe61c.mongodb.net/FDFED")
+const MONGOOSE_URI = process.env.MONGOOSE_URI;
+const FRONTENDPORT = process.env.FRONTENDPORT;
+
+
+
+mongoose.connect(MONGOOSE_URI)
 .then(()=>{console.log("MONGO DB CONNECTED SUCCESSFULLY")})
 .catch(()=>{console.log("SOME ERROR OCCURED IN CONNECTING MONGODB")})
 
@@ -27,7 +32,7 @@ app.use('/api/post', require('./Routes/Post'));
 
 const io = socket(server,{
     cors:{
-        origin:'http://localhost:3000',
+        origin:`http://localhost:1${FRONTENDPORT}`,
         credentails:true
     }
 })
