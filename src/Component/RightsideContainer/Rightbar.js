@@ -14,7 +14,7 @@ export default function Rightbar() {
   let id =user.user._id;
   const Backendport = process.env.REACT_APP_BACKEND_PORT;
 
-  const jwt_here="eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjY1Njc2MmE1YzQzMDk1Y2I4YWQzZGMzYyIsInVzZXJuYW1lIjoiU0FJUEFWQU4iLCJpYXQiOjE3MDEzMjA0OTR9.3YHs-mLthGHdMRVS7SVWC0-yyhbF3CgEemL_ucXBnpU"
+  const jwt_here=user.jwttoken
   const[suggestions,setSuggestions] = useState([]);
 
   useEffect(()=>{

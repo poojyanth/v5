@@ -1,4 +1,6 @@
 import React, { useEffect } from "react";
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
+import {faCircleCheck as okTick, faCircleXmark as noCross} from '@fortawesome/free-regular-svg-icons'
 import { useDispatch, useSelector } from "react-redux";
 import { logout } from "../ReduxContainer/UserReducer";
 import { useState } from "react";
@@ -111,14 +113,14 @@ export const Setting1 = ({ user, setUser }) => {
           <input
             type="text"
             style={settingInput}
-            name="username"
+            name="username" 
             editable
             value={username}
             onChange={(e) => setUsername(e.target.value)}
             id="username"
           />
           <div className="SettingsmallIcon" style={smallIcon}>
-            <img src={Image} height="80%" alt="" />
+          <FontAwesomeIcon icon={okTick} style={{color: "#029702",}} />
           </div>
         </div>
         <div className="setting" style={settingCSS}>
@@ -152,7 +154,7 @@ export const Setting1 = ({ user, setUser }) => {
             id="lastname"
           />
           <div className="SettingsmallIcon" style={smallIcon}>
-            <img src={Image} height="80%" alt="" />
+            <img src={''} height="80%" alt="" />
           </div>
         </div>
         <div
@@ -184,7 +186,7 @@ export const Setting1 = ({ user, setUser }) => {
             id="bio"
           />
           <div className="SettingsmallIcon" style={smallIcon}>
-            <img src={Image} height="80%" alt="" />
+            <img src={''} height="80%" alt="" />
           </div>
         </div>
       </div>
@@ -231,7 +233,7 @@ export const Setting2 = ({ user, setUser }) => {
             id="email"
           />
           <div className="SettingsmallIcon" style={smallIcon}>
-            <img src={Image} height="80%" alt="" />
+            <img src={''} height="80%" alt="" />
           </div>
         </div>
         <div className="setting" style={settingCSS}>
@@ -248,7 +250,7 @@ export const Setting2 = ({ user, setUser }) => {
             id="currentpassword"
           />
           <div className="SettingsmallIcon" style={smallIcon}>
-            <img src={""} height="80%" alt="" />
+            <FontAwesomeIcon icon={okTick} style={{color: "#029702",}} />
           </div>
         </div>
         <div className="setting" style={settingCSS}>
@@ -265,7 +267,7 @@ export const Setting2 = ({ user, setUser }) => {
             id="newpassword"
           />
           <div className="SettingsmallIcon" style={smallIcon}>
-            <img src={Image} height="80%" alt="" />
+          <FontAwesomeIcon icon={okTick} style={{color: "#029702",}} />
           </div>
         </div>
         <div className="setting" style={settingCSS}>
@@ -282,7 +284,7 @@ export const Setting2 = ({ user, setUser }) => {
             id="confirmpassword"
           />
           <div className="SettingsmallIcon" style={smallIcon}>
-            <img src={Image} height="80%" alt="" />
+          <img src={''} height="80%" alt="" />
           </div>
         </div>
       </div>
@@ -389,8 +391,95 @@ export const Setting3 = ({ user, setUser }) => {
   );
 };
 
-
 export const Setting4 = ({ user, setUser }) => {
+  console.log(user);
+  var ImagePreview = user.user.coverphoto ? user.user.coverphoto : Image;
+
+  const handleImageInput = (event) => {
+    if(event.target.files.length === 0) return;
+    ImagePreview = URL.createObjectURL(event.target.files[0]);
+    document.getElementById("ImagePreviewImage").src = ImagePreview;
+  };
+
+  const handleSave = () => {
+    setUser({
+      ...user,
+      user: {
+        ...user.user,
+        coverphoto: ImagePreview,
+      },
+    });
+  }
+
+  return (
+    <div className="settingsPane" style={settingsPane}>
+      <div className="settingHeader" style={settingHeader}>
+        <h1>Profile Photo</h1>
+      </div>
+      <div className="settings" style={settings}>
+        <label
+          htmlFor="profilepicture"
+          style={{ width: "20%", fontWeight: "bold" }}
+        >
+          <div
+            className="ImagePreview"
+            style={{
+              transition: "all 0.01s ease",
+              border: "1.5px solid #c2c2c2",
+              borderRadius: "5px",
+              display: "flex",
+              justifyContent: "center",
+              alignItems: "center",
+            }}
+          >
+            <img
+              id="ImagePreviewImage"
+              src={ImagePreview}
+              height="200px"
+              width="200px"
+              alt=""
+            />
+          </div>
+          <div
+            className="ImageUploadButton"
+            style={{
+              transition: "all 0.01s ease",
+              border: "1.5px solid #c2c2c2",
+              borderRadius: "5px",
+              display: "flex",
+              justifyContent: "center",
+              alignItems: "center",
+            }}
+          >
+            <p>Upload</p>
+          </div>
+        </label>
+        <input
+          type="file"
+          name="profilepicture"
+          onChange={handleImageInput}
+          id="profilepicture"
+          style={{ display: "none" }}
+        />
+      </div>
+      <div
+        className="saveButton"
+        style={{
+          width: "100%",
+          height: "10%",
+          display: "flex",
+          justifyContent: "flex-end",
+          alignItems: "center",
+        }}
+      >
+        <button style={saveButton} onClick={handleSave}>Save</button>
+      </div>
+    </div>
+  );
+};
+
+
+export const Setting5 = ({ user, setUser }) => {
 
   const handleThemeChange = (event) => {
     if(event.target.value === "Light") {

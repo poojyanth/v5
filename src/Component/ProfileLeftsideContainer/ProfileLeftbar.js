@@ -7,6 +7,7 @@ import { useLocation } from 'react-router-dom';
 import { Link} from "react-router-dom";
 import Profilecover from "../Images/default-cover-4.jpeg"
 import defaultUser from "../Images/blank-profile-picture-973460_960_720.webp"
+import Alert from 'antd/es/alert/Alert';
 
 export default function ProfileLeftbar({profileid}) {
 
@@ -15,8 +16,7 @@ export default function ProfileLeftbar({profileid}) {
   const Backendport = process.env.REACT_APP_BACKEND_PORT;
   let user = userDetails.user;
   let id =user.user._id;
-  let username = user.user.username;
-  const jwt_here = user.user.jwttoken;
+  const jwt_here=user.jwttoken
   // let followerscount = user.user.followers.length;
   // let followingcount = user.user.following.length;
   // let profilepic = user.user.profilepicture;
@@ -24,11 +24,16 @@ export default function ProfileLeftbar({profileid}) {
   // const myUserId="656762a5c43095cb8ad3dc3c";
 
   const [user_details,setUser_Details] = useState([]);
+  const [followings,setFollowings] = useState([]);
  
   useEffect(()=>{
     const getuserdetails =async()=>{
       try{
-      const details = await axios.get(`http://localhost:${Backendport}/api/user/post/user/details/${profileid}`);
+      const details = await axios.get(`http://localhost:${Backendport}/api/user/post/user/details/${profileid}`,{
+        headers:{
+          jwttoken:jwt_here
+        }
+      });
       setUser_Details(details.data);
       }catch(error){
         console.log("ERROR OCCURED IN CATCH BLOCK"+error)
@@ -36,25 +41,24 @@ export default function ProfileLeftbar({profileid}) {
     }
     // alert("PROFILE ID :"+profileid);
     getuserdetails();
+    console.log("USER DETAILS :"+user_details);
+    const getfollowings=async()=>{
+      try{   
+
+          const response = await axios.get(`http://localhost:${Backendport}/api/user/get/followings/${profileid}`,{
+            headers:{
+              jwttoken:jwt_here
+            }
+          })
+          // console.log("RESS :"+response)
+          setFollowings(response.data);
+          }catch(error){
+            console.log("SOME ERROR IN CATCH BLOCK "+error);
+          }
+        }
+       getfollowings();
   },[profileid])
 
-console.log(user_details);
-
-  const [followings,setFollowings] = useState([]);
-
-  useEffect(()=>{
-    const getfollowings=async()=>{
-    try{   
-        const response = await axios.get(`http://localhost:${Backendport}/api/user/get/followings/${id}`)
-        // console.log("RESS :"+response)
-        setFollowings(response.data);
-        }catch(error){
-          console.log("SOME ERROR IN CATCH BLOCK "+error);
-        }
-      }
-     getfollowings();
-  }
-  ,[]);
   console.log("FFF")
   console.log(followings);
 
@@ -95,7 +99,7 @@ const handleFollow = async()=>{
 
         <img src={`${Profilecover}`} className="ProfilepageCover" alt="" />
         <div style={{ display: 'flex', alignItems: 'center', marginTop: -20 }}>
-          <img src={(user.user.profilepicture)?user.user.profilepicture:defaultUser} className="Profilepageimage" alt="" />
+          <img src={(user_details.profilepicture)?user_details.profilepicture:defaultUser} className="Profilepageimage" alt="" />
           <div>
             <p style={{ marginLeft: 6, marginTop: 20, color: "black", textAlign: 'start' }}>{user_details.username}</p>
             <p style={{ marginLeft: 6, color: "black", textAlign: "start", marginTop: -16, fontSize: 11 }}>Software Developer</p>
@@ -133,7 +137,7 @@ const handleFollow = async()=>{
         {
           //he issue you're facing might be because you're not explicitly returning the JSX inside the map function. In arrow functions, if you use curly braces {}, you need to use the return statement explicitly. If you want to use parentheses (), you can skip the return statement.
         followings.map((item)=>(
-          <Link to={`/profilepage/${item.others._id}`} key={item.others._id} style={{width: '30%', cursor: "pointer", margin: '5px', textDecoration: 'none', color: 'black', overflowX: 'clip' }}>
+          <Link to={`/profilepage/${item.others._id}`} key={item.others._id} style={{width: '4pc',height: '4pc', cursor: "pointer", margin: '5px', textDecoration: 'none', color: 'black', overflowX: 'clip' }}>
           
           <img src={`${(item.others.profilepicture)?item.others.profilepicture:defaultUser}`} className="friendimage" alt="" />
           <p style={{ marginTop: -2 }}>{item.others.username}</p> 

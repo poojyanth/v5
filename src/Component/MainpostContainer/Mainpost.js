@@ -21,6 +21,7 @@ export default function Mainpost() {
   let user = userDetails.user;
   let id =user.user._id;
   const jwt_here=user.jwttoken
+  // alert(jwt_here)
   const [posts,setPosts] = useState([]);
   const [loading, setLoading] = useState(true); // State to manage loading
 

@@ -10,12 +10,14 @@ import Follow from '../RightsideContainer/Follow';
 
 export default function ProfileRightbar({profileid}) {
 
+  
   // const myUserId="656762a5c43095cb8ad3dc3c";
   const Backendport = process.env.REACT_APP_BACKEND_PORT;
-
+  
   const userDetails = useSelector((state)=>state.user);
   let user = userDetails.user;
   let id =user.user._id;
+  const jwt_here=user.jwttoken
 
   const [followers,setFollowers] = useState([]);
 
@@ -39,7 +41,7 @@ export default function ProfileRightbar({profileid}) {
   // FOR SUGGESTIONS 
 
   
-  const jwt_here="eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjY1Njc2MmE1YzQzMDk1Y2I4YWQzZGMzYyIsInVzZXJuYW1lIjoiU0FJUEFWQU4iLCJpYXQiOjE3MDEzMjA0OTR9.3YHs-mLthGHdMRVS7SVWC0-yyhbF3CgEemL_ucXBnpU"
+  
   const[suggestions,setSuggestions] = useState([]);
 
   useEffect(()=>{

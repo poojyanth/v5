@@ -11,6 +11,7 @@ import {
   Setting2,
   Setting3,
   Setting4,
+  Setting5,
 } from "../../Component/Settings/settings";
 
 const SettingsContainer = {
@@ -86,12 +87,16 @@ const settings = [
     component: Setting2,
   },
   {
-    name: "CoverPhoto",
+    name: "Profile Photo",
     component: Setting3,
   },
   {
-    name: "Theme",
+    name: "Cover Photo",
     component: Setting4,
+  },
+  {
+    name: "Theme",
+    component: Setting5,
   }
 ];
 
@@ -203,6 +208,7 @@ export default function SettingsPage({ match }) {
             : setting === 1 ? <Setting2  user={user} setUser={setUser}/> 
             : setting === 2 ? <Setting3  user={user} setUser={setUser}/> 
             : setting === 3 ? <Setting4  user={user} setUser={setUser}/>
+            : setting === 4 ? <Setting5  user={user} setUser={setUser}/>
             : <Setting1  user={user} setUser={setUser}/>}
           </div>
         </div>

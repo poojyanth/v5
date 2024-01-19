@@ -45,9 +45,9 @@ const LandingLoginSignup = ({LoginContainerRef,loginSignup,setLoginSignup,setSho
 
   const user = useSelector((state) => state.user?.user);
 
-  const handleClick = (e)=>{
+  const handleClick = async (e)=>{
     e.preventDefault();
-    login(dispatch ,{email , password});
+    await login(dispatch ,{email , password});
     setShowLoginContainer(false);
     setLoginSignup(0);
     navigate('/');

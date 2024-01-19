@@ -11,6 +11,8 @@ const { verifytoken } = require('../middleware/verifytoken');
 // METHOD USED :- POST
 router.post("/createpost",verifytoken, async (req, res) => {
     
+    console.log(req.body);
+
     try {
         console.log(req.body);
         console.log(req.user);
@@ -111,7 +113,7 @@ router.get("/get/allpost",verifytoken, async (req, res) => {
             return res.status(400).json("NO POSTS FOUND ...");
         }
     
-        console.log(user_posts);
+        // console.log(user_posts);
         return res.status(200).json({post: user_posts});
         
         
@@ -225,7 +227,7 @@ router.get("/get/:key", verifytoken, async (req, res) => {
 
 // ROUTE-10 :- FETCH ALL POSTS IN USER PROFILE PAGE
 // METHOD USED :- GET
-router.get("/get/post/:id", async (req, res) => {
+router.get("/get/post/:id", verifytoken, async (req, res) => {
     try {
      const user_posts = await Post.find({user:req.params.id});
      if(!user_posts){

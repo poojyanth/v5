@@ -44,19 +44,19 @@ function App() {
     <div className="App">
       <Router>
         <Routes>
-          <Route exact path="/" element={user!== null ? <Home/>: <Navigate to={"/login"}/>} />
+          <Route exact path="/" element={user!== null ? <Home/>: <Navigate to={"/landingpage"}/>} />
           <Route exact path="/landingpage" element={<LandingPage/>}/>
-          <Route exact path="/profilepage/:id" element={user!== null ? <Profile/>: <Navigate to={"/login"}/>}/>
+          <Route exact path="/profilepage/:id" element={user!== null ? <Profile/>: <Navigate to={"/landingpage"}/>}/>
           <Route exact path="/signup" element={user!== null ? <Navigate to={"/"}/> : <Signup/>}/>
           <Route exact path="/login" element={user!== null ? <Navigate to={"/"}/> : <Login/>}/>  
-          <Route exact path="/postpage/:postid" element={user!== null ? <PostPage/> : <Navigate to={"/login"}/>}/>
-          <Route exact path="/chat" element={user!== null ? <Chat/>: <Navigate to={"/login"}/>} />
+          <Route exact path="/postpage/:postid" element={user!== null ? <PostPage/> : <Navigate to={"/landingpage"}/>}/>
+          <Route exact path="/chat" element={user!== null ? <Chat/>: <Navigate to={"/landingpage"}/>} />
           <Route exact path="/get_all_liked_posts" element={<Likedposts />} />
-          <Route exact path="/explorepage" element={user!== null ? <Explorepage/> : <Navigate to={"/login"}/>}/>
-          <Route exact path="/addnewpost" element={user!== null ? <AddNewPost/> : <Navigate to={"/login"}/>}/>
-          <Route exact path="/searchpage/:key" element={user!== null ? <SearchPage/> : <Navigate to={"/login"}/>}/>
-          <Route path="/settings/:settingName" element={user!== null ? <SettingsPage /> : <Navigate to={"/login"}/>} />
-          <Route exact path="/settings/*" element={user!== null ? <Navigate to={'/settings/Profile'}/>: <Navigate to={"/login"}/>}/>
+          <Route exact path="/explorepage" element={user!== null ? <Explorepage/> : <Navigate to={"/landingpage"}/>}/>
+          <Route exact path="/addnewpost" element={user!== null ? <AddNewPost/> : <Navigate to={"/landingpage"}/>}/>
+          <Route exact path="/searchpage/:key" element={user!== null ? <SearchPage/> : <Navigate to={"/landingpage"}/>}/>
+          <Route path="/settings/:settingName" element={user!== null ? <SettingsPage /> : <Navigate to={"/landingpage"}/>} />
+          <Route exact path="/settings/*" element={user!== null ? <Navigate to={'/settings/Profile'}/>: <Navigate to={"/landingpage"}/>}/>
           <Route exact path="/*" element={<Navigate to={"/"}/>}/>
           <Route exact path="/test" element={<LoadingAnimation2 />} />
           <Route exact path="/admin" element={<AdminPage/>}/>

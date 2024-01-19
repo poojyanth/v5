@@ -30,7 +30,11 @@ export default function Post(props) {
   useEffect(() => {
     const getuserdetails = async () => {
       try {
-        const details = await axios.get(`http://localhost:${Backendport}/api/user/post/user/details/${props.post.user}`);
+        const details = await axios.get(`http://localhost:${Backendport}/api/user/post/user/details/${props.post.user}`,{
+          headers:{
+            jwttoken:jwt_here
+          }
+        });
         setUserDetails(details.data);
       } catch (error) {
         console.log("ERROR OCCURED IN CATCH BLOCK" + error)
@@ -190,7 +194,7 @@ export default function Post(props) {
               <Link to={`/profilepage/${userDetails._id}`} style={{textDecoration: 'none', color: 'black', fontWeight: '600'}}>
             <div style={{    display: 'flex', alignItems: 'center'}}>
 
-              <img src={(user.user.profilepicture)?user.user.profilepicture:defaultUser} className="PostImage" alt="" />
+              <img src={(userDetails.profilepicture)?userDetails.profilepicture:defaultUser} className="PostImage" alt="" />
               <div>
                 <p style={{ marginLeft: '5px', textAlign: "start" }}>{userDetails.username}</p>
               </div>
@@ -247,8 +251,8 @@ export default function Post(props) {
           </div>
           {show === true ?
           <>
-            <hr style={{border: '1px solid rgba(0, 0, 0, 0.2)'}}/>
-            <div style={{ padding: '10px',maxHeight: '30vh', overflowX: 'hidden',  overflowY: 'scroll' }}>
+            <hr style={{border: '0.5px solid rgba(0, 0, 0, 0.2)'}}/>
+            <div className='CommentsBoxScroll' style={{ padding: '10px',maxHeight: '30vh', overflowX: 'hidden',  overflowY: 'scroll' }}>
               <div style={{ display: "flex", alignItems: "center", margin: '5px 0' }}>
                 <img src={(user.user.profilepicture) ? user.user.profilepicture : defaultUser} className="PostImage" alt="" />
                 <textarea
@@ -260,7 +264,7 @@ export default function Post(props) {
                 />
                 <button className='addCommentbtn' onClick={handleComment}>Post</button>
               </div>
-              <hr style={{border: '1px solid rgba(0, 0, 0, 0.2)', margin: '0'}}/>
+              <hr style={{border: '0.5px solid rgba(0, 0, 0, 0.2)', margin: '0'}}/>
               {Comments.map((item) => (
                 <div style={{ margin: '3px 0' }}>
                   <div style={{ display: "flex", alignItems: "center", }}>

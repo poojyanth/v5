@@ -104,8 +104,6 @@ router.post("/login", [
             return res.status(400).json("INCORRECT PASSWORD");
         }
 
-        console.log(SECRETKEY);
-
         const jwttoken = await jwt.sign({
             id:user._id,
             username:user.username
@@ -284,16 +282,17 @@ router.delete("/delete/:id",verifytoken, async (req, res) => {
 
 // GET USER DETAILS FOR A POST
 
-router.get("/post/user/details/:id",async(req,res)=>{
+router.get("/post/user/details/:id",verifytoken,async(req,res)=>{
     try{
     const user = await User.findById(req.params.id);
-    console.log("UserID requested"+req.params.id);
+    // console.log("UserID requested"+req.params.id);
     if(!user){
         req.status(400).send("CAN'T GET USER FOR A POST");
     }
     const {email,password,phonenumber,...others}= user._doc;
     // remaining details will be stores in others variable
     // others contain username,profilpicture
+    console.log(others)
     res.status(200).send(others);
 }catch(error){
     return res.status(400).send("SOME ERROR IN TRY_ CATCH (get user for a post)")
@@ -303,7 +302,7 @@ router.get("/post/user/details/:id",async(req,res)=>{
 
 // GET USER DETAILS WITH USERID
 
-router.get("/user/details/:id",async(req,res)=>{
+router.get("/user/details/:id",verifytoken,async(req,res)=>{
     try{
     const user = await User.findById(req.params.id);
     if(!user){
@@ -354,9 +353,9 @@ router.get("/all/user/:id", verifytoken, async (req, res) => {
 
 // GET FOLLOWING LIST OF LOGGED IN USER
 
-router.get("/get/followings/:id",async(req,res)=>{
+router.get("/get/followings/:id",verifytoken, async(req,res)=>{
     try{
-
+        console.log("get followings route",req.params.id);
         const user = await User.findById(req.params.id);
         const followings = await Promise.all(
             user.following.map((item)=>{
