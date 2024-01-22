@@ -1,7 +1,27 @@
+.AdminMainContainer{
+    padding: 1px 0 0px 0px;
+    display: flex;
+    background-color: var(--secondary-color);
+    flex-direction: row;
+}
 .MainComponentAdmin{
     display: flex;
+    width: 100%;
     flex-direction: column;
     align-items: center;
+}
+
+.AdminsideBar{
+    width: 5vw;
+    position: sticky;
+    top: 8vh;
+    height: 92vh;
+    background-color: var(--primary-color);
+    border-radius: 0 5px 5px 0;
+}
+
+.AdminsideBar:hover{
+    width: 15vw;
 }
 
 .adminContainer{
@@ -9,7 +29,10 @@
     display: flex;
     width: 80vw;
     border: 1px solid black;
-    flex-direction: column;
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: center;
+    flex-wrap: wrap;
     border-radius: 10px;
     height: 70vh;
     margin: 10px;
@@ -102,17 +125,17 @@
     background-color: red;
 }   
 
-.pieChartsContainer{
+
+.AdminSmallCard{
     display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    background-color: var(--primary-color);
+    border-radius: 10px;
+    margin: 10px;
+    padding: 10px;
+    width: 25vh;
+    height: 25vh;
+    box-shadow: 0 0 10px 0 rgba(0,0,0,0.2);
 }
-
-canvas{
-    width: 100px;
-    height: 100px;
-}
-
-.chart-canvas {
-    width: 400px; /* Set the width */
-    height: 400px; /* Set the height */
-  }
-  

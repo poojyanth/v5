@@ -1,5 +1,5 @@
 .home{
-    background-color: rgb(235, 238, 242);
+    background-color: var(--secondary-color);
 }
 
 .ComponentContainer{

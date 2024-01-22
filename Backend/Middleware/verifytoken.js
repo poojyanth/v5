@@ -7,6 +7,7 @@ const verifytoken=(req,res,next)=>{
     const token_in_headers = req.headers.jwttoken;
     // console.log("JWT TOKEN IN GOT IN MIDDLEWARE :"+token_in_headers);
     // console.log("JWT TOKEN IN GOT IN MIDDLEWARE :"+token_in_headers);
+    // console.log("JWT TOKEN IN GOT IN MIDDLEWARE :"+token_in_headers);
     if(!token_in_headers){
         console.log("NO TOKEN IN HEADERS")
         console.log(req.body)

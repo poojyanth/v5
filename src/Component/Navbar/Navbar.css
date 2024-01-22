@@ -4,7 +4,7 @@
     margin: auto;
     justify-content: space-between;
     height: 8vh;
-    background-color: white;
+    background-color: var(--primary-color);
     top: 0;
     border-bottom-left-radius: 13px;
     border-bottom-right-radius: 13px;
@@ -16,7 +16,7 @@
     display: flex;
     align-items: center;
     flex: 4;
-    background-color: rgb(224, 228, 232);
+    background-color: var(--secondary-color);
     padding: 5px;
     border-radius: 10px;
 }
@@ -59,7 +59,11 @@
     border: none;
     padding: 4px;
     border-radius: 10px;
-    background-color: rgb(224, 228, 232);
+    background-color: var(--secondary-color);
+}
+
+.searchInput:focus{
+    outline: none;
 }
 
 .NavbarUsername{
@@ -84,8 +88,8 @@
   }
   
   .dropbtn {
-    background-color: #fff;
-    color: black;
+    background-color: var(--primary-color);
+    color: var(--primary-text-color);
     padding: 8px 12px;
     font-size: 16px;
     border: none;
@@ -95,7 +99,7 @@
   .dropdown-content {
     display: none;
     position: absolute;
-    background-color: white;
+    background-color: var(--primary-color);
     right: 0.5vw;
     min-width: 120px;
     box-shadow: 0px 8px 16px 0px rgba(0, 0, 0, 0.2);
@@ -103,7 +107,7 @@
 }
 
 .dropdown-content a, .dropdown-content button {
-    color: black;
+    color: var(--primary-text-color);
     padding: 12px 16px;
     text-decoration: none;
     transition: background-color 0.2s ease-in-out;
@@ -111,7 +115,7 @@
   }
   
   .dropdown-content a:hover, .dropdown-content button:hover {
-    background-color: #c2c2c2;
+    background-color: var(--tertiary-color);
   }
   
   .dropdown:hover .dropdown-content {

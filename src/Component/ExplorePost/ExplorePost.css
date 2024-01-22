@@ -5,7 +5,7 @@
     /* padding: 10px; */
     border: 1px solid #dbdbdb;
     border-radius: 3px;
-    background-color: #fff;
+    background-color: var(--secondary-color);
     width: 23vw;
     height: 23vw;
     box-sizing: border-box;

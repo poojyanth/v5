@@ -10,11 +10,11 @@ import Follow from './Follow';
 export default function Rightbar() {
 
   const userDetails = useSelector((state)=>state.user);
+  const Backendport = process.env.REACT_APP_BACKEND_PORT;
   let user = userDetails.user;
   let id =user.user._id;
-  const Backendport = process.env.REACT_APP_BACKEND_PORT;
-
   const jwt_here=user.jwttoken
+  
   const[suggestions,setSuggestions] = useState([]);
 
   useEffect(()=>{

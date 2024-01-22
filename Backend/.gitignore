@@ -13,6 +13,8 @@
 
 .env
 
+traffic.log
+
 # misc
 .DS_Store
 .env.local

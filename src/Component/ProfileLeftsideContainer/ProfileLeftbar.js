@@ -129,7 +129,7 @@ const handleFollow = async()=>{
         <h3>Followings</h3>
         <div style={{ display: "flex", justifyContent: 'space-between' }}>
           <p style={{ marginLeft: 10 }}>Friends</p>
-          <p style={{ marginRight: 10, color: "#aaa" }}>See all</p>
+          <p style={{ marginRight: 10, color: "var(--secondary-text-color)" }}>See all</p>
         </div>
         <div style={{ display: 'flex', flexWrap: "wrap",flexDirection: 'row', justifyContent: 'center' }}>
 

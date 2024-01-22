@@ -125,7 +125,7 @@ const jwt_here="eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjY1NTg0NGFhYTFlZjE
             
             <div>
               <p style={{ marginLeft: '5px', textAlign: "start" }}>{userDetails.username}</p>
-              <p style={{ fontSize: "11px", textAlign: "start", marginLeft: 5, marginTop: -13, color: "#aaa" }}>Following by suman</p>
+              <p style={{ fontSize: "11px", textAlign: "start", marginLeft: 5, marginTop: -13, color: "var(--secondary-text-color)" }}>Following by suman</p>
             </div>
             <img src={`${MoreOptions}`} style={{marginRight:16}}className="moreicons" alt="" />
           </div>
@@ -168,7 +168,7 @@ const jwt_here="eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjY1NTg0NGFhYTFlZjE
                   <p style={{ marginLeft: "6px" , fontSize:18, marginTop:6 }}>{item.username}</p>
                 </div>
                 <p style={{ marginLeft: "55px" , textAlign:'start' , marginTop:-16 }}>{item.writtencomment}</p>
-                <p style={{ marginLeft: "55px" , textAlign:'start' , marginTop:-10 , color:"#aaa" , fontSize:11}}>Reply</p>
+                <p style={{ marginLeft: "55px" , textAlign:'start' , marginTop:-10 , color:"var(--secondary-text-color)" , fontSize:11}}>Reply</p>
                 
               </div>
 

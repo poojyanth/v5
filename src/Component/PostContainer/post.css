@@ -6,7 +6,7 @@
 
 .SubPostContainer{
     width: 100%;
-    background-color: white;
+    background-color:var(--primary-color);
     border-radius: 10px;
 }
 
@@ -43,8 +43,8 @@
 .addCommentbtn{
     padding: 9px;
     border: none;
-    background-color: black;
-    color: white;
+    background-color: var(--primary-text-color);
+    color: var(--primary-color);
     border-radius: 6px;
     cursor: pointer;
 }
@@ -53,8 +53,8 @@
     position:inherit;
     top: 30px; /* Adjust the positioning based on your layout */
     right: 10px; /* Adjust the positioning based on your layout */
-    background-color: #fff;
-    border: 1px solid #ccc;
+    background-color: var(--primary-color);
+    border: 1px solid var(--tertiary-color);
     padding: 5px;
     border-radius: 5px;
     z-index: 999;

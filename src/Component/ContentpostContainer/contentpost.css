@@ -1,6 +1,6 @@
 .ContentUploadContainer{
     width: calc(100% - 4vw);
-    background-color: white;
+    background-color: var(--primary-color);
     margin: auto;
     border-radius: 10px;
 }

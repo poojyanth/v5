@@ -144,7 +144,7 @@ export default function SettingsPage({ match }) {
       if (buttonValue === setting) {
         e.target.style.backgroundColor = "#e0e4e8";
       } else {
-        e.target.style.backgroundColor = "transparent";
+        e.target.style.backgroundColor = "#e0e4e8";
       }
     };
 
@@ -174,13 +174,14 @@ export default function SettingsPage({ match }) {
                 }
                 width="100px"
                 height="100px"
+                style={{borderRadius: '50%', border: '1px solid'}}
                 alt=""
                 className="SettingsProfilePicture"
               />
               <div className="settingsRightUserDetailsText">
                 <p
                   className="settingsRightUserDetailsTextUsername"
-                  style={{ margin: "0" }}
+                  style={{ margin: "0", fontWeight: "bold", userSelect: "none"}}
                 >
                   {user.user.username}
                 </p>

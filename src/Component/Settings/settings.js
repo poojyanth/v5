@@ -4,6 +4,7 @@ import {faCircleCheck as okTick, faCircleXmark as noCross} from '@fortawesome/fr
 import { useDispatch, useSelector } from "react-redux";
 import { logout } from "../ReduxContainer/UserReducer";
 import { useState } from "react";
+import coverPhoto from "../Images/default-cover-4.jpeg";
 import Image from "../Images/blank-profile-picture-973460_960_720.webp";
 import { set } from "mongoose";
 
@@ -348,8 +349,8 @@ export const Setting3 = ({ user, setUser }) => {
             <img
               id="ImagePreviewImage"
               src={ImagePreview}
-              height="200px"
-              width="200px"
+              height="100%"
+              width="100%"
               alt=""
             />
           </div>
@@ -359,9 +360,12 @@ export const Setting3 = ({ user, setUser }) => {
               transition: "all 0.01s ease",
               border: "1.5px solid #c2c2c2",
               borderRadius: "5px",
+              width: "100px",
+              margin: '5px auto',
               display: "flex",
               justifyContent: "center",
               alignItems: "center",
+              cursor: 'pointer'
             }}
           >
             <p>Upload</p>
@@ -393,7 +397,7 @@ export const Setting3 = ({ user, setUser }) => {
 
 export const Setting4 = ({ user, setUser }) => {
   console.log(user);
-  var ImagePreview = user.user.coverphoto ? user.user.coverphoto : Image;
+  var ImagePreview = user.user.coverphoto ? user.user.coverphoto : coverPhoto;
 
   const handleImageInput = (event) => {
     if(event.target.files.length === 0) return;
@@ -414,12 +418,12 @@ export const Setting4 = ({ user, setUser }) => {
   return (
     <div className="settingsPane" style={settingsPane}>
       <div className="settingHeader" style={settingHeader}>
-        <h1>Profile Photo</h1>
+        <h1>Cover Photo</h1>
       </div>
       <div className="settings" style={settings}>
         <label
-          htmlFor="profilepicture"
-          style={{ width: "20%", fontWeight: "bold" }}
+          htmlFor="coverphoto"
+          style={{ width: "80%", fontWeight: "bold" }}
         >
           <div
             className="ImagePreview"
@@ -427,6 +431,7 @@ export const Setting4 = ({ user, setUser }) => {
               transition: "all 0.01s ease",
               border: "1.5px solid #c2c2c2",
               borderRadius: "5px",
+              height: '50vh',
               display: "flex",
               justifyContent: "center",
               alignItems: "center",
@@ -435,8 +440,9 @@ export const Setting4 = ({ user, setUser }) => {
             <img
               id="ImagePreviewImage"
               src={ImagePreview}
-              height="200px"
-              width="200px"
+              height="100%"
+              style={{objectFit: 'cover'}}
+              width="100%"               
               alt=""
             />
           </div>
@@ -446,19 +452,22 @@ export const Setting4 = ({ user, setUser }) => {
               transition: "all 0.01s ease",
               border: "1.5px solid #c2c2c2",
               borderRadius: "5px",
+              width: "100px",
+              margin: '5px auto',
               display: "flex",
               justifyContent: "center",
               alignItems: "center",
+              cursor: 'pointer'
             }}
           >
-            <p>Upload</p>
+            <p>Browse</p>
           </div>
         </label>
         <input
           type="file"
-          name="profilepicture"
+          name="coverphoto"
           onChange={handleImageInput}
-          id="profilepicture"
+          id="coverphoto"
           style={{ display: "none" }}
         />
       </div>
@@ -481,7 +490,10 @@ export const Setting4 = ({ user, setUser }) => {
 
 export const Setting5 = ({ user, setUser }) => {
 
+  const [theme, setTheme] = useState("Light");
+
   const handleThemeChange = (event) => {
+    setTheme(event.target.value);
     if(event.target.value === "Light") {
       document.documentElement.style.setProperty("--primary-color", "#0095f6");
       document.documentElement.style.setProperty("--secondary-color", "#ffffff");
@@ -494,6 +506,10 @@ export const Setting5 = ({ user, setUser }) => {
       document.documentElement.style.setProperty("--primary-color", "#0095f6");
       document.documentElement.style.setProperty("--secondary-color", "#ffffff");
     }
+  }
+
+  const handleSave = () => {
+    console.log("Save");
   }
 
   return (
@@ -518,46 +534,79 @@ export const Setting5 = ({ user, setUser }) => {
             <option value="Custom">Custom</option>
           </select>
           <div className="SettingsmallIcon" style={smallIcon}>
-            <img src={Image} height="80%" alt="" />
+            <img src={''} height="80%" alt="" />
           </div>
         </div>
-        <div className="setting" style={settingCSS}>
-          <label
-            htmlFor="primarycolor"
-            style={{ width: "20%", fontWeight: "bold" }}
-          >
-            Primary Color
-          </label>
-          <input
-            type="color"
-            style={settingInput}
-            name="primarycolor"
-            id="primarycolor"
-            defaultValue="#0095f6"
-          />
-          <div className="SettingsmallIcon" style={smallIcon}>
-            <img src={""} height="80%" alt="" />
+        {theme==='Custom'?  <div className="themeSettings" style={{display: 'flex', flexDirection: 'column', width: '100%', justifyContent: 'space-around', alignItems: 'center'}}>
+          <div className="setting" style={settingCSS}>
+            <label
+              htmlFor="primarycolor"
+              style={{ width: "20%", fontWeight: "bold" }}
+            > 
+              Primary Color
+            </label>
+            <input
+              type="color"
+              style={{...settingInput, width: "40px", height: '40px'}}
+              name="primarycolor"
+              id="primarycolor"
+              defaultValue="#0095f6"
+            />
+            <div className="SettingsmallIcon" style={smallIcon}>
+              <img src={""} height="80%" alt="" />
+            </div>
           </div>
-        </div>
-        <div className="setting" style={settingCSS}>
-          <label
-            htmlFor="secondarycolor"
-            style={{ width: "20%", fontWeight: "bold" }}
-          >
-            Secondary Color
-          </label>
-          <input
-            type="color"
-            style={settingInput}
-            name="secondarycolor"
-            id="secondarycolor"
-            defaultValue="#ffffff"
-          />
-          <div className="SettingsmallIcon" style={smallIcon}>
-            <img src={Image} height="80%" alt="" />
+          <div className="setting" style={settingCSS}>
+            <label
+              htmlFor="secondarycolor"
+              style={{ width: "20%", fontWeight: "bold" }}
+            >
+              Secondary Color
+            </label>
+            <input
+              type="color"
+              style={{...settingInput, width: "40px", height: '40px'}}
+              name="secondarycolor"
+              id="secondarycolor"
+              defaultValue="#ffffff"
+            />
+            <div className="SettingsmallIcon" style={smallIcon}>
+              <img src={''} height="80%" alt="" />
+            </div>
           </div>
-        </div>
+          <div className="setting" style={settingCSS}>
+            <label
+              htmlFor="tertiarycolor"
+              style={{ width: "20%", fontWeight: "bold" }}
+            >
+              Tertiary Color
+            </label>
+            <input
+              type="color"
+              style={{...settingInput, width: "40px", height: '40px'}}
+              name="tertiarycolor"
+              id="tertiarycolor"
+              defaultValue="#000000"
+            />
+            <div className="SettingsmallIcon" style={smallIcon}>
+              <img src={''} height="80%" alt="" />
+            </div>
+          </div>
+        </div>: <></>}
+        
       </div>        
+          <div
+          className="saveButton"
+          style={{
+            width: "100%",
+            height: "10%",
+            display: "flex",
+            justifyContent: "flex-end",
+            alignItems: "center",
+          }}
+        >
+          <button style={saveButton} onClick={handleSave}>Save</button>
+        </div>
     </div>
   );
 }

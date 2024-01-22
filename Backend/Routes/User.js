@@ -156,6 +156,7 @@ router.post("/login", [
 // })
 
 router.put("/follow/:id" , verifytoken , async(req , res)=>{
+    console.log("follow route");
     if(req.params.id !== req.body.user){
         const user = await User.findById(req.params.id);
         const otheruser = await User.findById(req.body.user);

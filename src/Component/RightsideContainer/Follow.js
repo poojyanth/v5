@@ -9,8 +9,9 @@ export default function Follow(props) {
   const userDetails = useSelector((state)=>state.user);
   let user = userDetails.user;
   let id =user.user._id;
+  const jwt_here=user.jwttoken
 
-    const jwt_here="eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjY1NTg0NGFhYTFlZjE1OGM2ZTNjNjdlZCIsInVzZXJuYW1lIjoiVVNFUjIiLCJpYXQiOjE3MDAyODU0NDZ9.Oo2Vo_M0wmya9zQaCkWnVgkoC4jFji_HqgEri_JHgQs"
+  
     const [followImg,setFollowImg] = useState([addfriend]);
     // const myUserId="656762a5c43095cb8ad3dc3c";
     

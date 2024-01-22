@@ -57,9 +57,9 @@ function App() {
           <Route exact path="/searchpage/:key" element={user!== null ? <SearchPage/> : <Navigate to={"/landingpage"}/>}/>
           <Route path="/settings/:settingName" element={user!== null ? <SettingsPage /> : <Navigate to={"/landingpage"}/>} />
           <Route exact path="/settings/*" element={user!== null ? <Navigate to={'/settings/Profile'}/>: <Navigate to={"/landingpage"}/>}/>
+          <Route exact path="/admin" element={user!==null && user.user.username==='Admin' ? <AdminPage/> : <Navigate to={'/'}/>}/>
           <Route exact path="/*" element={<Navigate to={"/"}/>}/>
           <Route exact path="/test" element={<LoadingAnimation2 />} />
-          <Route exact path="/admin" element={<AdminPage/>}/>
           <Route exact path="/viewstory/:pictureid" element={< ViewStoryImage/>}/>
           {/* <Route exact path="/explore" element={<Explore/>}/> */}
           <Route exact path="/reels" element={<Carousel items={['https://firebasestorage.googleapis.com/v0/b/fdfed-d64be.appspot.com/o/1703178916135Snapchat-1450444302.mp4?alt=media&token=9ed77aae-978b-4f05-97dc-daeec89dba14',

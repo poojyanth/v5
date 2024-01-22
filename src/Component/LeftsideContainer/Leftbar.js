@@ -43,33 +43,33 @@ console.log(posts);
     <div className='NotificationsContainer'>
               <div className='containerHead'>
                                   <p >Notifications</p>
-                                  <p style={{ color: "#aaa" }}>See all</p>
+                                  <p style={{ color: "var(--secondary-text-color)" }}>See all</p>
               </div>
               <div className='ScrollContainerDisNone'>
               <div className='notificationItem' >
                         <img src={`${image3}`} className="notificationimg" alt="" />
-                        <p style={{ color:"#aaa" , fontSize:13 , width:"120px" , textAlign:"start"}}>Madan like your post</p>
+                        <p style={{ color:"var(--secondary-text-color)" , fontSize:13 , width:"120px" , textAlign:"start"}}>Madan like your post</p>
                         <img src={`${image3}`} className="likeimage" alt="" />
               </div>
               <div className='notificationItem'>
                         <img src={`${image3}`} className="notificationimg" alt="" />
-                        <p style={{ color:"#aaa" , fontSize:13 , textAlign:"start" , width:"120px"}}>Suman started to following you</p>
+                        <p style={{ color:"var(--secondary-text-color)" , fontSize:13 , textAlign:"start" , width:"120px"}}>Suman started to following you</p>
                         <img src={`${image3}`} className="followinguserimage" alt="" />
               </div>
               <div className='notificationItem'>
                         <img src={`${image3}`} className="notificationimg" alt="" />
-                        <p style={{  color:"#aaa" , fontSize:13 , width:"120px" , textAlign:"start"}}>Madan like your post</p>
+                        <p style={{  color:"var(--secondary-text-color)" , fontSize:13 , width:"120px" , textAlign:"start"}}>Madan like your post</p>
                         <img src={`${image3}`} className="likeimage" alt="" />
               </div>
               <div className='notificationItem'>
                         <img src={`${image3}`} className="notificationimg" alt="" />
-                        <p style={{ color:"#aaa" , fontSize:13 , width:"120px" , textAlign:"start"}}>Madan like your post</p>
+                        <p style={{ color:"var(--secondary-text-color)" , fontSize:13 , width:"120px" , textAlign:"start"}}>Madan like your post</p>
                         <img src={`${image3}`} className="likeimage" alt="" />
               </div>
 
               <div className='notificationItem'>
                         <img src={`${image3}`} className="notificationimg" alt="" />
-                        <p style={{ color:"#aaa" , fontSize:13 , width:"120px" , textAlign:"start"}}>Madan like your post</p>
+                        <p style={{ color:"var(--secondary-text-color)" , fontSize:13 , width:"120px" , textAlign:"start"}}>Madan like your post</p>
                         <img src={`${image3}`} className="likeimage" alt="" />
               </div>
               </div>
@@ -81,7 +81,7 @@ console.log(posts);
     <div className='NotificationsContainer'>
               <div className='containerHead'>
                         <p >Explore</p>
-                        <Link to="/explorepage" style={{ color: "#aaa", textDecoration: 'none' }}><p >See all</p></Link>
+                        <Link to="/explorepage" style={{ color: "var(--secondary-text-color)", textDecoration: 'none' }}><p >See all</p></Link>
               </div>
               
               <div className='ExploreImageContainer ScrollContainerDisNone'>

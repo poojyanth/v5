@@ -14,4 +14,10 @@ code {
 
 :root{
   transition: all 0.5s ease;
+  --primary-color: white;
+  --secondary-color: #ebeef2;
+  --tertiary-color: #c1c1c1;
+  --primary-text-color: black;
+  --secondary-text-color: #aaa;
 }
+

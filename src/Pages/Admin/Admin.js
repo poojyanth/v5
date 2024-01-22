@@ -1,20 +1,31 @@
 import React, { useEffect, useState } from 'react';
 import Navbar from '../../Component/Navbar/Navbar';
+import AdminSmallNumberCard from '../../Component/Admin/AdminSmallNumberCard';
 import axios from 'axios';
 import './Admin.css';
 import { useNavigate } from 'react-router-dom';
-import Chart from 'chart.js/auto'; // Import chart.js library
+import { useSelector } from 'react-redux';
 
 const AdminPage = () => {
   const [totalUsers, setTotalUsers] = useState([]);
   const [totalPosts, setTotalPosts] = useState([]);
+  const [totalTraffic, setTotalTraffic] = useState([]);
+  const [totalTrafficNumber, setTotalTrafficNumber] = useState(0);
 
   const navigate = useNavigate();
+  const userDetails = useSelector((state)=>state.user);
   const Backendport = process.env.REACT_APP_BACKEND_PORT;
+  let user = userDetails.user;
+  let id =user.user._id;
+  const jwt_here=user.jwttoken
 
   const getUsers = async () => {
     try {
-      const response = await axios.get(`http://localhost:${Backendport}/api/user/get/allusers`);
+      const response = await axios.get(`http://localhost:${Backendport}/api/user/get/allusers`,{
+        headers:{
+          jwttoken: jwt_here
+        }
+      });
       setTotalUsers(response.data.allUsersList); // Assuming the response contains an 'allUsersList' field
     } catch (error) {
       console.log("ERROR OCCURRED IN CATCH BLOCK:", error);
@@ -23,16 +34,37 @@ const AdminPage = () => {
 
   const getPosts = async () => {
     try {
-      const response = await axios.get(`http://localhost:${Backendport}/api/post/get/allposts`);
+      const response = await axios.get(`http://localhost:${Backendport}/api/post/get/allposts`,{
+        headers:{
+          jwttoken: jwt_here
+        }
+      });
       setTotalPosts(response.data.post); // Assuming the response contains an 'allPostsList' field
     } catch (error) {
       console.log("ERROR OCCURRED IN CATCH BLOCK:", error);
     }
   };
 
+  const getTraffic = async () => {
+    try {
+      const response = await axios.get(`http://localhost:${Backendport}/api/admin/log`,{
+        headers:{
+          jwttoken: jwt_here
+        }
+      });
+      setTotalTrafficNumber(response.data.numberOfRequests);
+      // setTotalTraffic(response.data.logData); // Assuming the response contains an 'allPostsList' field
+    }
+    catch (error) {
+      console.log("ERROR OCCURRED IN CATCH BLOCK:", error);
+    }
+  };
+      
+
   useEffect(() => {
     getUsers();
     getPosts();
+    getTraffic();
   }, []);
 
 
@@ -58,121 +90,85 @@ const AdminPage = () => {
     setTotalLikes(likesCount);
     setTotalComments(commentsCount);
 
-    // Create pie charts
-    createPieChart('usersChart', 'Total Users', totalUsers.length);
-    createPieChart('postsChart', 'Total Posts', totalPosts.length);
-    createPieChart('likesChart', 'Total Likes', totalLikes);
-    createPieChart('commentsChart', 'Total Comments', totalComments);
+
   }, [totalUsers, totalPosts, totalLikes, totalComments]);
 
-  // Function to create pie chart
-  const createPieChart = (chartId, label, value) => {
-    const ctx = document.getElementById(chartId);
-    const existingChart = Chart.getChart(ctx);
-
-    if (existingChart) {
-      existingChart.destroy();
-    }
-
-    new Chart(ctx, {
-      type: 'pie',
-      data: {
-        labels: [label, 'Remaining'],
-        datasets: [
-          {
-            label: label,
-            data: [value, Math.max(0, 50 - value)], // Assuming maximum value is 100
-            backgroundColor: [
-              'rgba(54, 162, 235, 0.6)', // Color for the value
-              'rgba(255, 99, 132, 0.6)' // Color for the remaining part of the pie chart
-            ],
-            borderColor: [
-              'rgba(54, 162, 235, 1)',
-              'rgba(255, 99, 132, 1)'
-            ],
-            borderWidth: 1,
-          },
-        ],
-      },
-      options: {
-        responsive: false,
-        maintainAspectRatio: false,
-        // Other chart options as needed
-      },
-    });
-  };
 
   return (
     <>
       <Navbar />
-      <div className='MainComponentAdmin'>
-      <div className='Adminsection3 adminContainer'>
-          <h2>Pie Charts</h2>
-          <div className='pieChartsContainer'>
-            <canvas id='usersChart' width='200' height='200'></canvas>
-            <canvas id='postsChart' width='200' height='200'></canvas>
-            <canvas id='likesChart' width='200' height='200'></canvas>
-            <canvas id='commentsChart' width='200' height='200'></canvas>
-          </div>
+      <div className='AdminMainContainer'>
+        <div className='AdminsideBar'>
         </div>
-        <div className='Adminsection1 adminContainer'>
-          <h2>Total Users</h2>
-          <div className='userList scroll'>
-            {totalUsers.map((user) => {
-              return (
-                <div className='user' id={user._id} onClick={() => toggleDropdown(user._id)} >
-                  <div className='userHeader'>
-                    <h3 style={{    margin: '5px 10px'}} >{user.username}</h3>
-                    <div className='dropdown'>
-                      <button className='dropbtn'> 
-                        ...
-                       </button>
-                      <div className={`dropdown-content`}>
-                        <button className='dropbtn' onClick={()=> navigate(`/profilepage/${user._id}`)}>Goto Profile</button>
-                        <button className='dropbtn delete' style={{width: '100%'}}>Delete</button> 
-                      </div>
-                    </div>
-                  </div>
-                  <div className='userDetails'>
-                    <p className='userDetail'>Email : {user.email}</p>
-                    <p className='userDetail'>PhoneNumber : {user.phonenumber}</p>
-                  </div>
-                </div>
-              );
-            })}
+        <div className='MainComponentAdmin'>
+          <div className='adminContainer'>
+            <AdminSmallNumberCard CardName={'Traffic'} CardValue= {totalTrafficNumber} />
+            <AdminSmallNumberCard CardName={'Posts'} CardValue={400} />  
+            <AdminSmallNumberCard CardName={'Users'} CardValue={400}/>
+            <AdminSmallNumberCard CardName={'Likes'} CardValue={400}/>
           </div>
-        </div>
-
-        <div className='Adminsection2 adminContainer'>
-          <h2>Total Posts {totalPosts.length}</h2>
-          <div className='postList scroll'>
-            {totalPosts.map((post) => {
-              return (
-                <div className='Adminpost' id={post._id} onClick={() => toggleDropdown(post._id)}>
-                  
-                    <div className='AdminpostHeader' style={{display: 'flex', flexDirection: 'row', alignItems: 'center', width: '90%', justifyContent: 'space-around'}}>
-                      <div>
-                        <h3>{post._id}</h3>
-                        <div className='AdminpostDetails'>
-                        <p className='AdminpostDetail'>Description : {post.description}</p>
-                        <p className='AdminpostDetail'>User : {post.user}</p>
-                        <p className='AdminpostDetail'>Likes : {post.likes.length}</p>
+          <div className='adminContainer'>
+            {totalTraffic}
+          </div>
+          <div className='Adminsection1 adminContainer'>
+            <h2>Total Users</h2>
+            <div className='userList scroll'>
+              {totalUsers.map((user) => {
+                return (
+                  <div className='user' id={user._id} onClick={() => toggleDropdown(user._id)} >
+                    <div className='userHeader'>
+                      <h3 style={{    margin: '5px 10px'}} >{user.username}</h3>
+                      <div className='dropdown'>
+                        <button className='dropbtn'> 
+                          ...
+                        </button>
+                        <div className={`dropdown-content`}>
+                          <button className='dropbtn' onClick={()=> navigate(`/profilepage/${user._id}`)}>Goto Profile</button>
+                          <button className='dropbtn delete' style={{width: '100%'}}>Delete</button> 
                         </div>
                       </div>
-                      <img className="AdminPostImage" src={post.image} alt='post' />
                     </div>
-                    
-                  
-                  <div className='dropdown'>
-                    <button className='dropbtn'>...</button>
-                    <div className={`dropdown-content`}>
-                      <button className='dropbtn delete' style={{width: '100%'}}>Delete</button>
+                    <div className='userDetails'>
+                      <p className='userDetail'>Email : {user.email}</p>
+                      <p className='userDetail'>PhoneNumber : {user.phonenumber}</p>
                     </div>
                   </div>
-                  
-                </div>
-              );
-            })}
+                );
+              })}
+            </div>
+          </div>
+
+          <div className='Adminsection2 adminContainer'>
+            <h2>Total Posts {totalPosts.length}</h2>
+            <div className='postList scroll'>
+              {totalPosts.map((post) => {
+                return (
+                  <div className='Adminpost' id={post._id} onClick={() => toggleDropdown(post._id)}>
+                    
+                      <div className='AdminpostHeader' style={{display: 'flex', flexDirection: 'row', alignItems: 'center', width: '90%', justifyContent: 'space-around'}}>
+                        <div>
+                          <h3>{post._id}</h3>
+                          <div className='AdminpostDetails'>
+                          <p className='AdminpostDetail'>Description : {post.description}</p>
+                          <p className='AdminpostDetail'>User : {post.user}</p>
+                          <p className='AdminpostDetail'>Likes : {post.likes.length}</p>
+                          </div>
+                        </div>
+                        <img className="AdminPostImage" src={post.image} alt='post' />
+                      </div>
+                      
+                    
+                    <div className='dropdown'>
+                      <button className='dropbtn'>...</button>
+                      <div className={`dropdown-content`}>
+                        <button className='dropbtn delete' style={{width: '100%'}}>Delete</button>
+                      </div>
+                    </div>
+                    
+                  </div>
+                );
+              })}
+            </div>
           </div>
         </div>
       </div>
