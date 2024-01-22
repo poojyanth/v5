@@ -1,19 +1,24 @@
 // Import the functions you need from the SDKs you need
 import { initializeApp } from "firebase/app";
 import { getAnalytics } from "firebase/analytics";
-// TODO: Add SDKs for Firebase products that you want to use
-// https://firebase.google.com/docs/web/setup#available-libraries
 
-// Your web app's Firebase configuration
-// For Firebase JS SDK v7.20.0 and later, measurementId is optional
+const FIREBASE_API_KEY = process.env.REACT_APP_FIREBASE_API_KEY;
+const FIREBASE_AUTH_DOMAIN = process.env.REACT_APP_FIREBASE_AUTH_DOMAIN;
+const FIREBASE_PROJECT_ID = process.env.REACT_APP_FIREBASE_PROJECT_ID;
+const FIREBASE_STORAGE_BUCKET = process.env.REACT_APP_FIREBASE_STORAGE_BUCKET;
+const FIREBASE_MESSAGING_SENDER_ID = process.env.REACT_APP_FIREBASE_MESSAGING_SENDER_ID;
+const FIREBASE_APP_ID = process.env.REACT_APP_FIREBASE_APP_ID;
+const FIREBASE_MEASUREMENT_ID = process.env.REACT_APP_FIREBASE_MEASUREMENT_ID; 
+
+
 const firebaseConfig = {
-  apiKey: "AIzaSyBib1YrTIp_pdclubZcjB4GrEMypB-MiEM",
-  authDomain: "fotoflask-66c8a.firebaseapp.com",
-  projectId: "fotoflask-66c8a",
-  storageBucket: "fotoflask-66c8a.appspot.com",
-  messagingSenderId: "501551615169",
-  appId: "1:501551615169:web:2e2e55bb044f0012535840",
-  measurementId: "G-5B8L6KX021"
+  apiKey: FIREBASE_API_KEY,
+  authDomain: FIREBASE_AUTH_DOMAIN,
+  projectId: FIREBASE_PROJECT_ID,
+  storageBucket: FIREBASE_STORAGE_BUCKET,
+  messagingSenderId: FIREBASE_MESSAGING_SENDER_ID,
+  appId: FIREBASE_APP_ID,
+  measurementId: FIREBASE_MEASUREMENT_ID
 };
 
 // Initialize Firebase

@@ -10,7 +10,7 @@ import Follow from './Follow';
 export default function Rightbar() {
 
   const userDetails = useSelector((state)=>state.user);
-  const Backendport = process.env.REACT_APP_BACKEND_PORT;
+  const BACKEND_URI = process.env.REACT_APP_BACKEND_URI;
   let user = userDetails.user;
   let id =user.user._id;
   const jwt_here=user.jwttoken
@@ -20,7 +20,7 @@ export default function Rightbar() {
   useEffect(()=>{
     const getsuggestions =async()=>{
       try{
-      const details = await axios.get(`http://localhost:${Backendport}/api/user/all/user/${id}`,{
+      const details = await axios.get(`${BACKEND_URI}/api/user/all/user/${id}`,{
         headers:{
           jwttoken:jwt_here
         }

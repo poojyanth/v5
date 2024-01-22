@@ -6,6 +6,7 @@ import { useSelector}  from 'react-redux'
 export default function Likedposts() {
 
   const userDetails = useSelector((state)=>state.user);
+  const BACKEND_URI = process.env.REACT_APP_BACKEND_URI;
   let user = userDetails.user;
   let id =user.user._id;
   const jwt_here=user.jwttoken
@@ -14,7 +15,7 @@ const [posts,setPosts] = useState([]);
 useEffect(()=>{
   const getposts = async()=>{   
     try{
-      const response = await axios.get(`http://localhost:5000/api/post/get_all_liked_posts`,{
+      const response = await axios.get(`${BACKEND_URI}/api/post/get_all_liked_posts`,{
         headers:{
           jwttoken:jwt_here // must be the attribute name (same name as in headers )-> i.e jwttoken
         }

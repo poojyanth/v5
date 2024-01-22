@@ -16,8 +16,7 @@ import { set } from 'mongoose';
 import { rgbParse } from '@kurkle/color';
 
 export default function Post(props) {
-  const Backendport = process.env.REACT_APP_BACKEND_PORT;
-  const FrontEndPort = process.env.REACT_APP_FRONTEND_PORT;
+  const BACKEND_URI = process.env.REACT_APP_BACKEND_URI;
   const userDetails2 = useSelector((state) => state.user);
   let user = userDetails2.user;
   const navigate = useNavigate();
@@ -30,7 +29,7 @@ export default function Post(props) {
   useEffect(() => {
     const getuserdetails = async () => {
       try {
-        const details = await axios.get(`http://localhost:${Backendport}/api/user/post/user/details/${props.post.user}`,{
+        const details = await axios.get(`${BACKEND_URI}/api/user/post/user/details/${props.post.user}`,{
           headers:{
             jwttoken:jwt_here
           }
@@ -64,7 +63,7 @@ export default function Post(props) {
       "comment": `${commentwriting}`
     }
     setComments(Comments.concat(comment));
-    await fetch(`http://localhost:${Backendport}/api/post/comment/post`,
+    await fetch(`${BACKEND_URI}/api/post/comment/post`,
       {
         method: "PUT",
         headers: {
@@ -105,7 +104,7 @@ export default function Post(props) {
   const handleLike = async () => {
     if (Like === LikeIcon) {
       setLike(anotherlikeicon);
-      await fetch(`http://localhost:${Backendport}/api/post/${props.post._id}/like`,
+      await fetch(`${BACKEND_URI}/api/post/${props.post._id}/like`,
         {
           method: "PUT",
           headers: {
@@ -130,7 +129,7 @@ export default function Post(props) {
       //   setCount(count + 1);
     } else {
       setLike(LikeIcon);
-      await fetch(`http://localhost:${Backendport}/api/post/${props.post._id}/like`,
+      await fetch(`${BACKEND_URI}/api/post/${props.post._id}/like`,
         {
           method: "PUT",
           headers: {

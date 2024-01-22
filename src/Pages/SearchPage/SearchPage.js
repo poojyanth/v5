@@ -9,7 +9,7 @@ import { useParams } from 'react-router-dom'
 
 export default function SearchPage() {
 
-  const Backendport = process.env.REACT_APP_BACKEND_PORT;
+  const BACKEND_URI = process.env.REACT_APP_BACKEND_URI;
 
   const {key} = useParams('/:key');
 
@@ -21,7 +21,7 @@ export default function SearchPage() {
   
     const getsearchPosts = async()=>{
         try{
-          const response = await axios.get(`http://localhost:${Backendport}/api/post/get/${encodeURIComponent(key)}`,{
+          const response = await axios.get(`${BACKEND_URI}/api/post/get/${encodeURIComponent(key)}`,{
             headers:{
               jwttoken:jwt_here 
             }

@@ -9,6 +9,7 @@ export default function Stories() {
 
     const [allfollowings, setAllfollowings] = useState();
     const userDetails = useSelector((state) => state.user);
+    const BACKEND_URI = process.env.REACT_APP_BACKEND_URI;
     let user = userDetails.user;
     let id = user.user._id;
 
@@ -16,7 +17,7 @@ export default function Stories() {
 
 
         const getstories = async () => {
-            const ur_followings = await axios.get(`http://localhost:5000/api/user/get/followings_with_stories/${id}`);
+            const ur_followings = await axios.get(`${BACKEND_URI}/api/user/get/followings_with_stories/${id}`);
             //axios not only returns data along with that it will return less useful things like config,ststuesText ,status etc ..
             // main content we need is present in data attribute of object
             console.log(ur_followings.data);

@@ -11,12 +11,12 @@ import "./post.css"
 export default function Post(props) {
 
   const[userDetails,setUserDetails] = useState([]);
-  const Backendport = process.env.REACT_APP_BACKEND_PORT;
+  const BACKEND_URI = process.env.REACT_APP_BACKEND_URI;
 
   useEffect(()=>{
     const getuserdetails =async()=>{
       try{
-      const details = await axios.get(`http://localhost:${Backendport}/api/user/post/user/details/${props.post.user}`);
+      const details = await axios.get(`${BACKEND_URI}/api/user/post/user/details/${props.post.user}`);
       setUserDetails(details.data);
       }catch(error){
         console.log("ERROR OCCURED IN CATCH BLOCK"+error)
@@ -72,7 +72,7 @@ const jwt_here="eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjY1NTg0NGFhYTFlZjE
 
   const handleLike = async() => {
     if (Like === LikeIcon) {
-      await fetch(`http://localhost:${Backendport}/api/post/${props.post._id}/like`,
+      await fetch(`${BACKEND_URI}/api/post/${props.post._id}/like`,
       {method:"PUT" ,
       headers:{
         'Content-Type':'application/json',
@@ -93,7 +93,7 @@ const jwt_here="eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjY1NTg0NGFhYTFlZjE
     //  setLike(anotherlikeicon);
     //   setCount(count + 1);
     } else {
-      await fetch(`http://localhost:${Backendport}/api/post/${props.post._id}/like`,
+      await fetch(`${BACKEND_URI}/api/post/${props.post._id}/like`,
       {method:"PUT" ,
       headers:{
         'Content-Type':'application/json',

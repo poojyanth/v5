@@ -13,7 +13,7 @@ export default function ProfileMainpost({profileid}) {
 
 
   const userDetails = useSelector((state)=>state.user);
-  const Backendport = process.env.REACT_APP_BACKEND_PORT;
+  const BACKEND_URI = process.env.REACT_APP_BACKEND_URI;
   let user = userDetails.user;
   let id =user.user._id;
   const jwt_here=user.jwttoken
@@ -22,7 +22,7 @@ export default function ProfileMainpost({profileid}) {
 
 const getposts = async()=>{   
   try{
-    const response = await axios.get(`http://localhost:${Backendport}/api/post/get/post/${profileid}`,{
+    const response = await axios.get(`${BACKEND_URI}/api/post/get/post/${profileid}`,{
       headers:{
         jwttoken:jwt_here // must be the attribute name (same name as in headers )-> i.e jwttoken
       }

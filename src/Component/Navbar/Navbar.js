@@ -8,7 +8,6 @@ import { useNavigate } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
 import { logout } from "../ReduxContainer/UserReducer";
 import Logo from "../Images/LOGO.svg"
-import { inherits } from 'util';
 
 export default function Navbar() {
   const navigate = useNavigate();

@@ -13,7 +13,7 @@
 
 .env
 
-traffic.log
+traffic.json
 
 # misc
 .DS_Store

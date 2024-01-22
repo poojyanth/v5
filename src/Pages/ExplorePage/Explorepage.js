@@ -8,7 +8,7 @@ import ExplorePost from '../../Component/ExplorePost/ExplorePost'
 
 export default function Explorepage() {
 
-  const Backendport = process.env.REACT_APP_BACKEND_PORT;
+  const BACKEND_URI = process.env.REACT_APP_BACKEND_URI;
 
     const userDetails = useSelector((state)=>state.user);
     let user = userDetails.user;
@@ -18,7 +18,7 @@ export default function Explorepage() {
   
     const getExplorePosts = async()=>{
         try{
-          const response = await axios.get(`http://localhost:${Backendport}/api/post/get/allpost`,{
+          const response = await axios.get(`${BACKEND_URI}/api/post/get/allpost`,{
             headers:{
               jwttoken:jwt_here // must be the attribute name (same name as in headers )-> i.e jwttoken
             }

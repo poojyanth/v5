@@ -12,7 +12,7 @@ export default function ProfileRightbar({profileid}) {
 
   
   // const myUserId="656762a5c43095cb8ad3dc3c";
-  const Backendport = process.env.REACT_APP_BACKEND_PORT;
+  const BACKEND_URI = process.env.REACT_APP_BACKEND_URI;
   
   const userDetails = useSelector((state)=>state.user);
   let user = userDetails.user;
@@ -24,7 +24,7 @@ export default function ProfileRightbar({profileid}) {
   useEffect(()=>{
     const getfollowers=async()=>{
     try{   
-        const response = await axios.get(`http://localhost:${Backendport}/api/user/get/followers/${id}`)
+        const response = await axios.get(`${BACKEND_URI}/api/user/get/followers/${id}`)
        
         setFollowers(response.data);
         }catch(error){
@@ -47,7 +47,7 @@ export default function ProfileRightbar({profileid}) {
   useEffect(()=>{
     const getsuggestions =async()=>{
       try{
-      const details = await axios.get(`http://localhost:${Backendport}/api/user/all/user/${id}`,{
+      const details = await axios.get(`${BACKEND_URI}/api/user/all/user/${id}`,{
         headers:{
           jwttoken:jwt_here
         }

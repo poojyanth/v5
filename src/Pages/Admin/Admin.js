@@ -14,14 +14,14 @@ const AdminPage = () => {
 
   const navigate = useNavigate();
   const userDetails = useSelector((state)=>state.user);
-  const Backendport = process.env.REACT_APP_BACKEND_PORT;
+  const BACKEND_URI = process.env.REACT_APP_BACKEND_URI;
   let user = userDetails.user;
   let id =user.user._id;
   const jwt_here=user.jwttoken
 
   const getUsers = async () => {
     try {
-      const response = await axios.get(`http://localhost:${Backendport}/api/user/get/allusers`,{
+      const response = await axios.get(`${BACKEND_URI}/api/user/get/allusers`,{
         headers:{
           jwttoken: jwt_here
         }
@@ -34,7 +34,7 @@ const AdminPage = () => {
 
   const getPosts = async () => {
     try {
-      const response = await axios.get(`http://localhost:${Backendport}/api/post/get/allposts`,{
+      const response = await axios.get(`${BACKEND_URI}/api/post/get/allposts`,{
         headers:{
           jwttoken: jwt_here
         }
@@ -47,7 +47,7 @@ const AdminPage = () => {
 
   const getTraffic = async () => {
     try {
-      const response = await axios.get(`http://localhost:${Backendport}/api/admin/log`,{
+      const response = await axios.get(`${BACKEND_URI}/api/admin/log`,{
         headers:{
           jwttoken: jwt_here
         }

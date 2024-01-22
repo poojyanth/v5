@@ -1,5 +1,5 @@
 import './App.css';
-import Home from './Pages/Home/Home';
+import Home from './Pages/Home/Home'; 
 import Login from './Pages/Login/Login';
 import Profile from './Pages/Profile/Profile';
 import { toast, ToastContainer } from 'react-toastify';
@@ -12,7 +12,7 @@ import SettingsPage from './Pages/SettingsPage/SettingsPage';
 import Chat from './Pages/Chat/Chat';
 import ViewStoryImage from './Component/Storiescontainer/ViewStoryImage';
 import LandingPage from './Pages/LandingPage/LandingPage';
-import LoadingAnimation2 from './Pages/test/test';
+import LoadingAnimation2 from './Pages/test/test';  
 // import Explore from './Component/Explore/Explore';
 import Carousel from './Pages/Reels/Carousel';
 import AdminPage from './Pages/Admin/Admin';

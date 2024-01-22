@@ -18,14 +18,14 @@ export default function Chatcontainer({ currentChatUser }) {
     const [message, setMessage] = useState();
     const [inputmessage, setInputmessage] = useState();
     const [arrivalmsg,setArrivalmsg] = useState(null);
-    const Backendport = process.env.REACT_APP_BACKEND_PORT;
+    const BACKEND_URI = process.env.REACT_APP_BACKEND_URI;
 
 
 
     useEffect(()=>{
         const getmessages = async()=>{   
           try{
-            const response = await axios.get(`http://localhost:${Backendport}/api/post/get/chat/msg/${id}/${currentChatUser.others._id}`,{
+            const response = await axios.get(`${BACKEND_URI}/api/post/get/chat/msg/${id}/${currentChatUser.others._id}`,{
               headers:{
                 jwttoken:jwt_here // must be the attribute name (same name as in headers )-> i.e jwttoken
               }
@@ -42,7 +42,7 @@ export default function Chatcontainer({ currentChatUser }) {
       },[currentChatUser.others._id])
     console.log(message)
     //   const sendmsg =()=>{
-    //     fetch(`http://localhost:${Backendport}/api/post/msg`,{method:'POST',
+    //     fetch(`${BACKEND_URI}/api/post/msg`,{method:'POST',
     // headers:{
     //     'Content-Type':"application/JSON",
     //     jwttoken : jwt_here
@@ -57,7 +57,7 @@ export default function Chatcontainer({ currentChatUser }) {
     useEffect(()=>{
 
         if(currentChatUser!== null){
-            socket.current = io("http://localhost:${Backendport}")
+            socket.current = io("${BACKEND_URI}")
             socket.current.emit("addUser",id)
         }
     },[id])
@@ -80,7 +80,7 @@ export default function Chatcontainer({ currentChatUser }) {
            message:inputmessage
         })
 
-        fetch(`http://localhost:${Backendport}/api/post/msg`, {
+        fetch(`${BACKEND_URI}/api/post/msg`, {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json', // Fixed typo here

@@ -13,7 +13,7 @@ import anotherlikeicon from "../../Component/Images/setLike.png"
 
 export default function PostPage() {
     const userDetails = useSelector((state)=>state.user);
-    const Backendport = process.env.REACT_APP_BACKEND_PORT;
+    const BACKEND_URI = process.env.REACT_APP_BACKEND_URI;
     let user = userDetails.user;
     let id =user.user._id;
     const jwt_here=user.jwttoken
@@ -29,7 +29,7 @@ export default function PostPage() {
 
     const getpost = async()=>{
         try{
-          const response = await axios.get(`http://localhost:${Backendport}/api/post/get/PostID/${postid}`,
+          const response = await axios.get(`${BACKEND_URI}/api/post/get/PostID/${postid}`,
             {
                 headers:{
                 jwttoken: jwt_here
@@ -42,7 +42,7 @@ export default function PostPage() {
             console.log("Postdata",postData);
 
             
-            const response2 = await axios.get(`http://localhost:${Backendport}/api/user/post/user/details/${response.data.user}`,
+            const response2 = await axios.get(`${BACKEND_URI}/api/user/post/user/details/${response.data.user}`,
             {
                 headers:{
                 jwttoken: jwt_here

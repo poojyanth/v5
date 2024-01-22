@@ -12,7 +12,7 @@ import { getStorage, ref, uploadBytesResumable, getDownloadURL } from "firebase/
 const AddNewPost = () => {
 
   const navigate = useNavigate();
-
+  const BACKEND_URI = process.env.REACT_APP_BACKEND_URI;
   const userDetails = useSelector((state)=>state.user);
   let user = userDetails.user;
   const jwt_here = user.jwttoken
@@ -56,7 +56,7 @@ const AddNewPost = () => {
     // Handle successful uploads on complete
     // For instance, get the download URL: https://firebasestorage.googleapis.com/...
     getDownloadURL(uploadTask.snapshot.ref).then(async(downloadURL) => {
-      await fetch("http://localhost:5000/api/post/createpost",{method:"POST",
+      await fetch(`${BACKEND_URI}/api/post/createpost`,{method:"POST",
       headers:{
         'Content-Type':'application/JSON',
         jwttoken:jwt_here 
