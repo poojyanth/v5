@@ -1,16 +1,43 @@
 import React, { useEffect, useState } from 'react';
 import Navbar from '../../Component/Navbar/Navbar';
-import AdminSmallNumberCard from '../../Component/Admin/AdminSmallNumberCard';
 import axios from 'axios';
 import './Admin.css';
-import { useNavigate } from 'react-router-dom';
+import { useNavigate, useParams } from 'react-router-dom';
 import { useSelector } from 'react-redux';
+import AllStats from '../../Component/Admin/AllStats';
+import UserStats from '../../Component/Admin/UserStats';
+import PostStats from '../../Component/Admin/PostStats';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faBlackTie } from '@fortawesome/free-brands-svg-icons';            
+import { faSolarPanel,faImages, faUsers, faChartSimple } from '@fortawesome/free-solid-svg-icons';
+
+const AdminSideBarOption = {height: '4pc', cursor: 'pointer', alignItems: 'center', display: 'flex', justifyContent: 'space-around', flexDirection: 'row'};
 
 const AdminPage = () => {
   const [totalUsers, setTotalUsers] = useState([]);
   const [totalPosts, setTotalPosts] = useState([]);
   const [totalTraffic, setTotalTraffic] = useState([]);
   const [totalTrafficNumber, setTotalTrafficNumber] = useState(0);
+  const [showsideBar, setShowsideBar] = useState(false);
+  
+  const category = useParams(':category').category;
+  const [adminContent, setAdminContent] = useState(category? category: 'DashBoard');
+
+  const adminContentOptions = [
+    {
+      name: 'DashBoard'
+    },
+    {
+      name: 'Users'
+    },
+    {
+      name: 'Posts'
+    },
+    {
+      name: 'Analytics'
+    }
+  ]
+
 
   const navigate = useNavigate();
   const userDetails = useSelector((state)=>state.user);
@@ -53,6 +80,7 @@ const AdminPage = () => {
         }
       });
       setTotalTrafficNumber(response.data.numberOfRequests);
+      setTotalTraffic(response.data.logData); // Assuming the response contains an 'allPostsList' field
       // setTotalTraffic(response.data.logData); // Assuming the response contains an 'allPostsList' field
     }
     catch (error) {
@@ -67,12 +95,15 @@ const AdminPage = () => {
     getTraffic();
   }, []);
 
+  useEffect(() => {
+    const categoryIndex = adminContentOptions.findIndex(
+      (category) => category.name === category
+    );
+    if (categoryIndex !== -1) {
+      setAdminContent(categoryIndex);
+    }
+  }, [category]);
 
-  const toggleDropdown = (ID) => {
-    // alert(userId)
-    document.getElementById(ID).classList.toggle('show');
-
-  };
 
   const [totalLikes, setTotalLikes] = useState(0);
   const [totalComments, setTotalComments] = useState(0);
@@ -93,83 +124,63 @@ const AdminPage = () => {
 
   }, [totalUsers, totalPosts, totalLikes, totalComments]);
 
+  const handleSideBarMouseOver = () => {
+    setShowsideBar(true);
+  }
+
+  const handleSideBarMouseLeave = () => {
+    setShowsideBar(false);
+  }
+
+  const handleSideBarClick = (page) => () => {
+    setAdminContent(page);
+    window.history.pushState(null, null, `/admin/${page}`);
+  }
+
 
   return (
     <>
       <Navbar />
       <div className='AdminMainContainer'>
-        <div className='AdminsideBar'>
+        <div className='AdminsideBar' onMouseOver={handleSideBarMouseOver} onMouseOut={handleSideBarMouseLeave}>
+          <div className='AdminsideBarContainer'>
+            <div  className='AdminsideBarHeader' style={{height: '4pc', alignItems: 'center', display: 'flex', justifyContent: 'space-around', flexDirection: 'row', width: 'inherit'}}>                
+              <FontAwesomeIcon icon={faBlackTie} size={showsideBar? 'sm':'lg' } /> <h2 style={{display: showsideBar?'block': 'none'}} >Admin</h2>
+            </div>
+            <hr></hr>
+            <div className='AdminsideBarOptions' style={{width: 'inherit'}}>
+              <div style={AdminSideBarOption}  className='AdminsideBarOption' onClick={handleSideBarClick('DashBoard')} >
+              <FontAwesomeIcon style={showsideBar?{width: '20%'}: {width: '100%'}} icon={faSolarPanel} size={showsideBar? 'sm':'lg' } /><h3 style={showsideBar?{width: '80%'}:{display: 'none'}}>{showsideBar? 'Dashboard': ''}</h3>
+              </div>
+              <div style={AdminSideBarOption}  className='AdminsideBarOption' onClick={handleSideBarClick('Users')}>
+              <FontAwesomeIcon style={showsideBar?{width: '20%'}: {width: '100%'}} icon={faUsers} size={showsideBar? 'sm':'lg' } /> <h3 style={showsideBar?{width: '80%'}:{display: 'none'}}>{showsideBar? 'Users': ''}</h3>
+              </div>
+              <div style={AdminSideBarOption}  className='AdminsideBarOption' onClick={handleSideBarClick('Posts')}>
+              <FontAwesomeIcon style={showsideBar?{width: '20%'}: {width: '100%'}} icon={faImages} size={showsideBar? 'sm':'lg' } /> <h3 style={showsideBar?{width: '80%'}:{display: 'none'}}>{showsideBar? 'Posts': ''}</h3>
+              </div>
+              <div style={AdminSideBarOption}  className='AdminsideBarOption' onClick={handleSideBarClick('Analytics')}>
+              <FontAwesomeIcon style={showsideBar?{width: '20%'}: {width: '100%'}} icon={faChartSimple} size={showsideBar? 'sm':'lg' } /> <h3 style={showsideBar?{width: '80%'}:{display: 'none'}}>{showsideBar? 'Analytics': ''}</h3>
+              </div>
+            </div>
+          </div>
         </div>
         <div className='MainComponentAdmin'>
-          <div className='adminContainer'>
-            <AdminSmallNumberCard CardName={'Traffic'} CardValue= {totalTrafficNumber} />
-            <AdminSmallNumberCard CardName={'Posts'} CardValue={400} />  
-            <AdminSmallNumberCard CardName={'Users'} CardValue={400}/>
-            <AdminSmallNumberCard CardName={'Likes'} CardValue={400}/>
-          </div>
-          <div className='adminContainer'>
-            {totalTraffic}
-          </div>
-          <div className='Adminsection1 adminContainer'>
-            <h2>Total Users</h2>
-            <div className='userList scroll'>
-              {totalUsers.map((user) => {
-                return (
-                  <div className='user' id={user._id} onClick={() => toggleDropdown(user._id)} >
-                    <div className='userHeader'>
-                      <h3 style={{    margin: '5px 10px'}} >{user.username}</h3>
-                      <div className='dropdown'>
-                        <button className='dropbtn'> 
-                          ...
-                        </button>
-                        <div className={`dropdown-content`}>
-                          <button className='dropbtn' onClick={()=> navigate(`/profilepage/${user._id}`)}>Goto Profile</button>
-                          <button className='dropbtn delete' style={{width: '100%'}}>Delete</button> 
-                        </div>
-                      </div>
-                    </div>
-                    <div className='userDetails'>
-                      <p className='userDetail'>Email : {user.email}</p>
-                      <p className='userDetail'>PhoneNumber : {user.phonenumber}</p>
-                    </div>
-                  </div>
-                );
-              })}
-            </div>
-          </div>
+          {
+            adminContent==='DashBoard'?
+            <AllStats totalTrafficNumber={totalTrafficNumber} totalTraffic={totalTraffic} totalUsers={totalUsers} totalPosts={totalPosts} />
+            :
+            adminContent==='Users'?
+            <UserStats  totalUsers={totalUsers}/>
+            :
+            adminContent==='Posts'?
+            <PostStats   totalUsers={totalUsers} totalPosts={totalPosts} />
+            :
+            adminContent==='Analytics'?
+            <AllStats totalTrafficNumber={3} totalTraffic={totalTraffic} totalUsers={totalUsers} totalPosts={totalPosts} />
+            :
+            <AllStats totalTrafficNumber={4} totalTraffic={totalTraffic} totalUsers={totalUsers} totalPosts={totalPosts} />
 
-          <div className='Adminsection2 adminContainer'>
-            <h2>Total Posts {totalPosts.length}</h2>
-            <div className='postList scroll'>
-              {totalPosts.map((post) => {
-                return (
-                  <div className='Adminpost' id={post._id} onClick={() => toggleDropdown(post._id)}>
-                    
-                      <div className='AdminpostHeader' style={{display: 'flex', flexDirection: 'row', alignItems: 'center', width: '90%', justifyContent: 'space-around'}}>
-                        <div>
-                          <h3>{post._id}</h3>
-                          <div className='AdminpostDetails'>
-                          <p className='AdminpostDetail'>Description : {post.description}</p>
-                          <p className='AdminpostDetail'>User : {post.user}</p>
-                          <p className='AdminpostDetail'>Likes : {post.likes.length}</p>
-                          </div>
-                        </div>
-                        <img className="AdminPostImage" src={post.image} alt='post' />
-                      </div>
-                      
-                    
-                    <div className='dropdown'>
-                      <button className='dropbtn'>...</button>
-                      <div className={`dropdown-content`}>
-                        <button className='dropbtn delete' style={{width: '100%'}}>Delete</button>
-                      </div>
-                    </div>
-                    
-                  </div>
-                );
-              })}
-            </div>
-          </div>
+          }
         </div>
       </div>
     </>

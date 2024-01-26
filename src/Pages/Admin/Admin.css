@@ -1,8 +1,13 @@
 .AdminMainContainer{
+    user-select: none;
     padding: 1px 0 0px 0px;
     display: flex;
     background-color: var(--secondary-color);
     flex-direction: row;
+}
+
+.AdminMainContainer *{
+    transition: all 0.15s ease-in-out;
 }
 .MainComponentAdmin{
     display: flex;
@@ -14,9 +19,11 @@
 .AdminsideBar{
     width: 5vw;
     position: sticky;
+    overflow-x: hidden;
     top: 8vh;
     height: 92vh;
     background-color: var(--primary-color);
+    transition: all 0.5s ease-in-out;
     border-radius: 0 5px 5px 0;
 }
 
@@ -28,13 +35,13 @@
     user-select: none;
     display: flex;
     width: 80vw;
-    border: 1px solid black;
+    /* border: 1px solid black;  */
     flex-direction: row;
     justify-content: space-between;
     align-items: center;
     flex-wrap: wrap;
     border-radius: 10px;
-    height: 70vh;
+
     margin: 10px;
 }
 
@@ -138,4 +145,66 @@
     width: 25vh;
     height: 25vh;
     box-shadow: 0 0 10px 0 rgba(0,0,0,0.2);
+}
+
+.serverLog{
+    width: 75vw;
+    box-shadow: 0 0 10px 0 rgba(0,0,0,0.2);
+    height: 60vh;
+    padding: 2pc;
+    background-color: white;
+}
+
+.serverLogHeader{
+    display: 'flex';
+    align-items: 'center';
+    width: '100%';
+    height: '5vh';
+    border-bottom: '1px solid black';
+    padding: '0.5rem'
+}
+
+.serverlogTableContainer::-webkit-scrollbar {
+    width: 0;
+}
+
+.serverLogData{
+    height: 2pc;
+    transition: all 0.15s ease-in-out;
+}
+
+.serverLogData:hover{
+    cursor: pointer;
+    background-color: #f1f1f1;
+}
+
+.faTrash path{
+    transition: color 0.05s ease-in-out;
+
+}
+
+.faTrash path:hover{
+    color: red;
+}
+
+.faCircleExclamation path{
+    transition: color 0.05s ease-in-out;
+
+}
+
+.faCircleExclamation path:hover{
+    color: orange;
+}
+
+.UserStatsUsername{
+    transition: all 0.15s ease-in-out;
+}
+
+.UserStatsUsername:hover{
+    cursor: pointer;
+    font-weight: 600
+}
+
+.UserData{
+    transition: all 0.1s ease-in-out;
 }

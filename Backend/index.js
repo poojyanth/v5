@@ -3,6 +3,7 @@ const mongoose = require("mongoose");
 const cors = require('cors');
 const socket = require('socket.io');
 const fs = require('fs');
+const path = require('path');
 
 require('dotenv').config();
 
@@ -45,6 +46,8 @@ const app = express();
 
 app.use(express.json());
 const server = app.listen(PORT,()=>{
+    const logFilePath = 'traffic.json';
+    fs.writeFileSync(logFilePath, '');
     console.log("Backend server running at PORT "+PORT);
 })
 

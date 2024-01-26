@@ -57,6 +57,7 @@ function App() {
           <Route exact path="/searchpage/:key" element={user!== null ? <SearchPage/> : <Navigate to={"/landingpage"}/>}/>
           <Route path="/settings/:settingName" element={user!== null ? <SettingsPage /> : <Navigate to={"/landingpage"}/>} />
           <Route exact path="/settings/*" element={user!== null ? <Navigate to={'/settings/Profile'}/>: <Navigate to={"/landingpage"}/>}/>
+          <Route exact path="/admin/:category" element={user!==null && user.user.username==='Admin' ? <AdminPage/> : <Navigate to={'/'}/>}/>  
           <Route exact path="/admin" element={user!==null && user.user.username==='Admin' ? <AdminPage/> : <Navigate to={'/'}/>}/>
           <Route exact path="/*" element={<Navigate to={"/"}/>}/>
           <Route exact path="/test" element={<LoadingAnimation2 />} />

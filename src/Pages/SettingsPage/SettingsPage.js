@@ -108,12 +108,12 @@ export default function SettingsPage({ match }) {
 
   useEffect(() => {
     const buttons = document.querySelectorAll(".SettingsHeaderButton");
-
     buttons.forEach((button) => {
       button.style.backgroundColor = "transparent";
     });
     document.getElementById(setting).style.backgroundColor = "#e0e4e8";
   }, [setting]);
+
 
   useEffect(() => {
     const settingIndex = settings.findIndex(
@@ -123,6 +123,7 @@ export default function SettingsPage({ match }) {
       setSetting(settingIndex);
     }
   }, [settingName]);
+  
 
   if (useSelector((state) => state.user.user) === null) {
     window.location.href = "/login";

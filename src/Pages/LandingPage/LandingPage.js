@@ -56,7 +56,7 @@ const flask = {
 };
 
 const landingpage_style = {
-  backgroundColor: 'rgb(235, 238, 242)',
+  backgroundColor: 'var(--secondary-color)',
   opacity: 0,
 };
 

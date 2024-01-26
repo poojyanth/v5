@@ -86,6 +86,7 @@ export default function Navbar() {
           {showDropdown &&
             <div className="dropdown-content">
               <Link to="/settings">Settings</Link>
+              {user.user.Admin==="0"?<Link to="/admin">Admin</Link>:null}
               <Link onClick={handleLogOut}>Logout</Link>
               {/* Add other options here */}
             </div>

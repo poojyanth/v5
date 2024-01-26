@@ -14,8 +14,8 @@ router.post("/createpost",verifytoken, async (req, res) => {
     console.log(req.body);
 
     try {
-        console.log(req.body);
-        console.log(req.user);
+        // console.log(req.body);
+        // console.log(req.user);
         let {description,image,video}= req.body;
   
         const newPost = new Post({         
@@ -67,7 +67,7 @@ router.get("/get/postID/:id", verifytoken, async (req, res) => {
             return res.status(400).json("NO POSTS FOUND ...");
         }
 
-        console.log(user_posts);
+        // console.log(user_posts);
         //  console.log(user_posts);
         res.status(200).json(user_posts);   
         } catch (error) {
@@ -124,7 +124,7 @@ router.get("/get/allpost",verifytoken, async (req, res) => {
 
 })
 
-router.get("/get/allposts", async (req, res) => {
+router.get("/get/allposts", verifytoken, async (req, res) => {
     
     try {
 
@@ -198,7 +198,7 @@ router.get("/get/:key", verifytoken, async (req, res) => {
         },
       ]);
 
-        console.log(mergedData);
+        // console.log(mergedData);
   
       // Search operation based on description, username, or tags
       const searchQuery = req.params.key; // Assuming search query is passed through query parameter

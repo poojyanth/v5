@@ -1,0 +1,49 @@
+.login-container, .signup-container{
+    display: flex;
+    flex-direction: column;
+    width: 60%;
+    padding: 10%;
+    justify-content: center;
+    align-items: center;
+}
+.login-container input, .signup-container input{
+    margin: 2vh 2vw;
+    width: 100%;
+    height: 3vh;
+    padding-left: 1vw;
+    border-radius: 5px;
+    border:1px black solid;
+    /* border: none; */
+}
+
+.btnforsignup{
+    margin: 2vh 2vw;
+    width: 8vw;
+    height: 4vh;
+    border-radius: 5px;
+    border: none;
+    background-color: #000;
+    display: flex;
+    justify-content: center;
+    color: white;
+    font-weight: bold;
+    cursor: pointer;
+}
+
+.LoginSignupLink{
+    text-decoration: none;
+    color: black;
+    font-weight: bold;
+    padding: 1px 3px;
+    border-radius: 5px;
+    transition: all 0.1s ease-in-out;
+}
+
+.LoginSignupLink:hover{
+    background-color: black;
+    color: white;
+}
+
+.LoginSignuph1{
+    font-family:  'Montserrat Alternates', sans-serif;
+}

@@ -66,7 +66,11 @@ router.get('/log',verifytoken, async (req, res) => {
         // Parse each line of JSON and create an array of objects
         const parsedLog = logLines.map(line => JSON.parse(line));
 
+        // send only 200 most recent requests
+        
+        
         const numberOfRequests = parsedLog.length;
+        parsedLog.splice(200);
 
         res.json({ numberOfRequests, logData: parsedLog });
     } catch (err) {

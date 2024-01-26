@@ -293,7 +293,7 @@ router.get("/post/user/details/:id",verifytoken,async(req,res)=>{
     const {email,password,phonenumber,...others}= user._doc;
     // remaining details will be stores in others variable
     // others contain username,profilpicture
-    console.log(others)
+    // console.log(others)
     res.status(200).send(others);
 }catch(error){
     return res.status(400).send("SOME ERROR IN TRY_ CATCH (get user for a post)")
@@ -459,7 +459,7 @@ router.get("/get/followings_with_stories/:id",async(req,res)=>{
 
         })
 
-        console.log(followingList);
+        // console.log(followingList);
 
 
         res.status(200).send(followingList)
@@ -520,8 +520,8 @@ router.get("/get/allusers",async(req,res)=>{
             allUsersList.push(others)
 
         })
-        console.log(allUsersList);
-        return res.status(200).json({allUsersList})
+        // console.log(allUsersList);
+        return res.status(200).json({allUsersList : allUsersList})
     }catch(error){
         return res.status(400).send("SOME ERROR OCCURED IN try-catch")
     }
