@@ -75,7 +75,7 @@ export default function Navbar() {
         <Link to="/addnewpost" className='Icons' style={{marginBottom: '8px', alignItems: 'center', textDecoration: 'none', color: 'black', fontSize: '25px', display: 'flex'}}>
           +
         </Link>
-        <Link to={`/profilepage/${id}`} style={{ textDecoration: 'none', color: 'black' }}>
+        <Link to={user.user.type===2? `/organization/${id}` : `/profilepage/${id}`} style={{ textDecoration: 'none', color: 'black' }}>
           <div style={{ display: 'flex', alignItems: 'center' }}>
             <img src={(user.user.profilepicture) ? user.user.profilepicture : defaultUser} className="ProfileImage" alt="" />
             <p className="NavbarUsername" style={{ marginLeft: '5px' }}>{user.user.username}</p>

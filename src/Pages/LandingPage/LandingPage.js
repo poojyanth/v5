@@ -17,7 +17,7 @@ import { useState } from "react";
 const LandingPage_LoadingCont = {
   display: "flex",
   justifyContent: "center",
-  position: "absolute",
+  position: "fixed",
   alignItems: "center",
   height: "100vh",
   width: "100vw",

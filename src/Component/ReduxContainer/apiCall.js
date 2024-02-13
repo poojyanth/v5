@@ -12,6 +12,17 @@ export const login = async(dispatch , user)=>{
           }
 }
 
+export const loginOrganisation = async(dispatch , user)=>{
+            dispatch(loginStart());
+            try {
+                     const res = await axios.post(`${BACKEND_URI}/api/organisation/login` , user);
+                     dispatch(loginSuccess(res.data)); 
+            } catch (error) {
+                        dispatch(loginFailure());
+            }
+    }
+
+
 export const createuser = async(dispatch , user)=>{
 
     dispatch(loginStart());
@@ -24,6 +35,17 @@ export const createuser = async(dispatch , user)=>{
               dispatch(loginFailure());
     }
 }
+
+export const createOrganisation = async(dispatch , user)=>{
+    dispatch(loginStart());
+    try {
+             const res = await axios.post(`${BACKEND_URI}/api/organisation/create/user` , user);
+             dispatch(loginSuccess(res.data)); 
+    } catch (error) {
+              dispatch(loginFailure());
+    }
+}
+
 
 // export const VerifyEmail = async(dispatch , user)=>{
 //           dispatch(loginStart());

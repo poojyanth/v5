@@ -19,7 +19,7 @@ const LoginContainer = {
   flexDirection: 'column',
   opacity: 0,
   backgroundColor: 'var(--secondary-color)',
-  position: 'absolute',
+  position: 'fixed',
   justifyContent: 'center',
   alignItems: 'center',
   top: '0vh',

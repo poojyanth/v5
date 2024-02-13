@@ -58,6 +58,7 @@ app.get('/',(req,res)=>{
 }
 )
 app.use('/api/user', require('./Routes/User'));
+app.use('/api/organisation', require('./Routes/Organization'));
 app.use('/api/post', require('./Routes/Post'));
 app.use('/api/admin', require('./Routes/Admin'));
 
