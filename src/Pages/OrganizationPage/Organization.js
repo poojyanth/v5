@@ -12,7 +12,10 @@ export default function Organization() {
     <div className='OrganizationProfileContainer'>
     <Navbar/>
     <div className='OrganizationSubContainer'>
-              
+      <div className='OrganizationLeftContainer'>
+        </div>
+      <div className='OrganizationRightContainer'>
+      </div>
     </div>
 </div>
   )

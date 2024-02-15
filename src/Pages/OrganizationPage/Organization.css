@@ -1,9 +1,35 @@
 .OrganizationProfileContainer{
-    background-color: rgb(235, 238, 242);
+    background-color: var(--secondary-color);
+}
+
+.OrganizationProfileContainer>.mainNavbar{
+    border-radius: 0;
+    border-bottom: 1px solid var(--tertiary-color);
 }
 
 .OrganizationSubContainer{
-    border-top: 1px solid rgb(204, 204, 204);
     width: 100%;
+    display: flex;
+    flex-direction: row;
     height: 92vh;
+}
+
+.OrganizationLeftContainer{
+    width: 5vw;
+    border-radius: 0 0 5px 0;
+    height: 100%;
+    float: left;
+    background-color: var(--primary-color);
+}
+
+.OrganizationLeftContainer:hover{
+    width: 20vw;
+    position: absolute;
+}
+
+.OrganizationRightContainer{
+    width: 95vw;
+    height: 100%;
+    float: right;
+    background-color: var(--secondary-color);
 }
