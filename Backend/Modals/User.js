@@ -36,8 +36,11 @@ const Userschema = new mongoose.Schema({
     }, 
     StoryDescription:{
         type:String
-    }
-
+    },
+    StoryViewers: {
+        type: [String], 
+        default: [],
+      }
 
 
 })

@@ -1,7 +1,6 @@
 import React, { useState, useEffect } from 'react';
- import './addnewpost.css';
-import wicket from "../../Component/Images/wicket.jpg";
-import Navbar from '../../Component/Navbar/Navbar';
+ import './addnewreel.css';
+import Navbar from '../Navbar/Navbar'
 import { useNavigate } from 'react-router-dom';
 
 // for adding post
@@ -9,17 +8,17 @@ import { useSelector}  from 'react-redux'
 import app from "../../firebase"
 import { getStorage, ref, uploadBytesResumable, getDownloadURL } from "firebase/storage";
 
-const AddNewPost = () => {
+const Addnewreel = () => {
 
   const navigate = useNavigate();
-  const BACKEND_URI = process.env.REACT_APP_BACKEND_URI;
+
   const userDetails = useSelector((state)=>state.user);
   let user = userDetails.user;
   const jwt_here = user.jwttoken
   console.log(user);
 
   const [file,setFile] = useState(null);
-  const [imagePre , setImagePre] = useState(null);
+  const [videoPre , setVideoPre] = useState(null);
   const [description,setDescription] = useState('');
 
 
@@ -56,16 +55,16 @@ const AddNewPost = () => {
     // Handle successful uploads on complete
     // For instance, get the download URL: https://firebasestorage.googleapis.com/...
     getDownloadURL(uploadTask.snapshot.ref).then(async(downloadURL) => {
-      await fetch(`${BACKEND_URI}/api/post/createpost`,{method:"POST",
+      await fetch("http://localhost:4000/api/reels/addnewreel",{method:"POST",
       headers:{
         'Content-Type':'application/JSON',
         jwttoken:jwt_here 
       },
-      body:JSON.stringify({description:description,image:downloadURL,video:''})
+      body:JSON.stringify({description:description,video:downloadURL})
     }).then((data)=>{
 
       navigate(`/`);
-      alert("IMAGE POST - SUCCESSFULLY UPLOADED ");
+      alert("REEL SUCCESSFULLY UPLOADED ");
 
       window.location.reload(true);
     })
@@ -78,117 +77,124 @@ const AddNewPost = () => {
 
 
 
-  const [imageSrc, setImageSrc] = useState(null);
-  const handleImageChange = (e) => {
+  const [videoSrc, setVideoSrc] = useState(null);
+  const handleVideoChange = (e) => {
     const file = e.target.files[0];
-    setImageSrc(URL.createObjectURL(file));
+    setVideoSrc(URL.createObjectURL(file));
+    //setVideoSrc("NOT NULL")
   };
 
   const handleDescriptionChange = (e) => {
     document.querySelector('.description-box').innerText = e.target.value;
   };
 
-  const handleTagChange = (e) => {
+const handleTagChange = (e) => {
     const tagValue = `#${e.target.value}`;
-    document.querySelector('.card-holder-name').innerText = tagValue;
-    document.querySelector('.card-holder-name1R').innerText = tagValue;
+    const cardHolderName = document.querySelector('.card-holder-name');
+    const cardHolderName1 = document.querySelector('.card-holder-name1');
+  
+    if (cardHolderName) {
+      cardHolderName.innerText = tagValue;
+    }
+  
+    if (cardHolderName1) {
+      cardHolderName1.innerText = tagValue;
+    }
   };
 
   useEffect(() => {
-    let profilePic = document.getElementById("display-picR");
+    let profilePic = document.getElementById("display-pic");
     let inputFile = document.getElementById("inputt");
 
     inputFile.onchange = function () {
       profilePic.src = URL.createObjectURL(inputFile.files[0]);
     };
 
-    document.querySelector('.card-number-input').oninput = () => {
-      document.querySelector('.description-box').innerText = document.querySelector('.card-number-input').value;
-    };
+    // document.querySelector('.card-number-input').oninput = () => {
+    //  // document.querySelector('.description-box').innerText = document.querySelector('.card-number-input').value;
+    // };
 
     document.querySelector('.cvv-input').oninput = () => {
-      document.querySelector('.card-holder-name').innerText = "#" + document.querySelector('.cvv-input').value;
-      document.querySelector('.card-holder-name1R').innerText = "#" + document.querySelector('.cvv-input').value;
+      //document.querySelector('.card-holder-name').innerText = "#" + document.querySelector('.cvv-input').value;
+      document.querySelector('.card-holder-name1').innerText = document.querySelector('.cvv-input').value;
     };
 
     document.querySelector('.cvv-input').onmouseenter = () => {
-      document.querySelector('.frontR').style.transform = 'perspective(1000px) rotateY(-180deg)';
-      document.querySelector('.back').style.transform = 'perspective(1000px) rotateY(0deg)';
+      document.querySelector('.front').style.transform = 'perspective(1000px) rotateY(-180deg)';
+     document.querySelector('.back').style.transform = 'perspective(1000px) rotateY(0deg)';
     };
 
     document.querySelector('.cvv-input').onmouseleave = () => {
-      document.querySelector('.frontR').style.transform = 'perspective(1000px) rotateY(0deg)';
+      document.querySelector('.front').style.transform = 'perspective(1000px) rotateY(0deg)';
       document.querySelector('.back').style.transform = 'perspective(1000px) rotateY(180deg)';
     };
   }, []);
 
   return (
     <>
- 
     <Navbar/>
- 
+
+
+
+    <div className="container_reel">
+
+
+
+      <div className="feedcontainer">
+        <div className="front">
+          <div className="feed">
+          
+            <div className="photo">
+  
+ <video
+ id="display-pic" 
+ src="https://firebasestorage.googleapis.com/v0/b/fdfed-d64be.appspot.com/o/1703179557072VID-20211205-WA0041.mp4?alt=media&token=9ac5ea8d-6c88-47e6-87a4-4c6b06c4db3c"
+ autoPlay={true}
+ loop
+ muted  // Add this line
+ style={{
+   width: '90%',
+   height: '100%',
+   objectFit: 'cover',
+   borderRadius: '6%',
+   maxHeight:'630px'
    
-    <div className="containerR">
-      <div className="feedcontainerR">
-        <div className="frontR">
-          <div className="feedR">
-            <div className="headR" style={{marginBottom:'-9px'}}>
-              <div className="profilepic3_details">
-                <img className="profilepicR" src={`${user.user.profilepicture}` }/>
-                <div className="detailsR">
-                  <h5 style={{marginTop:'16px',fontSize:'16px',marginLeft:'-21px'}}>{user.user.username}</h5>
+ }}
+/>
+  
+</div>
+<div className="head">
+              <div className="profilepic3_detailsTT">
+                <img className="profilepicTT" src={`${user.user.profilepicture}` }/>
+                <div className="detailsTT">
+                  <h5 style={{'color':'white'}}>{user.user.username}</h5>
                 </div>
               </div>
-              <div className="trpiledots">
-                <span>
-                  <i className="bi bi-three-dots"></i>
-                </span>
-              </div>
             </div>
-            <div className="photoR">
-              <img id="display-picR" src={imageSrc || `${wicket}`} />
-            </div>
-            <div className="icons">
-              <div className="mainicons">
-                <span>
-                  <i className="bi bi-heart"></i>
-                </span>
-                <span>
-                  <i className="bi bi-chat-dots"></i>
-                </span>
-                <span>
-                  <i className="bi bi-share"></i>
-                </span>
-              </div>
-     
-            </div>
-            <div className="caption">
-              <p>
-              <div className="description-box" style={{wordWrap:'break-word'}}>################</div>
-              </p>
-              <h5>TAGS :</h5> <div className="card-holder-name">.................</div>
-            </div>
+        
           </div>
         </div>
         <div className="back">
-          <div className="backfeedR">
-            <div className="card-holder-name1R ">.................</div>
-            <h1>FOTO FLASK</h1>
-            <h3>.............NEW POST LOADING..........</h3>
+          <div className="backfeed">
+            <h2 >Reel's Description </h2>
+            <div className="card-holder-name1 ">.................</div>
           </div>
         </div>
       </div>
-      <form method="post" action="/singlepost" encType="multipart/form-data">
-        <input
-          type="file"
-          name="single_input"
-          id="inputt"
-          accept="image/jpeg, image/png, image/jpg"
-          className="form-control myinput"
-          // onChange={handleImageChange}
-          onChange={(e)=>[setFile(e.target.files[0]) , setImagePre(URL.createObjectURL(e.target.files[0])),handleImageChange]}
 
-        />
+
+
+
+      <form method="post" action="/singlepost" encType="multipart/form-data">
+      <input
+  type="file"
+  name="single_input"
+  id="inputt"
+  accept="video/*"
+  className="form-control myinput"
+  onChange={(e) => [setFile(e.target.files[0]), setVideoPre(URL.createObjectURL(e.target.files[0])), handleVideoChange]}
+/>
+
         <div className="inputBox remove_phone">
           <span>User Name</span>
           <input type="text" name="cardnumber" className="" value="SAIPAVAN" readOnly />
@@ -198,38 +204,41 @@ const AddNewPost = () => {
           <input type="text" name="cardnumber" className="" value="05-01-2024" readOnly />
         </div>
         <label id="labell" htmlFor="inputt" className="submit-btn">
-          UPLOAD PHOTO
+          UPLOAD VIDEO
         </label>
-        <div className="inputBox">
+        {/* <div className="inputBox">
           <span>Description</span>
           <input
             type="text"
             className="card-number-input"
             name="description"
             placeholder="Enter Post Description"
-            onChange={(e)=>[setDescription(e.target.value),handleDescriptionChange]}
+         
             // onChange={handleDescriptionChange}
             required
           />
-        </div>
+        </div> */}
         <div className="inputBox">
-          <span>Tag</span>
+          <span>Enter Reel's Description</span>
           <input
             type="text"
             name="tag"
             placeholder="Enter a Tag"
             className="cvv-input"
-            onChange={handleTagChange}
+            onChange={(e)=>[handleTagChange ,setDescription(e.target.value),handleDescriptionChange]}
             required
           />
         </div>
         <button type="submit" className="submit-btn" onClick={handlepost} >
-          ADD NEW POST
+          ADD NEW REEL
         </button>
       </form>
+
+
+
     </div>
     </>
   );
 };
 
-export default AddNewPost;
+export default Addnewreel;

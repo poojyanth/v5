@@ -283,7 +283,7 @@ router.delete("/delete/:id",verifytoken, async (req, res) => {
 
 // GET USER DETAILS FOR A POST
 
-router.get("/post/user/details/:id",verifytoken,async(req,res)=>{
+router.get("/post/user/details/:id",async(req,res)=>{
     try{
     const user = await User.findById(req.params.id);
     // console.log("UserID requested"+req.params.id);
@@ -526,6 +526,67 @@ router.get("/get/allusers",async(req,res)=>{
         return res.status(400).send("SOME ERROR OCCURED IN try-catch")
     }
 })
+
+
+
+// get story viewers(their username , profile picture) (array) of logged in user in leftbar
+
+router.get("/getstoryviewers",verifytoken,async(req,res)=>{
+    try{
+        const user = await User.findById(req.user.id);
+
+        if (!user) {
+            return res.status(404).send("User not found");
+          }
+
+        console.log("user bro here: "+user.StoryViewers)
+     
+        const Viewers = await Promise.all(
+            user.StoryViewers.map((item)=>{
+                return User.findById(item);
+            })
+        )
+
+
+
+        let ViewersList =[];
+
+        Viewers.map((person)=>{
+            const {email,password,phonenumber,followers,following,StoryViewers,Likedposts,Stories,...others}=person._doc;
+            ViewersList.push({others})
+        })
+        console.log("viewers : "+Viewers)
+
+        res.status(200).send(ViewersList)
+
+    }catch(error){
+        
+        return res.status(400).send("SOME ERROR OCCURED IN try-catch in story Viewers"+error)
+    }
+})
+
+
+// addd viewer when they viewed your story 
+
+router.put("/:id/addviewer",verifytoken,async(req,res)=>{
+ 
+    try{
+     
+     const story_Owner = await User.findById(req.params.id);
+     console.log(story_Owner);
+ 
+    if(!story_Owner.StoryViewers.includes(req.user.id)){
+        await story_Owner.updateOne({$push:{StoryViewers:req.user.id}});  
+        return res.status(200).json("Viewer added successfully");
+    }else{
+        return res.status(200).json("You have already viewed the story ");
+    }
+}catch(error){
+    return res.status(400).json("SOME ERROR OCCURED IN try-catch in adding story viewer"+error );
+}
+
+})
+
 
 
 

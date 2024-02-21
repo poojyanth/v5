@@ -41,23 +41,12 @@ export default function Chatcontainer({ currentChatUser }) {
         getmessages();
       },[currentChatUser.others._id])
     console.log(message)
-    //   const sendmsg =()=>{
-    //     fetch(`${BACKEND_URI}/api/post/msg`,{method:'POST',
-    // headers:{
-    //     'Content-Type':"application/JSON",
-    //     jwttoken : jwt_here
-    // }, body:JSON.stringify({
-    //     from:id,
-    //     to:currentChatUser.others._id,
-    //     message:inputmessage
-    // })}),
-
-    //   }
+    
 
     useEffect(()=>{
 
         if(currentChatUser!== null){
-            socket.current = io("${BACKEND_URI}")
+            socket.current = io(`${BACKEND_URI}`)
             socket.current.emit("addUser",id)
         }
     },[id])
@@ -122,7 +111,7 @@ export default function Chatcontainer({ currentChatUser }) {
                         {item.myself === false ? <div className='msg' >
                      <img src={`${currentChatUser?.others?.profilepicture}`} className='chatUserProfile' />
                      <p  style={{textAlign:'start' , marginLeft:'10px'}}>{item.message}</p>
-                     </div> :     <div style={{width:"40%" , marginTop:"10px", display: "flex", alignItems: 'center',marginLeft:'30px', backgroundColor: 'rgb(241,243,241)' ,padding:'5px', marginTop:'10px',borderRadius:'10px' , marginLeft:'650px'}}>
+                     </div> :     <div className='MSGG' style={{width:"40%" , marginTop:"10px", display: "flex", alignItems: 'center',marginLeft:'30px', backgroundColor: 'rgb(241,243,241)' ,padding:'5px', marginTop:'10px',borderRadius:'10px' , marginLeft:'650px'}}>
                     {/* <img src={`${image3}`} className='chatUserProfile' /> */}
                     <p  style={{textAlign:'start' , marginLeft:'10px'}}>{item.message}</p>
                 </div> }
