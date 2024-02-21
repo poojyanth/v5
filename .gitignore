@@ -5,7 +5,7 @@
 /.pnp
 .pnp.js
 
-traffic.json
+traffic.json*
 
 # testing
 /coverage
