@@ -11,6 +11,8 @@
 .stories{
     display: flex;
     flex-direction: row;
+    margin: auto;
+    width: calc(100% - 4vw);
     overflow-x: scroll;
 }
 

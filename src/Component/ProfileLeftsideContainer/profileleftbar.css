@@ -11,8 +11,8 @@
 .NotificationsContainer{
     width: 20vw;
     margin: 2vh auto;
+    height: 50vh;
     background-color: var(--primary-color);
-    /* margin-top: 20px; */
     border-radius: 20px;
 }
 

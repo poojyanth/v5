@@ -28,12 +28,6 @@ export default function Stories() {
 
 
     return (
-        <div>
-
-
-            {/* <h5>STORIES PART HERE </h5> */}
-
-
             <div className="stories" style={{WebkitOverflowScrolling: 'touch',overflowY:'scroll' }}>
 
                 {
@@ -51,7 +45,5 @@ export default function Stories() {
 
              
             </div>
-
-        </div>
     )
 }

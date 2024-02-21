@@ -3,7 +3,11 @@
 }
 
 .NotificationsContainer{
-    height: max-content;
+    height: 40vh;
+}
+
+.ExploreImageContainer{
+    height: 90%;
 }
 
 .ScrollContainerDisNone{
@@ -12,6 +16,7 @@
 }
 .ScrollContainerDisNone2{
     max-height:60vh ;
+    overflow-y: scroll;
     height: 40vh;
 }
 
