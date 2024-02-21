@@ -204,7 +204,7 @@ export default function Contentpost({ reloadMainpost }) {
           Your browser does not support the video tag.
         </video>}
           <div style={{display: 'flex', flexDirection: 'row', justifyContent: 'space-between', margin: '0 5px 5px'}}>
-            <div>
+            <div style={{marginTop:'10px',marginLeft:'14px'}}>
               <label htmlFor='file'>
                 <img src={`${imageIcon}`} className="icons" alt="" />
                 <input type="file" name="file" id="file" style={{ display: "none" }} onChange={handleImageChange} />

@@ -61,12 +61,13 @@ app.use('/api/user', require('./Routes/User'));
 app.use('/api/organisation', require('./Routes/Organization'));
 app.use('/api/post', require('./Routes/Post'));
 app.use('/api/admin', require('./Routes/Admin'));
+app.use('/api/reels', require('./Routes/Reels'));
 
 
 
 const io = socket(server,{
     cors:{
-        origin:`http://localhost:1${FRONTENDPORT}`,
+        origin:`http://localhost:${FRONTENDPORT}`,
         credentails:true
     }
 })
@@ -82,7 +83,7 @@ io.on("connection",(socket)=>{
         onlineUsers.set(id,socket.id);
     })
     socket.on("send-msg",(data)=>{
-        const sendUserSocket  = onlineUsers.get(data.io);
+        const sendUserSocket  = onlineUsers.get(data.to);
         if(sendUserSocket){
             socket.to(sendUserSocket).emit("msg-receive",data.message)
         }

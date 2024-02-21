@@ -33,7 +33,42 @@ useEffect(()=>{
 getposts();
 },[])
 
-console.log(posts);
+
+const [viewers,setViewers] = useState([]);
+useEffect(()=>{
+  const getstoryviewers = async()=>{   
+    try{
+      const response2 = await axios.get(`http://localhost:4000/api/user/getstoryviewers`,{
+        headers:{
+          jwttoken:jwt_here // must be the attribute name (same name as in headers )-> i.e jwttoken
+        }
+      });
+
+      console.log(response2.data);
+      // before firebase used user  setPosts(response.data.followingPosts);
+      setViewers(response2.data);  // include particularly .followingPosts 
+                                               //otherwise it returns an data object
+  }catch(error){
+       console.log("ERROR OCCURED IN CATCH BLOCK "+error);
+  }
+  }
+  getstoryviewers();
+},[])
+
+useEffect(() => {
+  // Dynamically create script element
+  const script = document.createElement('script');
+  script.src = 'https://cdn.lordicon.com/lordicon.js';
+  script.async = true;
+
+  // Append script to the document's body
+  document.body.appendChild(script);
+
+  // Remove script when component is unmounted
+  return () => {
+    document.body.removeChild(script);
+  };
+}, []);
 
 
 
@@ -41,42 +76,25 @@ console.log(posts);
     <div className='Leftbar'>
       
     <div className='NotificationsContainer'>
-              <div className='containerHead'>
-                                  <p >Notifications</p>
-                                  <p style={{ color: "var(--secondary-text-color)" }}>See all</p>
+    <div style={{ display: 'flex', justifyContent: 'space-around', marginBottom:'10px' }}>
+                        <p style={{marginLeft:"-3px"}}>Recent Story Viewers</p>
+                        <p style={{  color: "#aaa" , marginLeft:"40px" }}>See all</p>
               </div>
-              <div className='ScrollContainerDisNone'>
-              <div className='notificationItem' >
-                        <img src={`${image3}`} className="notificationimg" alt="" />
-                        <p style={{ color:"var(--secondary-text-color)" , fontSize:13 , width:"120px" , textAlign:"start"}}>Madan like your post</p>
-                        <img src={`${image3}`} className="likeimage" alt="" />
-              </div>
-              <div className='notificationItem'>
-                        <img src={`${image3}`} className="notificationimg" alt="" />
-                        <p style={{ color:"var(--secondary-text-color)" , fontSize:13 , textAlign:"start" , width:"120px"}}>Suman started to following you</p>
-                        <img src={`${image3}`} className="followinguserimage" alt="" />
-              </div>
-              <div className='notificationItem'>
-                        <img src={`${image3}`} className="notificationimg" alt="" />
-                        <p style={{  color:"var(--secondary-text-color)" , fontSize:13 , width:"120px" , textAlign:"start"}}>Madan like your post</p>
-                        <img src={`${image3}`} className="likeimage" alt="" />
-              </div>
-              <div className='notificationItem'>
-                        <img src={`${image3}`} className="notificationimg" alt="" />
-                        <p style={{ color:"var(--secondary-text-color)" , fontSize:13 , width:"120px" , textAlign:"start"}}>Madan like your post</p>
-                        <img src={`${image3}`} className="likeimage" alt="" />
-              </div>
-
-              <div className='notificationItem'>
-                        <img src={`${image3}`} className="notificationimg" alt="" />
-                        <p style={{ color:"var(--secondary-text-color)" , fontSize:13 , width:"120px" , textAlign:"start"}}>Madan like your post</p>
-                        <img src={`${image3}`} className="likeimage" alt="" />
-              </div>
-              </div>
-
             
-       
+              {           
+   viewers.map((item)=>{
+    
+      return   <div style={{display:'flex' , alignItems:"center" , marginTop:"-35px",marginBottom:"10px"}}>
+      <img src={`${item.others.profilepicture}`} className="notificationimg" alt="" />
+      <h6 style={{marginLeft:"5px" , color:"#aaa" , fontSize:14 , width:"120px" , textAlign:"start"}}>{item.others.username}</h6>
+       </div>
+ 
+  })
+  
+  }
     </div>
+
+   
 
     <div className='NotificationsContainer'>
               <div className='containerHead'>
@@ -84,7 +102,7 @@ console.log(posts);
                         <Link to="/explorepage" style={{ color: "var(--secondary-text-color)", textDecoration: 'none' }}><p >See all</p></Link>
               </div>
               
-              <div className='ExploreImageContainer ScrollContainerDisNone'>
+              <div className='ExploreImageContainer ScrollContainerDisNone2'>
                 {           
                   posts.map((item)=>{
                     // return item.map((postdetails)=>{

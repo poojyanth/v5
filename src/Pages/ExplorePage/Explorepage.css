@@ -17,3 +17,7 @@
     justify-content: space-between;
     flex-direction: column;
 }
+
+.Explorepage{
+    background-color: var(--secondary-color);
+}

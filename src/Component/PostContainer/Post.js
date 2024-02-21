@@ -184,14 +184,29 @@ export default function Post(props) {
     setExpanded(!expanded);
   };
 
+  useEffect(() => {
+    // Dynamically create script element
+    const script = document.createElement('script');
+    script.src = 'https://cdn.lordicon.com/lordicon.js';
+    script.async = true;
+
+    // Append script to the document's body
+    document.body.appendChild(script);
+
+    // Remove script when component is unmounted
+    return () => {
+      document.body.removeChild(script);
+    };
+  }, []);
+
   return (
     <div className='PostContainer'>
       <div className='SubPostContainer'>
-          <div style={{    display: 'flex', alignItems : 'center',
+          <div style={{ display: 'flex', alignItems : 'center',
               justifyContent: 'space-between',    flexDirection: 'row'}}>
 
               <Link to={`/profilepage/${userDetails._id}`} style={{textDecoration: 'none', color: 'black', fontWeight: '600'}}>
-            <div style={{    display: 'flex', alignItems: 'center'}}>
+            <div style={{   margin:'7px' ,   display: 'flex', alignItems: 'center'}}>
 
               <img src={(userDetails.profilepicture)?userDetails.profilepicture:defaultUser} className="PostImage" alt="" />
               <div>
@@ -217,7 +232,7 @@ export default function Post(props) {
           <p style={{
                   textAlign: 'start',
                   width: '96%',
-                  margin: '3px',
+                  margin: '9px',
                   height: expanded ? 'auto' : '1.5rem',
                   overflow: 'hidden',
                   
@@ -225,7 +240,7 @@ export default function Post(props) {
                   whiteSpace: expanded ? 'pre-wrap': 'nowrap',
                   cursor: 'pointer',
                 }} onClick={handleExpand} >
-                <Link to={`/profilepage/` + userDetails._id} style={{ marginRight: '5px',fontWeight: 'bold', textDecoration: 'none', color: 'black' }}>
+                <Link to={`/profilepage/` + userDetails._id} style={{ margin: '5px',fontWeight: 'bold', textDecoration: 'none', color: 'black' }}>
                   {userDetails.username}
                 </Link>
                 {props.post.description}
@@ -236,41 +251,72 @@ export default function Post(props) {
           <div style={{ display: "flex", width: "100%", justifyContent: 'space-around'}}>
             
               <div style={{ display: "flex", alignItems: "center", cursor: "pointer" }} onClick={handleLike}>
-                <img src={`${Like}`} className="iconsforPost"  alt="" />
+                <img src={`${Like}`} className="iconsforPost"  alt="" style={{display:"none"}} />
+                <script src="https://cdn.lordicon.com/lordicon.js"></script>
+<lord-icon
+    src="https://cdn.lordicon.com/igciyimj.json"
+    trigger="hover"
+    colors="primary:#121331,secondary:#e83a30,tertiary:#ffc738,quaternary:#f9c9c0,quinary:#e83a30,senary:#ebe6ef"
+    style={{ width: '29px', height: '29px' }}>
+</lord-icon>
                 <p style={{ marginLeft: "6px" }}>{count} Likes</p>
               </div>
               <div style={{ display: "flex", alignItems: "center", marginLeft: 20, cursor: "pointer" }} onClick={handleshow}>
-                <img src={`${CommentIcon}`}  className="iconsforPost" alt="" />
+                <img src={`${CommentIcon}`}  className="iconsforPost" alt="" style={{display:"none"}}  />
+                <script src="https://cdn.lordicon.com/lordicon.js"></script>
+<lord-icon
+    src="https://cdn.lordicon.com/ayhtotha.json"
+    trigger="hover"
+    colors="primary:#66d7ee"
+    style={{ width: '29px', height: '29px' }}>
+</lord-icon>
                 <p style={{ marginLeft: "6px" }}>{props.post.comments.length} Comments</p>
               </div>            
               <div style={{ display: "flex", alignItems: "center", cursor: "pointer" }} onClick={() => handleShareClick(props.post._id)}>
-                <img src={`${Share}`} className="iconsforPost" alt="" />
+                <img src={`${Share}`} className="iconsforPost" alt="" style={{display:"none"}}  />
+                <script src="https://cdn.lordicon.com/lordicon.js"></script>
+<lord-icon
+    src="https://cdn.lordicon.com/boyoxams.json"
+    trigger="hover"
+    colors="primary:#e86830"
+    style={{ width: '29px', height: '29px' }}>
+</lord-icon>
                 <p style={{ marginLeft: "6px" }}>Share</p>
               </div>
+              
+      {/* <script src="https://cdn.lordicon.com/bhenfmcm.js"></script>
+      <lord-icon
+        src="https://cdn.lordicon.com/ofcynlwa.json"
+        trigger="hover"
+        style={{ width: '40px', height: '40px' }}
+      ></lord-icon> */}
+
+
+ 
           </div>
           {show === true ?
           <>
-            <hr style={{border: '0.5px solid rgba(0, 0, 0, 0.2)'}}/>
+           
             <div className='CommentsBoxScroll' style={{ padding: '10px',maxHeight: '30vh', overflowX: 'hidden',  overflowY: 'scroll' }}>
               <div style={{ display: "flex", alignItems: "center", margin: '5px 0' }}>
                 <img src={(user.user.profilepicture) ? user.user.profilepicture : defaultUser} className="PostImage" alt="" />
                 <textarea
                   id={props.post._id + 'comment'}
                   className='commentinput'
-                  placeholder='Write your thought'
-                  style={{ resize: 'none', minHeight: '30px',  marginLeft: '5px', width: '100%'}}
+                  placeholder='Write your comment here'
+                  style={{ resize: 'none', minHeight: '30px',   backgroundColor:'whitesmoke',  marginLeft: '5px', width: '100%'}}  
                   onChange={(e) => { setcommentwriting(e.target.value); }}
                 />
                 <button className='addCommentbtn' onClick={handleComment}>Post</button>
               </div>
-              <hr style={{border: '0.5px solid rgba(0, 0, 0, 0.2)', margin: '0'}}/>
+             
               {Comments.map((item) => (
                 <div style={{ margin: '3px 0' }}>
                   <div style={{ display: "flex", alignItems: "center", }}>
                     <img src={(user.user.profilepicture)?user.user.profilepicture:defaultUser} className="PostImage" alt="" />
                     <div style={{ margin:'5px',   display: 'flex', alignItems: 'center'}}>
-                      <p style={{  fontSize: 15, margin: '5px', textAlign: 'left'}}>
-                        <span><Link to={'/profilepage/'+item.user} style={{textDecoration: 'none', color: 'black', fontWeight: 'bolder'}}>{item.username}</Link></span> {item.comment}</p>
+                      <p style={{ maxWidth:'96%',wordBreak:'break-word' , backgroundColor:'whitesmoke' , padding:'6px 30px 6px 4px' , borderRadius:'10px 25px 20px 2px', fontSize: 15, margin: '5px', textAlign: 'left'}}>
+                        <span><Link to={'/profilepage/'+item.user} style={{textDecoration: 'none', color: 'black', fontWeight: 'bolder'}}>{item.username} : </Link></span> {item.comment}</p>
                     </div>
                   </div>
                 </div>

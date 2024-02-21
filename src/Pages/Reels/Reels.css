@@ -13,6 +13,10 @@
   color: #FFF;
 }
 
+.btn{
+  padding: 9px;
+}
+
 #carousel {
   height: 100%;
   width: 100%;
@@ -68,12 +72,16 @@
   transition: box-shadow 1s, height 250ms, width 250ms, left 1s, margin-top 1s, line-height 250ms, background-color 1s;
 }
 
+.comment_container{
+  animation: fadeIn 3s ease-in-out;
+}
+
 .level-2 {
   box-shadow: -.1em .1em .2em #212121;
   height: 60%;
   width: 17%;
   line-height: 72%;
-  background-color: #228291;
+  background-color: transparent;
   left: 15%;
   filter: blur(5px) brightness(25%);
 }
@@ -83,7 +91,7 @@
   height: 73%;
   width: 18%;
   line-height: 78%;
-  background-color: #6796E5;
+  background-color: transparent;
   left: 30%;
   filter: blur(3px) brightness(40%);
 }
@@ -93,7 +101,7 @@
   height: 90%;
   width: 23%;
   line-height: 85%;
-  background-color: #4EC9E1;
+  background-color: transparent;
   left: 50%;
 }
 
@@ -102,7 +110,7 @@
   height: 73%;
   width: 18%;
   line-height: 78%;
-  background-color: #6796E5;
+  background-color: transparent;
   left: 70%;
   filter: blur(3px) brightness(40%);
 }
@@ -112,7 +120,7 @@
   height: 60%;
   width: 17%;
   line-height: 72%;
-  background-color: #228291;
+  background-color: transparent;
   left: 85%;
   filter: blur(5px) brightness(25%);
 }
@@ -207,4 +215,112 @@
   -moz-user-select: none;
   -ms-user-select: none;
   user-select: none;
+}
+
+
+
+
+@keyframes slowLettersTransition {
+  from {
+    opacity: 0;
+    transform: translateY(10px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.descriptionn p {
+  animation: slowLettersTransition 3s ease-in-out;
+}
+
+
+
+.PostImage{
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  margin-left: 10px;
+}
+
+.reactions_box{
+  background-color: #212121;
+}
+.reactions_box svg{
+ margin-left: 6px; 
+   margin-right: 6px; 
+}
+
+.comment_reel{
+  position: fixed;
+  margin-top: 540px;
+  margin-left: 450px;
+  background-color: #212121;
+  overflow-wrap: break-word;
+}
+.comment_reel input{
+  font-size: 13px;
+  background-color: #212121;
+  color: white;
+  margin-bottom: 13px;
+  border-radius: 20%;
+  margin-left: 25px;
+  margin-top: 5px;
+  width: 70%;
+
+}
+
+.comment_reel{
+  animation: fadeIn 2s ease-in-out;
+}
+
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+
+
+
+/* ANIMATION */
+
+
+
+
+.hearts {
+  position: fixed;
+  bottom: 0;
+  left: 0;
+  animation: fall 2s ease-in infinite;
+  opacity: 1;
+  transition: opacity 1s ease-in;
+}
+
+@keyframes fall {
+  to {
+    transform: translateY(-450%);
+  }
+}
+
+
+
+html {
+  overflow: scroll;
+  overflow-x: hidden;
+}
+::-webkit-scrollbar {
+  width: 0;  /* Remove scrollbar space */
+  background: transparent;  /* Optional: just make scrollbar invisible */
+}
+/* Optional: show position indicator in red */
+::-webkit-scrollbar-thumb {
+  background: #FF0000;
+}
+
+.All_comments{
+  animation: slowLettersTransition 3s ease-in-out;
 }

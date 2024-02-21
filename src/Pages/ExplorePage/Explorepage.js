@@ -39,9 +39,7 @@ export default function Explorepage() {
     <div className='Explorepage'>
         <Navbar/>      
         <div className= "ExploreComponentContainer">
-            <div className="ExplorepageHeader">
-                <p>Explore</p>
-            </div>
+        
             <div className="ExplorePostContainer">
                 {exploreposts.post?.map((post)=>(
                     post.image? <ExplorePost post={post} key={post._id}/>: '' 

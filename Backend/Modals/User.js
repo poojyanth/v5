@@ -44,8 +44,12 @@ const Userschema = new mongoose.Schema({
         type: Number,
         default: 1,
         immutable: true
-    }
+    },
 
+    StoryViewers: {
+        type: [String], 
+        default: [],
+      }
 
 
 })

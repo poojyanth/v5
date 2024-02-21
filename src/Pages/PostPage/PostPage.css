@@ -1,5 +1,5 @@
 .postpage{
-    background-color: rgb(235, 238, 242);
+    background-color: var(--primary-color);
     height: max-content;
     /* height: 100vh; */
 }

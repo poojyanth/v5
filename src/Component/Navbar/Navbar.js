@@ -8,6 +8,7 @@ import { useNavigate } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
 import { logout } from "../ReduxContainer/UserReducer";
 import Logo from "../Images/LOGO.svg"
+import VideoIcon from "../Images/video.png"
 
 export default function Navbar() {
   const navigate = useNavigate();
@@ -69,11 +70,15 @@ export default function Navbar() {
         </div>
       </div>
       <div className='IconsContainer'>
-        <Link to="/" style={{ textDecoration: 'none', color: 'black' }}>
+      <Link to="/reels" ><img src={`${VideoIcon}`} className="Icons" alt="" /></Link>
+        <Link to="/chat" style={{ textDecoration: 'none', color: 'black' }}>
           <img src={`${Message}`} className="Icons" alt="" />
         </Link>
         <Link to="/addnewpost" className='Icons' style={{marginBottom: '8px', alignItems: 'center', textDecoration: 'none', color: 'black', fontSize: '25px', display: 'flex'}}>
           +
+        </Link>
+        <Link to="/addnewreel" className='Icons' style={{marginBottom: '8px', alignItems: 'center', textDecoration: 'none', color: 'black', fontSize: '25px', display: 'flex'}}>
+          R
         </Link>
         <Link to={user.user.type===2? `/organization/${id}` : `/profilepage/${id}`} style={{ textDecoration: 'none', color: 'black' }}>
           <div style={{ display: 'flex', alignItems: 'center' }}>

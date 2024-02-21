@@ -9,7 +9,6 @@ import { useLocation } from 'react-router-dom';
 export default function ViewStoryImage() {
     const userDetails = useSelector((state) => state.user);
     let user = userDetails.user;
-    const BACKEND_URI = process.env.REACT_APP_BACKEND_URI;
     let id = user.user._id;
     const jwt_here = user.jwttoken
 
@@ -26,7 +25,7 @@ export default function ViewStoryImage() {
     const getpost = async () => {
         try {
             console.log(loc_id);
-            const response = await axios.get(`${BACKEND_URI}/api/user/viewstory/${loc_id}`);
+            const response = await axios.get(`http://localhost:4000/api/user/viewstory/${loc_id}`);
             console.log(response.data);
             setPost(response.data);
             console.log("Postdata", postData);

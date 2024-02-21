@@ -18,9 +18,9 @@
     margin-left: 10px;
 }
 .PostImages{
-    width: 100%;
+    width: 97%;
     object-fit: cover;
-    border-radius: 2px;
+    border-radius: 12px;
 }
 
 .iconsforPost{

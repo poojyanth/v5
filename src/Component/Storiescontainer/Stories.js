@@ -9,15 +9,13 @@ export default function Stories() {
 
     const [allfollowings, setAllfollowings] = useState();
     const userDetails = useSelector((state) => state.user);
-    const BACKEND_URI = process.env.REACT_APP_BACKEND_URI;
     let user = userDetails.user;
+    console.log(user);
     let id = user.user._id;
 
     useEffect(() => {
-
-
         const getstories = async () => {
-            const ur_followings = await axios.get(`${BACKEND_URI}/api/user/get/followings_with_stories/${id}`);
+            const ur_followings = await axios.get(`http://localhost:4000/api/user/get/followings_with_stories/${id}`);
             //axios not only returns data along with that it will return less useful things like config,ststuesText ,status etc ..
             // main content we need is present in data attribute of object
             console.log(ur_followings.data);
@@ -25,7 +23,6 @@ export default function Stories() {
         }
         getstories();
     }, [])
-
 
     console.log(allfollowings)
 
@@ -37,7 +34,7 @@ export default function Stories() {
             {/* <h5>STORIES PART HERE </h5> */}
 
 
-            <div className="stories">
+            <div className="stories" style={{WebkitOverflowScrolling: 'touch',overflowY:'scroll' }}>
 
                 {
                     allfollowings && allfollowings.map((item) => {

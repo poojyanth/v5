@@ -67,3 +67,8 @@
        border-radius:10px;
 
 }
+.MSGG{
+    color: white;
+    background: rgb(120,64,255);
+background: linear-gradient(0deg, rgba(120,64,255,1) 15%, rgba(175,45,255,1) 74%);
+}
