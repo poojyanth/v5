@@ -20,11 +20,11 @@
     height: 100%;
     float: left;
     background-color: var(--primary-color);
+    position: fixed;
 }
 
 .OrganizationLeftContainer:hover{
-    width: 20vw;
-    position: absolute;
+    width: 10vw;
 }
 
 .OrganizationRightContainer{

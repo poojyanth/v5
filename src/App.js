@@ -20,8 +20,6 @@ import AdminPage from './Pages/Admin/Admin';
 import Likedposts from './Pages/Likedposts/Likedposts';
 import { useSelector}  from 'react-redux'
 
-
- 
 import {
   BrowserRouter as Router,
   Route,
@@ -33,11 +31,7 @@ import {
 function App() {
 
   const userDetails = useSelector((state)=>state.user);
-  // console.log(userDetails)
   let user = userDetails.user;
-  // console.log(user.user.username);
-  // console.log(user.user._id)
-
 
   return (
 
