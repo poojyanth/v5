@@ -82,6 +82,7 @@ export default function Chatcontainer({ currentChatUser }) {
             }),
         });
         setMessage(message.concat(messages))
+        setInputmessage('');
     };
 
     useEffect(()=>{
@@ -125,7 +126,7 @@ export default function Chatcontainer({ currentChatUser }) {
             </div>
 
             <div className='msgSenderContainer'>
-                <input type='text' onChange={(e) => setInputmessage(e.target.value)} placeholder='write your message here' className='msginput' />
+                <input type='text' value={inputmessage} onChange={(e) => setInputmessage(e.target.value)} placeholder='write your message here' className='msginput' />
                 <button className='msgButton' onClick={sendmsg}>Send</button>
             </div>
 

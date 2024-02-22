@@ -125,6 +125,24 @@ export default function Post(props) {
           setLike(LikeIcon);
           console.error('Error during like update:', error);
         });
+      await fetch(`http://localhost:4000/api/user/likedpost/${props.post._id}`,
+        {
+          method: "PUT",
+          headers: {
+            'Content-Type': 'application/json',
+            jwttoken: jwt_here
+          }, body: JSON.stringify({ user: myUserId })
+        }).then(response => {
+          console.log(response)
+          if (response.ok) {
+            console.log('successfully update like');
+          } else {
+            console.error('Failed to update like');
+          }
+        })
+        .catch(error => {
+          console.error('Error during like update in user array :', error);
+        });
       //  setLike(anotherlikeicon);
       //   setCount(count + 1);
     } else {
@@ -221,10 +239,47 @@ export default function Post(props) {
 
             </div>  
           </div>
+
+          {((props.post.image === '')&&(props.post.video === '' ) )? 
+          <div className="containerr" style={{
+  width: "470px",
+  maxWidth:"470px",
+  wordBreak:'break-word',
+  height: "430px",
+  background: "rgb(108,68,255)",
+  background: "linear-gradient(0deg, rgba(108,68,255,1) 22%, rgba(90,97,255,1) 35%, rgba(120,64,255,1) 61%, rgba(175,45,255,1) 78%)",
+  display: 'flex',
+  justifyContent: 'center',
+  alignItems: 'center',
+  borderRadius: '10px',
+  boxShadow: '0 4px 8px rgba(0, 0, 0, 0.1)',
+  overflow: 'hidden',
+  padding: '20px',
+  marginLeft: '7px',
+  fontFamily: 'Lobster, Poppins, sans-serif', // Specify the font family
+}}>
+  <p style={{
+    fontSize: "30px",
+    color: "white",
+    textAlign: 'start',
+    width: "100%",
+    marginTop: 0,
+    overflowWrap: 'break-word',
+    wordWrap: 'break-word',
+    whiteSpace: 'pre-line',
+  }}>
+    {props.post.description}
+  </p>
+</div>
+
+
+: <p></p>
+          }
           
+
       
           {props.post.image !== '' ? 
-           <img src={`${props.post.image}`} className="PostImages" alt="" />: props.post.video !== '' ? <video className="PostImages" width="500" height="500" controls >
+           <img src={`${props.post.image}`} className="PostImages" alt="" />: props.post.video !== '' ? <video className="PostImages" width="500" height="500" controls autoPlay loop muted  >
            <source src={`${props.post.video}`} type="video/mp4"/>
           </video> : ''
           }
