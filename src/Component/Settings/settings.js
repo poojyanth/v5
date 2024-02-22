@@ -6,7 +6,9 @@ import { logout } from "../ReduxContainer/UserReducer";
 import { useState } from "react";
 import coverPhoto from "../Images/default-cover-4.jpeg";
 import Image from "../Images/blank-profile-picture-973460_960_720.webp";
-import { set } from "mongoose";
+import {updateUserProfilePicture} from "../ReduxContainer/UserReducer";
+import axios from "axios";
+import { updateProfilePicture } from "../ReduxContainer/apiCall";
 
 const settingsPane = {
   display: "flex",
@@ -306,7 +308,12 @@ export const Setting2 = ({ user, setUser }) => {
 };
 
 export const Setting3 = ({ user, setUser }) => {
-  console.log(user);
+
+  const BACKEND_URI = process.env.REACT_APP_BACKEND_URI;
+  const dispatch = useDispatch();
+
+  const jwt_here=user.jwttoken
+
   var ImagePreview = user.user.profilepicture ? user.user.profilepicture : Image;
 
   const handleImageInput = (event) => {
@@ -315,15 +322,36 @@ export const Setting3 = ({ user, setUser }) => {
     document.getElementById("ImagePreviewImage").src = ImagePreview;
   };
 
-  const handleSave = () => {
-    setUser({
-      ...user,
-      user: {
-        ...user.user,
-        profilepicture: ImagePreview,
-      },
-    });
-  }
+  const handleSave = async (e) => {
+    e.preventDefault();
+    try {
+      const formData = new FormData();
+      formData.append('profilepicture', document.getElementById("profilepicture").files[0]);
+  
+      const response = await axios.post(
+        `${BACKEND_URI}/api/user/upload/profilepic`,
+        formData,
+        {
+          headers: {
+            'Content-Type': 'multipart/form-data',
+            jwttoken: jwt_here
+          }
+        }
+      );
+  
+      // Assuming the response.data contains the file path
+      const filePath = response.data;
+      alert(filePath);
+      // Update Redux or local state with the file path
+      updateProfilePicture(dispatch, filePath);
+      dispatch(updateUserProfilePicture(filePath));
+      console.log(user.user.profilepicture);
+    } catch (error) {
+      console.log("ERROR OCCURRED IN CATCH BLOCK:", error);
+      // Handle error if needed
+    }
+  };
+  
 
   return (
     <div className="settingsPane" style={settingsPane}>
@@ -396,7 +424,6 @@ export const Setting3 = ({ user, setUser }) => {
 };
 
 export const Setting4 = ({ user, setUser }) => {
-  console.log(user);
   var ImagePreview = user.user.coverphoto ? user.user.coverphoto : coverPhoto;
 
   const handleImageInput = (event) => {

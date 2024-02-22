@@ -3,6 +3,8 @@ const router = express.Router();
 require('dotenv').config();
 const bcrypt = require('bcryptjs');
 const jwt = require("jsonwebtoken");
+const  multer = require('multer');
+const Datemod = require('../Modals/Date')
 const SECRETKEY = process.env.SECRET_KEY;
 
 const { body, validationResult } = require('express-validator');
@@ -10,8 +12,36 @@ const User = require('../Modals/User');
 const { verifytoken } = require('../middleware/verifytoken');
 const Post = require('../Modals/Post');
 
+let storage_profilepics = multer.diskStorage({
+    destination:'../public/Images/ProfilePictures',
+     filename:(req,file,cb)=>{
+        cb(null, Date.now() + '_' + file.originalname);
+        req.body.profilepicture = '/Images/ProfilePictures/'+ Date.now() + '_' + file.originalname;
+     }
+}) 
 
-// ROUTE-1 :- CREATE NEW USER
+let uploadprofilepic =multer({
+    storage:storage_profilepics,
+    fileFilter:(req,file,cb)=>{
+        if(
+            file.mimetype === 'image/jpeg' ||
+            file.mimetype === 'image/jpg' ||
+            file.mimetype === 'image/png' ||
+            file.mimetype === 'image/gif'
+        ){
+               cb(null,true);
+        }else{
+            cb(null,false);
+            cb(new Error('ONLY IMAGES ARE ALLOWED TO BE UPLOADED'));
+        }
+
+    }
+})
+
+const upload = multer({ dest: 'images/' })
+
+
+// ROUTE-1 :- CREATE NEW USER 
 // METHOD USED :- POST
 router.post("/create/user", async (req, res) => {
 
@@ -114,47 +144,8 @@ router.post("/login", [
     }catch(error){
         return res.status(400).json("SOME ERROR OCCURED IN try-catch in /login route:" + error)
     }
-
-
     })
 
-
-// ROUTE-3 :- FOLLOW A USER
-// METHOD USED :- PUT
-
-// USER-2 IS TRYING TO FOLLOW USER-1
-// therefore id in "/follow/:id" must be of user-1
-// and user in req.body.user must be id of user-2
-// jwttoken in headers must be of user-2 as he has to login into his account to follow others
-// router.put("/follow/:id",verifytoken, async (req, res) => {
-
-//     try {
-
-//      const user1 = await User.findById(req.params.id);
-//      const user2 = await User.findById(req.body.user);
-
-//      if(req.params.id === req.body.user){
-//         return res.status(400).json("YOU CANNOT FOLLOW YOURSELF");
-//      }
-
-
-//      if(user1.followers.includes(user2)){
-//         return res.status(400).json("YOU ALREADY FOLLOWS THE USER");
-//      }
-
-   
-//      await user1.updateOne({$push:{followers:req.body.user}})
-//      await user2.updateOne({$push:{following:req.params.id}})
-
-
-//      res.status(200).json("FOLLOWING SUCCESSFULLY");
-
-
-//     } catch (error) {
-//         return res.status(400).json("SOME ERROR OCCURED IN try-catch in /follow/ "+error );
-//     }
-
-// })
 
 router.put("/follow/:id" , verifytoken , async(req , res)=>{
     console.log("follow route");
@@ -176,32 +167,6 @@ router.put("/follow/:id" , verifytoken , async(req , res)=>{
     }
 })
 
-//Following
-// router.put("/following/:id" , verifytoken , async(req , res)=>{
-//     if(req.params.id !== req.body.user){
-//         const user = await User.findById(req.params.id);
-//         const otheruser = await User.findById(req.body.user);
-
-//         if(!user.Followers.includes(req.body.user)){
-//             await user.updateOne({$push:{Followers:req.body.user}});
-//             await otheruser.updateOne({$push:{Following:req.params.id}});
-//             return res.status(200).json("User has followed");
-//         }else{
-//             await user.updateOne({$pull:{Followers:req.body.user}});
-//             await otheruser.updateOne({$pull:{Following:req.params.id}});
-//             return res.status(200).json("User has Unfollowed");
-//         }
-//     }else{
-//         return res.status(400).json("You can't follow yourself")
-//     }
-// })
-
-
-// ROUTE-3 :- FETCH POSTS OF FOLLOWERS
-// METHOD USED :- GET
-// user2 is following user1 -> so need to get user1's posts in user2 account (after login )
-// here id in req.params.id and jwttoken are of user2 as he need to login
-// no need of id here as we have jwttoken -> will change it later
 router.get("/followingposts/:id", verifytoken, async (req, res) => {
     try {
       const user2 = await User.findById(req.params.id);
@@ -213,11 +178,9 @@ router.get("/followingposts/:id", verifytoken, async (req, res) => {
       );
   
       const your_posts = await Post.find({ user: user2._id });
-  
-      // Combine your_posts and followingPosts into a single array
+
       let allPosts = your_posts.concat(...followingPosts);
   
-      // Sort allPosts by upload date (assuming the date attribute is named 'createdAt')
       allPosts.sort((a, b) => new Date(b.createdAt) - new Date(a.createdAt));
   
       res.status(200).json(allPosts);
@@ -227,13 +190,6 @@ router.get("/followingposts/:id", verifytoken, async (req, res) => {
   });
   
   
-  
-  
-
-
-// ROUTE-4 :- UPDATE USER PASSWORD
-// METHOD USED :- PUT
-
 router.put("/update/:id",verifytoken, async (req, res) => {
 
     try {
@@ -260,8 +216,6 @@ router.put("/update/:id",verifytoken, async (req, res) => {
 })
 
 
-// ROUTE-4 :- DELETE USER ACCOUNT
-// METHOD USED :- DELETE
 
 router.delete("/delete/:id",verifytoken, async (req, res) => {
 
@@ -282,19 +236,13 @@ router.delete("/delete/:id",verifytoken, async (req, res) => {
 })
 
 
-// GET USER DETAILS FOR A POST
-
 router.get("/post/user/details/:id",async(req,res)=>{
     try{
     const user = await User.findById(req.params.id);
-    // console.log("UserID requested"+req.params.id);
     if(!user){
         req.status(400).send("CAN'T GET USER FOR A POST");
     }
     const {email,password,phonenumber,...others}= user._doc;
-    // remaining details will be stores in others variable
-    // others contain username,profilpicture
-    // console.log(others)
     res.status(200).send(others);
 }catch(error){
     return res.status(400).send("SOME ERROR IN TRY_ CATCH (get user for a post)")
@@ -322,9 +270,6 @@ router.get("/user/details/:id",verifytoken,async(req,res)=>{
 })
 
 
-// GET USERS TO FOLLOW
-// i.e :- GET USERS IN SUGGESTED FOR YOU LIST
-// THOSE ARE USERS THAT ARE NOT IN YOUR FOLLOWING LIST (array)
 
 router.get("/all/user/:id", verifytoken, async (req, res) => {
     try {
@@ -350,10 +295,6 @@ router.get("/all/user/:id", verifytoken, async (req, res) => {
         res.status(500).send("Internal Server Error");
     }
 });
-
-
-
-// GET FOLLOWING LIST OF LOGGED IN USER
 
 router.get("/get/followings/:id",verifytoken, async(req,res)=>{
     try{
@@ -586,9 +527,28 @@ router.put("/:id/addviewer",verifytoken,async(req,res)=>{
     return res.status(400).json("SOME ERROR OCCURED IN try-catch in adding story viewer"+error );
 }
 
-})
+});
 
 
+// Profile Photo Upload
+
+router.post("/upload/profilepic",verifytoken,uploadprofilepic.single('profilepicture'),async(req,res)=>{
+    console.log(req.file);
+    try{
+        const user = await User.findById(req.user.id);
+        if(!user){
+            console.log("user not found");
+            return res.status(400).json("USER NOT FOUND");
+        }
+        await user.updateOne({$set:{profilepicture:req.body.profilepicture}});
+        return res.status(200).send(req.body.profilepicture);
+    }catch(error){
+        return res.status(400).json("SOME ERROR OCCURED IN try-catch in adding story viewer"+error );
+    }
+}
+);
+
+ 
 
 
 

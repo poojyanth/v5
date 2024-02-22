@@ -18,7 +18,6 @@
 }
 
 #carousel {
-  height: 100%;
   width: 100%;
   margin: auto;
   left: 0;
@@ -30,9 +29,11 @@
 .arrow {
   position: absolute;
   width: 60px;
-  height: 100%;
-  background-color: #000000;
+  height: 20vh;
   text-align: center;
+  display: flex;
+  align-items: center;
+  justify-content: center;
   font-size: 2em;
   cursor: pointer;
   line-height: 30px;
@@ -57,7 +58,6 @@
 }
 
 .arrow:hover {
-  background-color: #000000;
   color: #FFEB3B;
 }
 
@@ -210,6 +210,8 @@
 }
 
 .noselect {
+  background-color: #000000;
+  height: 100vh;
   -webkit-user-select: none;
   -html-user-select: none;
   -moz-user-select: none;
@@ -229,6 +231,12 @@
     opacity: 1;
     transform: translateY(0);
   }
+}
+
+.descriptionn{
+  position: absolute;
+  top: 10vh;
+  left: 10vw;
 }
 
 .descriptionn p {

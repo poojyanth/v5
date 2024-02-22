@@ -32,7 +32,7 @@ export default function Organization() {
       <div className='OrganizationLeftContainer' onMouseOver={() => setShowsidepanel(true)} onMouseOut={() => setShowsidepanel(false)}>
         <div className='OrganizationLeftProfileContainer'>
           <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'center',padding: '5%'}}>
-            <img src={(user_details.profilepicture)?user_details.profilepicture:defaultUser} className="OrganizationProfileImage" alt="" />          
+            <img src={(user.user.profilepicture)?user.user.profilepicture:defaultUser} className="OrganizationProfileImage" alt="" />          
         </div>
         </div>
         <div className='OrganizationProfileOptionContainer'>

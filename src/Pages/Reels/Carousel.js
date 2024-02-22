@@ -4,6 +4,8 @@ import { CSSTransition } from "react-transition-group";
 import Emoji from "./Emoji";
 import "./Reels.css";
 import { useSelector } from 'react-redux'
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faArrowRight } from "@fortawesome/free-solid-svg-icons";
 //import 'bootstrap/dist/css/bootstrap.min.css';
 
 
@@ -70,20 +72,20 @@ const Carousel = (props) => {
   return (
     <div id="carousel" className="noselect">
       <div className="arrow arrow-left" onClick={leftClick}>
-        <i className="fi-arrow-left"></i>
+      <FontAwesomeIcon icon={faArrowRight} flip="horizontal" style={{color: "#ffffff",}} />
       </div>
 
       {generateItems().map((item, index) => (
         <CSSTransition
-          key={index}
-          classNames={direction}
-          timeout={500} // Adjust the timeout as needed
+        key={index}
+        classNames={direction}
+        timeout={500} // Adjust the timeout as needed
         >
           {item}
         </CSSTransition>
       ))}
       <div className="arrow arrow-right" onClick={rightClick}>
-        <i className="fi-arrow-right"></i>
+        <FontAwesomeIcon icon={faArrowRight} style={{color: "#ffffff",}} />
       </div>
     </div>
   );

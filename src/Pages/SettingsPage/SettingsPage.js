@@ -156,7 +156,6 @@ export default function SettingsPage({ match }) {
         e.target.style.backgroundColor = "transparent";
       }
     };
-
     return (
       <div className="home">
         <Navbar />
@@ -173,6 +172,9 @@ export default function SettingsPage({ match }) {
                     ? user.user.profilepicture
                     : defaultUser
                 }
+                
+                // src={'/Images/ProfilePictures/1708623337285_1678733136955.jpg'}
+
                 width="100px"
                 height="100px"
                 style={{borderRadius: '50%', border: '1px solid'}}

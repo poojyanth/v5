@@ -5,13 +5,15 @@
 /.pnp
 .pnp.js
 
-traffic.json*
+Backend/traffic.json
 
 # testing
 /coverage
 
 # production
 /build
+
+/public/Images
 
 .env
 

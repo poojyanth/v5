@@ -22,9 +22,13 @@ export const UserReducer = createSlice({
                     logout:(state)=>{
                               state.user = null
                     },
+                    updateUserProfilePicture: (state, action) => {
+                        alert("action.payload",action.payload);
+                        state.user.profilepicture = action.payload;
+                    },
           },
 })
 
-export const {loginStart , loginSuccess , loginFailure , logout} = UserReducer.actions;
+export const {loginStart , loginSuccess , loginFailure , logout, updateUserProfilePicture } = UserReducer.actions;
 
 export default UserReducer.reducer;

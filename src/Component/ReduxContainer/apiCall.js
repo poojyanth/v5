@@ -1,5 +1,5 @@
 import axios from "axios";
-import {loginStart , loginSuccess , loginFailure , logout} from "./UserReducer";
+import {loginStart , loginSuccess , loginFailure , logout, updateUserProfilePicture} from "./UserReducer";
 const BACKEND_URI = process.env.REACT_APP_BACKEND_URI;
 
 export const login = async(dispatch , user)=>{
@@ -46,24 +46,12 @@ export const createOrganisation = async(dispatch , user)=>{
     }
 }
 
-
-// export const VerifyEmail = async(dispatch , user)=>{
-//           dispatch(loginStart());
-//           try {
-//                    const res = await axios.post("http://139.144.12.15:80/api/user/verify/email" , user);
-//                    dispatch(loginSuccess(res.data)); 
-//           } catch (error) {
-//                     dispatch(loginFailure());
-//           }
-// }
-
-
-// export const signup = async(dispatch , user)=>{
-//           dispatch(loginStart());
-//           try {
-//                    const res = await axios.post("http://139.144.12.15:80/api/user/create/user" , user);
-//                    dispatch(loginSuccess(res.data)); 
-//           } catch (error) {
-//                     dispatch(loginFailure());
-//           }
-// }
+export const updateProfilePicture = async (dispatch, newProfilePicture) => {
+    alert("newProfilePicture",newProfilePicture);
+    try {
+      dispatch(updateUserProfilePicture("/Images/ProfilePictures/1708626383429_1662808716527.jpg"));
+      console.log("Profile picture updated successfully");
+    } catch (error) {
+      console.log("Error updating profile picture:", error);
+    }
+  };

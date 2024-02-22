@@ -4,45 +4,45 @@ const cors = require('cors');
 const socket = require('socket.io');
 const fs = require('fs');
 const path = require('path');
-
+const morgan = require('morgan');
 require('dotenv').config();
 
 const MONGOOSE_URI = process.env.MONGOOSE_URI;
 const FRONTENDPORT = process.env.FRONTENDPORT;
 
-const loggerMiddleware = (req, res, next) => {
-    const { ip, method, originalUrl, baseUrl } = req;
-    const timestamp = new Date().toISOString();
-    const logData = {
-      timestamp,
-      ip,
-      method,
-      path: `${baseUrl}${originalUrl}`
-    };
+const accessLogStream = fs.createWriteStream('traffic.json', { flags: 'a' });
 
-    // Convert the log data to JSON format
-    const jsonData = JSON.stringify(logData) + '\n';
-
-    // Log traffic data to a file
-    fs.appendFile('traffic.json', jsonData, (err) => {
-      if (err) {
-        console.error('Error writing to log file:', err);
-      }
-    });
-
-    // Continue to the next middleware
-    next();
-};
+// Define custom token for IP address
+morgan.token('client-ip', (req) => req.ip);
 
 
-mongoose.connect(MONGOOSE_URI)
-.then(()=>{console.log("MONGO DB CONNECTED SUCCESSFULLY")})
-.catch(()=>{console.log("SOME ERROR OCCURED IN CONNECTING MONGODB")})
+const loggerMiddleware = morgan((tokens, req, res) => {
+  const timestamp = new Date().toISOString();
+  const logData = {
+    timestamp,
+    ip: tokens['client-ip'](req, res),
+    method: tokens.method(req, res), 
+    path: tokens.url(req, res),
+  };
+
+  return JSON.stringify(logData) + '\n';
+}, { stream: accessLogStream });
 
 
 const PORT = process.env.PORT ;
 
 const app = express(); 
+
+app.use((err, req, res, next) => {
+    console.error(err.stack);
+    res.status(500).json({ error: 'Internal Server Error' });
+  });
+
+  mongoose.connect(MONGOOSE_URI)
+  .then(()=>{console.log("MONGO DB CONNECTED SUCCESSFULLY")})
+  .catch((err) => {
+    console.error("Error connecting to MongoDB:", err);
+  })
 
 app.use(express.json());
 const server = app.listen(PORT,()=>{
