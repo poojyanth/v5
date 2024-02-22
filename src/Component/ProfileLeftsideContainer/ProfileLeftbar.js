@@ -114,11 +114,8 @@ const handleFollow = async()=>{
           <p style={{ color: "black", marginLeft: 20, fontSize: "14px" }}>Followers</p>
           <p style={{ color: "black", marginRight: 20, fontSize: "12px", marginTop: 17 }}>{followerscount}</p>
         </div>
-        <div style={{ marginTop: -20 }}>
-          <h5 style={{ color: "black", marginLeft: 10, fontSize: "14px", marginRight: 30, marginTop: 30, textAlign: "start" }}>User bio</h5>
-          <p style={{ color: "black", fontSize: "12px", marginTop: -20, textAlign: "start", marginLeft: "10px" }}>I would rather be despised of who I am, rather than loved by who I am not.</p>
-        </div>
-        { user.user._id !== profileid ? <div onClick={handleFollow}> <button style={{ width: "100%", paddingTop: 7, paddingBottom: 7, border: "none", backgroundColor: "green", color: "white", borderBottomRightRadius: '20px', borderBottomLeftRadius: '20px' }}>{Follow}</button></div> : <button style={{ width: "100%", paddingTop: 7, paddingBottom: 7, border: "none", backgroundColor: "green", color: "white", borderBottomRightRadius: '20px', borderBottomLeftRadius: '20px' }}>Edit Bio</button> }
+        
+        { user.user._id !== profileid ? <div onClick={handleFollow}> <button style={{ width: "100%", paddingTop: 7, paddingBottom: 7, border: "none", backgroundColor: "green", color: "white", borderBottomRightRadius: '20px', borderBottomLeftRadius: '20px' }}>{Follow}</button></div> : <Link to='/settings'><button style={{ width: "100%", paddingTop: 7, paddingBottom: 7, border: "none", backgroundColor: "green", color: "white", borderBottomRightRadius: '20px', borderBottomLeftRadius: '20px' }}>Edit Bio</button></Link> }
 
 
 
@@ -137,7 +134,7 @@ const handleFollow = async()=>{
         {
           //he issue you're facing might be because you're not explicitly returning the JSX inside the map function. In arrow functions, if you use curly braces {}, you need to use the return statement explicitly. If you want to use parentheses (), you can skip the return statement.
         followings.map((item)=>(
-          <Link to={`/profilepage/${item.others._id}`} key={item.others._id} style={{width: '4pc',height: '4pc', cursor: "pointer", margin: '5px', textDecoration: 'none', color: 'black', overflowX: 'clip' }}>
+          <Link to={`/profilepage/${item.others._id}`} key={item.others._id} style={{width: '4pc',height: '4pc', marginLeft:'12px', cursor: "pointer", marginBottom: '43px', textDecoration: 'none', color: 'black', overflowX: 'clip' }}>
           
           <img src={`${(item.others.profilepicture)?item.others.profilepicture:defaultUser}`} className="friendimage" alt="" />
           <p style={{ marginTop: -2 }}>{item.others.username}</p> 

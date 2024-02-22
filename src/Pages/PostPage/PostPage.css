@@ -1,5 +1,5 @@
 .postpage{
-    background-color: var(--primary-color);
+    background-color: rgb(235, 238, 242);
     height: max-content;
     /* height: 100vh; */
 }
@@ -30,8 +30,8 @@
 }
 
 .imageContainer img{
-    width: 90%;
-    max-height: 80vh;
+    width: 100%;
+    height: 80vh;
     object-fit: contain;
     border-radius: 15px;
     
@@ -117,10 +117,7 @@
 .postpage_middle_description{
     text-align: left;
     min-height: 20%;
-    display: flex;
     margin: 1px 5px;
-    flex-direction: column;
-    justify-content: space-around;
 }
 
 .postpage_right_bottom{

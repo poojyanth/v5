@@ -487,7 +487,7 @@ router.post("/add/story",verifytoken,async(req,res)=>{
       
         res.status(200).send("STORY ADDED")
     }else if(user.Stories.length==1){
-        await user.updateOne({$pull:{Stories:user.Stories[0]}})
+        await user.updateOne({$pull:{Stories:user.Stories[0]},$set:{StoryViewers:[]}})
         await user.updateOne({$push:{Stories:req.body.newstory},$set:{StoryDescription:req.body.description}})
         console.log("check story description : "+ user.StoryDescription);
         res.status(200).send("OLD STORY REMOVED AND NEW STORY ADDED")

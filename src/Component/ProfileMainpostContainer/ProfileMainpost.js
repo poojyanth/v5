@@ -53,7 +53,7 @@ const reloadMainpost = () => {
         <img src={`${image3}`} className="profileCoverimage" alt="" />
         <h2 style={{ marginTop: -43, color: "white", textAlign: "start", marginLeft: "34px" }}>Your Profile</h2>
       </div>
-      <Contentpost reloadMainpost={reloadMainpost}/>
+      
       {
    
    posts.map((item)=>{

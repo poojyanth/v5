@@ -70,6 +70,21 @@ useEffect(() => {
   };
 }, []);
 
+useEffect(() => {
+  // Dynamically create script element
+  const script = document.createElement('script');
+  script.src = 'https://cdn.lordicon.com/lordicon.js';
+  script.async = true;
+
+  // Append script to the document's body
+  document.body.appendChild(script);
+
+  // Remove script when component is unmounted
+  return () => {
+    document.body.removeChild(script);
+  };
+}, []);
+
 
 
   return (
@@ -92,6 +107,110 @@ useEffect(() => {
   })
   
   }
+    </div>
+
+    <div className='NotificationsContainer'>
+
+
+    <div className="rowww1">
+
+    <Link to="/reels" >
+    <div className="iiconn">
+    <script src="https://cdn.lordicon.com/lordicon.js"></script>
+<lord-icon
+    src="https://cdn.lordicon.com/aklfruoc.json"
+    trigger="hover"
+    style={{ width: '30px', height: '30px' }}>
+</lord-icon>
+    </div>
+    </Link>
+
+    <Link to="/addnewpost" >
+    <div className="iiconn">
+    <script src="https://cdn.lordicon.com/lordicon.js"></script>
+<lord-icon
+    src="https://cdn.lordicon.com/hqymfzvj.json"
+    trigger="hover"
+    style={{ width: '30px', height: '30px' }}>
+</lord-icon>
+    </div>
+    </Link>
+
+    <Link to="/chat" >
+    <div className="iiconn">
+    <script src="https://cdn.lordicon.com/lordicon.js"></script>
+<lord-icon
+    src="https://cdn.lordicon.com/fdxqrdfe.json"
+    trigger="hover"
+    style={{ width: '30px', height: '30px' }}>
+</lord-icon>
+    </div>
+    </Link>
+
+    <Link to="/settings" >
+    <div className="iiconn">
+    <script src="https://cdn.lordicon.com/lordicon.js"></script>
+<lord-icon
+    src="https://cdn.lordicon.com/lecprnjb.json"
+    trigger="hover"
+    style={{ width: '30px', height: '30px' }}>
+</lord-icon>
+    </div>
+    </Link>
+
+    </div>
+
+
+    <div className="rowww2">
+
+    <Link to="/likedposts" >
+    <div className="iiconn">
+    <script src="https://cdn.lordicon.com/lordicon.js"></script>
+<lord-icon
+    src="https://cdn.lordicon.com/xyboiuok.json"
+    trigger="hover"
+    style={{ width: '30px', height: '30px' }}>
+</lord-icon>
+    </div>
+    </Link>
+
+    <Link to="/explorepage" >
+    <div className="iiconn">
+    <script src="https://cdn.lordicon.com/lordicon.js"></script>
+<lord-icon
+    src="https://cdn.lordicon.com/kkvxgpti.json"
+    trigger="hover"
+    style={{ width: '30px', height: '30px' }}>
+</lord-icon>
+    </div>
+    </Link>
+
+ <Link to={`/profilepage/${id}`}>
+    <div className="iiconn">
+    <script src="https://cdn.lordicon.com/lordicon.js"></script>
+<lord-icon
+    src="https://cdn.lordicon.com/kthelypq.json"
+    trigger="hover"
+    style={{ width: '30px', height: '30px' }}>
+</lord-icon>
+    </div>
+    </Link>
+
+    <Link to={`/profilepage/${id}`}>
+    <div className="iiconn">
+    <script src="https://cdn.lordicon.com/lordicon.js"></script>
+<lord-icon
+    src="https://cdn.lordicon.com/whrxobsb.json"
+    trigger="hover"
+    style={{ width: '30px', height: '30px' }}>
+</lord-icon>
+    </div>
+    </Link>
+
+    </div>
+
+
+
     </div>
 
    
