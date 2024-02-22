@@ -6,7 +6,7 @@ const OrganizationProfile = () => {
   return (
     <div className='OrganizationSubProfileContainer'>
         <div className='OrganizationProfileCover'>
-            
+            dasd  
         </div>
     </div>
   )

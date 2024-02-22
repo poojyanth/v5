@@ -20,25 +20,32 @@ const OrganizationSchema = new mongoose.Schema({
     },
     followers: {
         type: Array,
+        default: []
    
     },
     following: {
         type: Array,
+        default: []
     },
     profilepicture:{
-        type:String
+        type:String,
+        default:""
     },
     Likedposts:{
         type:Array,
+        default:[]
     },
     Stories:{
         type:Array,
+        default:[]
     }, 
     StoryDescription:{
-        type:String
+        type:String,
+        default:""
     },
     bio:{
-        type:String
+        type:String,
+        default:""
     },
     type:{
         type: Number,

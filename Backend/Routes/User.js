@@ -49,6 +49,7 @@ router.post("/create/user", async (req, res) => {
             password: securePassword,
             phonenumber: req.body.phonenumber,
             profilepicture: req.body.profilepicture,
+            type: req.body.Utype,
         })
 
         user.save();

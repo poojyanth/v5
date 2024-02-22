@@ -3,7 +3,7 @@ import { Link } from 'react-router-dom'
 import { useSelector, useDispatch } from 'react-redux'
 import "./Signup.css"
 import { useState } from 'react';
-import { createOrganisation } from '../../Component/ReduxContainer/apiCall';
+import { createuser } from '../../Component/ReduxContainer/apiCall';
 
 export default function Login() {
   const dispatch = useDispatch();
@@ -18,7 +18,7 @@ export default function Login() {
   const [profilepicture , setProfilepicture] = useState('');
     const handleClick = (e)=>{
     e.preventDefault();
-    createOrganisation(dispatch ,{email , password, username , phonenumber, profilepicture});
+    createuser(dispatch ,{email , password, username , phonenumber, profilepicture, Utype : 2});
     }
 
   return (

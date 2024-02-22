@@ -8,19 +8,22 @@
 }
 
 .OrganizationSubContainer{
-    width: 100%;
+    user-select: none;
+    padding: 1px 0 0px 0px;
     display: flex;
+    background-color: var(--secondary-color);
     flex-direction: row;
-    height: 92vh;
 }
 
 .OrganizationLeftContainer{
     width: 5vw;
-    border-radius: 0 0 5px 0;
-    height: 100%;
-    float: left;
+    position: sticky;
+    overflow-x: hidden;
+    top: 8vh;
+    height: 92vh;
     background-color: var(--primary-color);
-    position: fixed;
+    transition: all 0.5s ease-in-out;
+    border-radius: 0 5px 5px 0;
 }
 
 .OrganizationLeftContainer:hover{
@@ -32,4 +35,26 @@
     height: 100%;
     float: right;
     background-color: var(--secondary-color);
+}
+
+.OrganizationProfileOptionItem{
+    transition: all 0.3s ease;
+    height: 10vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.OrganizationProfileOptionItem:hover{
+    color: grey;
+    cursor: pointer;
+}
+
+.OrganizationLeftProfileContainer{
+    height: 15%;
+}
+
+.OrganizationProfileImage{
+    width: 70%;
+    border-radius: 50%;
 }
