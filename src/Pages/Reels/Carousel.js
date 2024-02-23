@@ -628,7 +628,7 @@ const [hearts, setHearts] = useState([]);
         </div>
       )}
       {
-        className==="item level0"&& <div  class="All_comments" style={{ height:'max-content', overflowX:'hidden' ,WebkitOverflowScrolling: 'touch',overflowY:'scroll' ,marginTop:'-350px',marginLeft:'448px',display:'flex',flexDirection:'column',width:'353px',maxHeight:'250px',borderRadius:'20px 30px 30px 0px'}}>
+        className==="item level0"&& <div  class="All_comments" style={{ height:'max-content', overflowX:'hidden' ,WebkitOverflowScrolling: 'touch',overflowY:'scroll' ,marginTop:'-372px',marginLeft:'110%',display:'flex',flexDirection:'column',width:'353px',maxHeight:'250px',borderRadius:'20px 30px 30px 0px'}}>
 
           {
             REELComments && REELComments.map((comm)=>{

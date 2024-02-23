@@ -262,8 +262,8 @@
 
 .comment_reel{
   position: fixed;
-  margin-top: 540px;
-  margin-left: 450px;
+  margin-top: 500px;
+  margin-left: 110%;
   background-color: #212121;
   overflow-wrap: break-word;
 }
@@ -315,18 +315,10 @@
 }
 
 
-
-html {
-  overflow: scroll;
-  overflow-x: hidden;
-}
 ::-webkit-scrollbar {
   width: 0;  /* Remove scrollbar space */
   background: transparent;  /* Optional: just make scrollbar invisible */
-}
-/* Optional: show position indicator in red */
-::-webkit-scrollbar-thumb {
-  background: #FF0000;
+  height: 0;
 }
 
 .All_comments{

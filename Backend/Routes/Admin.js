@@ -4,19 +4,26 @@ const router = express.Router();
 require('dotenv').config();
 const bcrypt = require('bcryptjs');
 const jwt = require("jsonwebtoken");
+const cookieParser = require('cookie-parser');
 const SECRETKEY = process.env.SECRET_KEY;
+const csrf = require('csurf');
 
 const { body, validationResult } = require('express-validator');
 const User = require('../Modals/User');
 const { verifytoken } = require('../middleware/verifytoken');
 const Post = require('../Modals/Post');
 
+const csrfProtection = csrf({ cookie: true });
+router.use(cookieParser());
+router.use(csrfProtection);
+
+
 router.get('/Allusers', verifytoken, async (req, res) => {
     try {
         const users = await User.find();
         res.json(users);
     }
-    catch (err) {
+    catch (err) { 
         res.json({ message: err });
     }
 }

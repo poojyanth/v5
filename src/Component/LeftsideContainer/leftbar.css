@@ -75,7 +75,7 @@
 }
 
 .iiconn{
-    background-color: blanchedalmond;
+    background-color: var(--secondary-color);
     width:2.5pc;
     height: 2.5pc;
     margin: 10px auto;

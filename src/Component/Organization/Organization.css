@@ -1,0 +1,41 @@
+.OrganizationmainPostContainer{
+    flex: 3;
+    width: 70%;
+    
+}
+
+.profileCoverimage{
+    width: 92%;
+    border-radius: 10px;
+    height: 20vh;
+    object-fit: cover;
+}
+
+.OrganizationPagePostStats{
+    width: 50%;
+    height: auto;
+    background: white;
+    overflow-y: scroll;
+    margin: 2%;
+    border-radius: 2%;
+    display: flex;
+    flex-direction: column;
+}
+
+.OrganizationPagePostStatstags{
+    height: 10%;
+    overflow-y: scroll;
+    border: 1px solid var(--secondary-color);
+}
+
+.OrganizationPagePostStatsLikes{
+    height: 20%;
+    overflow-y: scroll;
+    border: 1px solid var(--secondary-color);
+}
+
+.OrganizationPagePostStatsComments{
+    height: 30%;
+    overflow-y: scroll;
+    border: 1px solid var(--secondary-color);
+}

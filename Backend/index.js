@@ -2,9 +2,12 @@ const express= require("express");
 const mongoose = require("mongoose");
 const cors = require('cors');
 const socket = require('socket.io');
+const cookieParser = require('cookie-parser');
 const fs = require('fs');
 const path = require('path');
+const helmet = require('helmet');
 const morgan = require('morgan');
+const csrf = require('csurf');
 require('dotenv').config();
 
 const MONGOOSE_URI = process.env.MONGOOSE_URI;
@@ -14,6 +17,8 @@ const accessLogStream = fs.createWriteStream('traffic.json', { flags: 'a' });
 
 // Define custom token for IP address
 morgan.token('client-ip', (req) => req.ip);
+
+const csrfProtection = csrf({cookie: true});
 
 
 const loggerMiddleware = morgan((tokens, req, res) => {
@@ -52,6 +57,8 @@ const server = app.listen(PORT,()=>{
 })
 
 app.use(cors()); 
+app.use(cookieParser());
+app.use(helmet());
 app.use(loggerMiddleware);
 app.get('/',(req,res)=>{
     res.send("Hello from backend");

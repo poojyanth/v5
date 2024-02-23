@@ -8,6 +8,7 @@ import { useNavigate } from 'react-router-dom';
 import { useSelector}  from 'react-redux'
 import app from "../../firebase"
 import { getStorage, ref, uploadBytesResumable, getDownloadURL } from "firebase/storage";
+import { toast } from 'react-toastify';
 
 const AddNewPost = () => {
 
@@ -34,6 +35,7 @@ const AddNewPost = () => {
 
     const uploadTask = uploadBytesResumable(storageRef, file);
 
+    toast.info('Uploading Post ');
     uploadTask.on('state_changed', 
    (snapshot) => {
     // Observe state change events such as progress, pause, and resume
@@ -46,6 +48,8 @@ const AddNewPost = () => {
         break;
       case 'running':
         console.log('Upload is running');
+        break;
+      default:
         break;
     }
   }, 
@@ -65,7 +69,7 @@ const AddNewPost = () => {
     }).then((data)=>{
 
       navigate(`/`);
-      alert("IMAGE POST - SUCCESSFULLY UPLOADED ");
+      toast.success('Post Added Successfully');
 
       window.location.reload(true);
     })

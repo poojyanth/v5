@@ -38,11 +38,6 @@ export default function Stories() {
                     // </div>
                     })
                 }
-
-                <div style={{ display: 'flex', alignItems: "center" }}>
-                    <img src={`${image3}`} className="StoryImage" alt="" />
-                </div>
-
              
             </div>
     )

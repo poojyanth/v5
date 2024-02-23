@@ -259,9 +259,8 @@ router.get("/user/details/:id",verifytoken,async(req,res)=>{
         req.status(400).send("CAN'T GET USER FOR A POST");
     }
     const {email,password,phonenumber,...others}= user._doc;
-    // remaining details will be stores in others variable
-    // others contain username,profilpicture
-    res.status(200).send({User: others});
+    console.log(others);
+    res.status(200).send({user: others});
 }catch(error){
 
     return res.status(400).send("SOME ERROR IN TRY_ CATCH (get user for a post)")
