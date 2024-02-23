@@ -46,6 +46,8 @@ const Addnewreel = () => {
       case 'running':
         console.log('Upload is running');
         break;
+      default:
+        break;
     }
   }, 
   (error) => {
@@ -197,11 +199,11 @@ const handleTagChange = (e) => {
 
         <div className="inputBox remove_phone">
           <span>User Name</span>
-          <input type="text" name="cardnumber" className="" value="SAIPAVAN" readOnly />
+          <input type="text" name="cardnumber" className="" value={user.user.username} readOnly />
         </div>
         <div className="inputBox remove_phone">
           <span>Date</span>
-          <input type="text" name="cardnumber" className="" value="05-01-2024" readOnly />
+          <input type="text" name="cardnumber" className="" value={new Date()} readOnly />
         </div>
         <label id="labell" htmlFor="inputt" className="submit-btn">
           UPLOAD VIDEO
