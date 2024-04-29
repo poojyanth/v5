@@ -1,70 +1,61 @@
-# Getting Started with Create React App
+# FotoFlask
+Welcome to our photo uploading website! We are thrilled to have you here. Our website is designed to make it easy for you to upload and share your photos with the world. We understand that your photos are precious memories, and we want to provide you with a safe and reliable platform to store and share them. Whether you're a professional photographer, a hobbyist, or just someone who loves taking pictures, our website is the perfect place to showcase your talent and creativity. With our easy-to-use interface, you can quickly and easily upload your photos, organize them into albums, and share them with your friends, family, and followers.
 
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+We take privacy and security seriously, so you can rest assured that your photos are safe with us. We use state-of-the-art security measures to protect your data, and we will never share your photos with anyone without your permission. In addition to uploading and sharing your photos, our website also offers a range of features to help you enhance and edit your pictures. You can crop, resize, and add filters to your photos, as well as create collages and add text. Thank you for choosing our website to share your photos with the world. We look forward to seeing all the amazing pictures you have to share!
 
-## Available Scripts
+## Softwares Used
+- HTML
+- CSS
+- JavaScript
 
-In the project directory, you can run:
+## With
+- NodeJS
+- Express
+- SQLite3 Database
+- EJS Template engine.
+- nodemon
 
-### `npm start`
+## Fotoflask usage on pc:
 
-Runs the app in the development mode.\
-Open [http://localhost:3000](http://localhost:3000) to view it in your browser.
+- Assuming you have already installed nodejs and node package manager on your device, Follow the steps below to install and use the source code on your laptop.
+- Clone this repository:
+  + You can do that by using the GIT CLI or by downloading the ZIP folder.
+  + `git clone https://github.com/fotoflask/V5.git`
 
-The page will reload when you make changes.\
-You may also see any lint errors in the console.
+- Install dependencies: after running npm init on your terminal in the current working directory, install:
+  + Express: `npm install express`
+  + SQLite : `npm install mongodb`
+  + Multer : `npm install multer`
+  + Mongoose : `npm install mongoose`
+  + fs : `npm install fs`
+  + body-parser : `npm install body-parser`
+  + path : `npm install path`
+  + querystring : `npm install querystring`
+  + To install all : `npm i`
+- Now, the setup is done. start the server, and the website will be locally hosted on your device.
 
-### `npm test`
+To start the server, you must run the nodeJS / Express App using the following command in the cwd terminal:
+- `cd backend`
+- `npm start`
 
-Launches the test runner in the interactive watch mode.\
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
+To start the frontend, you must run the nodeJS / Express App using the following command in the cwd terminal:
+- `npm start`
 
-### `npm run build`
+Open the hosted website: 
 
-Builds the app for production to the `build` folder.\
-It correctly bundles React in production mode and optimizes the build for the best performance.
+The website is now up and running! 
 
-The build is minified and the filenames include the hashes.\
-Your app is ready to be deployed!
+Now, all you need to do is to access it. 
+- Open a browser and type localhost:4000
 
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
+Team: 
+- 🟠 Poojyanth Reddy 
+- 🟢 Abhiram Reddy 
+- 🟡 Sai Pavan 
+- 🔴 Sravan 
+- 🟣 Gowtham S K
 
-### `npm run eject`
 
-**Note: this is a one-way operation. Once you `eject`, you can't go back!**
+The Database Dump file are located in `private/database`
 
-If you aren't satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
-
-Instead, it will copy all the configuration files and the transitive dependencies (webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you're on your own.
-
-You don't have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn't feel obligated to use this feature. However we understand that this tool wouldn't be useful if you couldn't customize it when you are ready for it.
-
-## Learn More
-
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
-
-To learn React, check out the [React documentation](https://reactjs.org/).
-
-### Code Splitting
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/code-splitting](https://facebook.github.io/create-react-app/docs/code-splitting)
-
-### Analyzing the Bundle Size
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size](https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size)
-
-### Making a Progressive Web App
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app](https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app)
-
-### Advanced Configuration
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/advanced-configuration](https://facebook.github.io/create-react-app/docs/advanced-configuration)
-
-### Deployment
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/deployment](https://facebook.github.io/create-react-app/docs/deployment)
-
-### `npm run build` fails to minify
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify](https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify)
+Github repository Link : [FotoFlask](https://github.com/fotoflask/V2.git)

@@ -59,7 +59,7 @@ function App() {
           <Route exact path="/admin" element={user!==null && user.user.username==='Admin' ? <AdminPage/> : <Navigate to={'/'}/>}/>
           <Route exact path="/*" element={<Navigate to={"/"}/>}/>
           <Route exact path="/test" element={<LoadingAnimation2 />} />
-          <Route exact path="/viewstory/:pictureid" element={< ViewStoryImage/>}/>
+          <Route exact path="/viewstory/:pictureid" element={< ViewStoryImage/>}/> 
           <Route exact path="/likedposts" element={< Likedposts/>}/>
           {/* <Route exact path="/explore" element={<Explore/>}/> */}
           <Route exact path="/reels" element={<Carousel items={

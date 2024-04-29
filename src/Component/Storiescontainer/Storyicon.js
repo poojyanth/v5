@@ -1,6 +1,7 @@
 import React from 'react'
 import { useNavigate } from 'react-router-dom';
 import {useSelector}  from 'react-redux'
+import defaultUser from "../Images/blank-profile-picture-973460_960_720.webp"
 
 
 
@@ -47,8 +48,6 @@ export default function Storyicon(props) {
         .catch(error => {
           console.error('Error during adding viewer to story:', error);
         });
-
-
   }
 
 
@@ -56,7 +55,7 @@ export default function Storyicon(props) {
     return (
         <div>
             <div style={{ display: 'flex', alignItems: "center" }} onClick={()=>{navigateAndReturn();addViewerToArray()}}>
-                <img src={`${props.details.others.profilepicture}`} className="StoryImage" alt="" />
+                <img src={(props.details.others.profilepicture)? props.details.others.profilepicture : defaultUser } className="StoryImage" alt="" />
             </div>
         </div>
     )

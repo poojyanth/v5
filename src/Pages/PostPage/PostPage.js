@@ -48,7 +48,7 @@ export default function PostPage() {
                     }
                 }
             );
-            // console.log(response2.data);
+
             setPostUserDetails(response2.data);
             console.log("PostUserDetails", postUserDetails);
         } catch (error) {
