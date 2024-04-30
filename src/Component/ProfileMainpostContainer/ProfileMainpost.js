@@ -7,10 +7,7 @@ import { useLocation } from 'react-router-dom';
 import axios from "axios"
 import { useSelector}  from 'react-redux'
 
-
 export default function ProfileMainpost({profileid}) {
-
-
 
   const userDetails = useSelector((state)=>state.user);
   const BACKEND_URI = process.env.REACT_APP_BACKEND_URI;
@@ -40,31 +37,25 @@ useEffect(()=>{
 getposts();
 },[profileid])
 
-
-
 const reloadMainpost = () => {
   getposts(); // Reload the posts
 };
-
   return (
     <div className='mainPostContainer ProfilePageMainPost'>
-
       <div>
         <img src={`${image3}`} className="profileCoverimage" alt="" />
         <h2 style={{ marginTop: -43, color: "white", textAlign: "start", marginLeft: "34px" }}>Your Profile</h2>
-      </div>
-      
-      {
-   
-   posts.map((item)=>{
-
-     return <Post post={item} key={item._id}/>
-    
-   })
- 
- 
- }
-
+      </div>      
+      {(posts?.length > 0)?       
+        posts.map((item)=>{
+          return <Post post={item} key={item._id}/>        
+        }):
+        <>
+          <div style={{height: '70%', display: 'flex', justifyContent: 'center', alignItems: 'center', fontWeight: 'bold'}}>
+            Nothing to Show Here
+          </div>
+        </>                
+      }
     </div>
   )
 }

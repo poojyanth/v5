@@ -7,7 +7,7 @@ import OrganizationProfile from '../../Component/Organization/OrganizationProfil
 import { useParams } from 'react-router-dom'
 import { useState } from 'react'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
-import { faIdCardClip } from '@fortawesome/free-solid-svg-icons'
+import { faIdCardClip,faImage } from '@fortawesome/free-solid-svg-icons'
 import { useSelector } from 'react-redux'
 import defaultUser from "../../Component/Images/blank-profile-picture-973460_960_720.webp"
 import OrganizationProfileMainpost from '../../Component/Organization/OrganizationProfileMainPost'
@@ -87,14 +87,14 @@ export default function Organization() {
         </div>
         <div className='OrganizationProfileOptionContainer'>
           <div className='OrganizationProfileOptionItem' onClick={() => setOption(0)}><FontAwesomeIcon icon={faIdCardClip} />{showsidepanel? <p>Profile</p> : ''}</div>
-          <div className='OrganizationProfileOptionItem' onClick={() => setOption(1)}>Posts</div>
+          <div className='OrganizationProfileOptionItem' onClick={() => setOption(1)}><FontAwesomeIcon icon={faImage} />{showsidepanel? <p>Posts</p> : ''}</div>
           <div className='OrganizationProfileOptionItem' onClick={() => setOption(2)}>Events</div>
           <div className='OrganizationProfileOptionItem' onClick={() => setOption(3)}>Members</div>
           </div>
         </div>
       <div className='OrganizationRightContainer'>
-        {option === 1 && <OrganizationProfile user_details={user_details}/>}
-        {option === 0 && <OrganizationProfileMainpost profileid={id.id}/>}
+        {option === 0 && user_details && <OrganizationProfile user_details={user_details} setUser_Details={setUser_Details}/>}
+        {option === 1 &&  <OrganizationProfileMainpost profileid={id.id}/>}
         {option === 2 && <div>Events</div>}
         {option === 3 && <div>Members</div>}
       </div>

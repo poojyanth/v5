@@ -28,6 +28,9 @@ const Userschema = new mongoose.Schema({
     profilepicture:{
         type:String
     },
+    coverphoto:{
+        type:String
+    },
     Likedposts:{
         type:Array,
     },

@@ -19,7 +19,10 @@ code {
   --primary-color: white;
   --secondary-color: #ebeef2;
   --tertiary-color: #c1c1c1;
+  --tertiary-color-hover: #a1a1a1;
   --primary-text-color: black;
   --secondary-text-color: #aaa;
+  --primary-button-color: #898989;
+  --primary-button-color-hover: #6f6f6f;
 }
 

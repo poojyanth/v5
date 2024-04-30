@@ -64,7 +64,7 @@ const reloadMainpost = () => {
 
       <div>
         <img src={`${image3}`} className="profileCoverimage" alt="" />
-        <h2 style={{ marginTop: -43, color: "white", textAlign: "start", marginLeft: "5%" }}>Your Profile</h2>
+        <h2 style={{ marginTop: -43, color: "white", textAlign: "start", marginLeft: "5%" }}>Post Stats</h2>
       </div>
       
       {
