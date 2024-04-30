@@ -17,7 +17,7 @@ import MessageIcon from '@mui/icons-material/Message';
 import ShareIcon from '@mui/icons-material/Message';
 
 const OrganizationProfile = ({ user_details, setUser_Details }) => {
-
+ 
   const { username, followers, following, profilepicture, bio } = user_details;
 
   return (
