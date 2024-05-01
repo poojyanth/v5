@@ -17,11 +17,7 @@ export default function ProfileLeftbar({profileid}) {
   let user = userDetails.user;
   let id =user.user._id;
   const jwt_here=user.jwttoken
-  // let followerscount = user.user.followers.length;
-  // let followingcount = user.user.following.length;
-  // let profilepic = user.user.profilepicture;
 
-  // const myUserId="656762a5c43095cb8ad3dc3c";
 
   const [user_details,setUser_Details] = useState([]);
   const [followings,setFollowings] = useState([]);
@@ -67,26 +63,38 @@ export default function ProfileLeftbar({profileid}) {
   let profilepic = user_details?.profilepicture;
 
  
-  const [Follow,setUnFollow] = useState([user.user.following.includes(profileid) ? "UnFollow" : "Follow" ]);
+  const [Follow,setUnFollow] = useState("Follow");
 
-// const handleFollow=async()=>{
-//   await fetch(`${BACKEND_URI}/api/user/follow/${id}`,{method:"PUT" ,
-//   headers:{
-//     'Content-Type':'application/json',
-//     jwttoken:jwt_here
-//   }, body: JSON.stringify({ user:user.user._id})})
-//   setUnFollow("UnFollowed")
-// }
- 
-const handleFollow = async()=>{
-  if(Follow === "Follow"){
-    await fetch(`${BACKEND_URI}/api/user/follow/${profileid}` , {method:'PUT', headers:{'Content-Type':"application/JSON" , jwttoken:jwt_here} , body:JSON.stringify({user:`${user.user._id}`})})
-    setUnFollow("UnFollow")
-  }else{
-    await fetch(`${BACKEND_URI}/api/user/follow/${profileid}` , {method:'PUT', headers:{'Content-Type':"application/JSON" , jwttoken:jwt_here} , body:JSON.stringify({user:`${user.user._id}`})})
-    setUnFollow("Follow")
+  useEffect(()=>{
+    const isFollowing = async()=>{
+      try{
+        if(user_details.followers.includes(id)){
+          setUnFollow("UnFollow")
+        }
+      }catch(error){
+        console.log(error);
+      }
+    }
+    isFollowing();
+  },[user_details.followers,id])
+
+  useEffect(()=>{
+    followingcount = user_details?.following?.length;
+    followerscount = user_details?.followers?.length;
+    profilepic = user_details?.profilepicture;
+  },[user_details])
+
+  const handleFollow = async()=>{
+    if(Follow === "Follow"){
+      await fetch(`${BACKEND_URI}/api/user/follow/${profileid}` , {method:'PUT', headers:{'Content-Type':"application/JSON" , jwttoken:jwt_here} , body:JSON.stringify({user:`${user.user._id}`})}).then(
+        setUnFollow("UnFollow")
+      )
+    }else{
+      await fetch(`${BACKEND_URI}/api/user/follow/${profileid}` , {method:'PUT', headers:{'Content-Type':"application/JSON" , jwttoken:jwt_here} , body:JSON.stringify({user:`${user.user._id}`})}).then(
+        setUnFollow("Follow")
+      )
+    }
   }
-}
 
 
 
@@ -115,7 +123,7 @@ const handleFollow = async()=>{
           <p style={{ color: "black", marginRight: 20, fontSize: "12px", marginTop: 17 }}>{followerscount}</p>
         </div>
         
-        { user.user._id !== profileid ? <div onClick={handleFollow}> <button style={{ width: "100%", paddingTop: 7, paddingBottom: 7, border: "none", backgroundColor: "green", color: "white", borderBottomRightRadius: '20px', borderBottomLeftRadius: '20px' }}>{Follow}</button></div> : <Link to='/settings'><button style={{ width: "100%", paddingTop: 7, paddingBottom: 7, border: "none", backgroundColor: "green", color: "white", borderBottomRightRadius: '20px', borderBottomLeftRadius: '20px' }}>Edit Bio</button></Link> }
+        { user.user._id !== profileid ? <div  onClick={handleFollow} > <button className="profilepage-follow-button" style={{ width: "100%", paddingTop: 7, paddingBottom: 7, border: "none", backgroundColor: "green", color: "white", borderBottomRightRadius: '20px', borderBottomLeftRadius: '20px' }}>{Follow}</button></div> : <Link to='/settings'><button className="profilepage-follow-button" style={{ width: "100%", paddingTop: 7, paddingBottom: 7, border: "none", backgroundColor: "green", color: "white", borderBottomRightRadius: '20px', borderBottomLeftRadius: '20px' }}>Edit Bio</button></Link> }
 
 
 

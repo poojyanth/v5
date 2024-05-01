@@ -45,3 +45,12 @@
     object-fit: cover;
     border-radius: 10px;
 }
+
+.profilepage-follow-button{
+    cursor: pointer;
+}
+
+.profilepage-follow-button:hover{
+    background-color: var(--secondary-color);
+    color: white;
+}
