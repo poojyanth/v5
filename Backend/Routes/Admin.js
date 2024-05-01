@@ -141,6 +141,8 @@ router.use(csrfProtection);
 //     });
 // };
 
+//ROUTE -1 :- GET ALL USERS
+
 router.get('/Allusers', verifytoken, async (req, res) => {
     try {
         const users = await User.find();
@@ -168,6 +170,7 @@ router.get('/Allusers', verifytoken, async (req, res) => {
 //     }
 // });
 
+// ROUTE - 2 :- GET ALL Users
 
 router.get('/user/:id', verifytoken,async (req, res) => {
     try {
@@ -180,6 +183,8 @@ router.get('/user/:id', verifytoken,async (req, res) => {
 }
 );
 
+// ROUTE -3 :- GET ALL POSTS
+
 router.get('/post/:id', verifytoken,async (req, res) => {
     try {
         const post = await Post.findById(req.params.id);
@@ -190,6 +195,8 @@ router.get('/post/:id', verifytoken,async (req, res) => {
     }
 }
 );
+
+// ROUTE - 4 :- GET Logs
 
 router.get('/log',verifytoken, async (req, res) => {
     

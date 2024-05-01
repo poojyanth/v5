@@ -76,6 +76,7 @@ router.get("/get/postID/:id", verifytoken, async (req, res) => {
 
 })
 
+// ROUTE-4 :- Update Post
 
 router.put("/update/post/:id",verifytoken, async (req, res) => {
 
@@ -102,7 +103,7 @@ router.put("/update/post/:id",verifytoken, async (req, res) => {
 
 })
 
-// ROUTE-4 :- FETCH ALL POSTS
+// ROUTE-5 :- FETCH ALL POSTS
 // METHOD USED :- GET
 router.get("/get/allpost",verifytoken, async (req, res) => {
     
@@ -123,6 +124,8 @@ router.get("/get/allpost",verifytoken, async (req, res) => {
         }
 
 })
+
+// ROUTE-6 :- Get ALL POSTS
 
 router.get("/get/allposts", verifytoken, async (req, res) => {
     
@@ -145,7 +148,7 @@ router.get("/get/allposts", verifytoken, async (req, res) => {
 
 
 
-// ROUTE-5: FETCH ALL POSTS WITH A KEY
+// ROUTE-7: FETCH ALL POSTS WITH A KEY
 // METHOD USED :- GET
 router.get("/get/:key", verifytoken, async (req, res) => {
     try {
@@ -207,7 +210,7 @@ router.get("/get/:key", verifytoken, async (req, res) => {
 });
 
 
-// ROUTE-10 :- FETCH ALL POSTS IN USER PROFILE PAGE
+// ROUTE-8 :- FETCH ALL POSTS IN USER PROFILE PAGE
 // METHOD USED :- GET
 router.get("/get/post/:id", verifytoken, async (req, res) => {
     try {
@@ -227,7 +230,7 @@ router.get("/get/post/:id", verifytoken, async (req, res) => {
 })
 
 
-// ROUTE-3 :- UPDATE A POST
+// ROUTE-9 :- UPDATE A POST
 // METHOD USED :- PUT
 router.put("/update/post/:id",verifytoken, async (req, res) => {
 
@@ -255,7 +258,7 @@ router.put("/update/post/:id",verifytoken, async (req, res) => {
 })
 
 
-// ROUTE-4:- LIKE A POST
+// ROUTE-10:- LIKE A POST
 // METHOD :- PUT
 
 router.put("/:id/like",verifytoken,async(req,res)=>{
@@ -278,7 +281,7 @@ router.put("/:id/like",verifytoken,async(req,res)=>{
 
 })
 
-// ROUTE-5:- DISLIKE A POST
+// ROUTE-11:- DISLIKE A POST
 // METHOD :- PUT
 
 router.put("/:id/dislike",verifytoken,async(req,res)=>{
@@ -303,7 +306,7 @@ router.put("/:id/dislike",verifytoken,async(req,res)=>{
 })
 
 
-// ROUTE-6:- ADD A COMMENT ON A POST
+// ROUTE-12:- ADD A COMMENT ON A POST
 // METHOD :- PUT
 
 router.put("/comment/post",verifytoken,async(req,res)=>{
@@ -325,7 +328,7 @@ router.put("/comment/post",verifytoken,async(req,res)=>{
 }
 })
 
-// ROUTE-7:- DELETE A POST
+// ROUTE-13:- DELETE A POST
 // METHOD :- DELETE
 
 router.delete("/delete/post/:id",verifytoken,async(req,res)=>{
@@ -352,7 +355,7 @@ router.delete("/delete/post/:id",verifytoken,async(req,res)=>{
 })
 
 
-
+// ROUTE-14:- Message
 
 router.post('/msg',verifytoken,async(req,res)=>{
     try{
@@ -368,7 +371,7 @@ router.post('/msg',verifytoken,async(req,res)=>{
 }
 })
 
-
+// ROUTE-15:- Get Message
 // get messages
 
 router.get('/get/chat/msg/:user1Id/:user2Id',async(req,res)=>{
@@ -393,8 +396,7 @@ router.get('/get/chat/msg/:user1Id/:user2Id',async(req,res)=>{
 }
 })
 
-
-// FETCH ALL LIKED POSTS OF A PARTICULAR USER
+// ROUTE-16:- Fetch all liked posts of a particular user
 router.get("/get_all_liked_posts",verifytoken, async (req, res) => {
 
     try {

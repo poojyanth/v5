@@ -201,6 +201,9 @@ router.put("/follow/:id" , verifytoken , async(req , res)=>{
 // user2 is following user1 -> so need to get user1's posts in user2 account (after login )
 // here id in req.params.id and jwttoken are of user2 as he need to login
 // no need of id here as we have jwttoken -> will change it later
+
+
+// ROUTE-4 :- FETCH POSTS OF FOLLOWING USERS
 router.get("/followingposts/:id", verifytoken, async (req, res) => {
     try {
       const user2 = await Organization.findById(req.params.id);
@@ -230,7 +233,7 @@ router.get("/followingposts/:id", verifytoken, async (req, res) => {
   
 
 
-// ROUTE-4 :- UPDATE USER PASSWORD
+// ROUTE-5 :- UPDATE USER PASSWORD
 // METHOD USED :- PUT
 
 router.put("/update/:id",verifytoken, async (req, res) => {
@@ -259,7 +262,7 @@ router.put("/update/:id",verifytoken, async (req, res) => {
 })
 
 
-// ROUTE-4 :- DELETE USER ACCOUNT
+// ROUTE-6 :- DELETE USER ACCOUNT
 // METHOD USED :- DELETE
 
 router.delete("/delete/:id",verifytoken, async (req, res) => {
@@ -281,7 +284,7 @@ router.delete("/delete/:id",verifytoken, async (req, res) => {
 })
 
 
-// GET USER DETAILS FOR A POST
+//ROUTE -7 :-GET USER DETAILS FOR A POST
 
 router.get("/post/user/details/:id",verifytoken,async(req,res)=>{
     try{
@@ -301,7 +304,7 @@ router.get("/post/user/details/:id",verifytoken,async(req,res)=>{
 
 })
 
-// GET USER DETAILS WITH USERID
+// ROUTE-8:- GET USER DETAILS WITH USERID
 
 router.get("/user/details/:id",verifytoken,async(req,res)=>{
     try{
@@ -324,7 +327,7 @@ router.get("/user/details/:id",verifytoken,async(req,res)=>{
 // GET USERS TO FOLLOW
 // i.e :- GET USERS IN SUGGESTED FOR YOU LIST
 // THOSE ARE USERS THAT ARE NOT IN YOUR FOLLOWING LIST (array)
-
+// ROUTE-9 :- GET USERS TO FOLLOW
 router.get("/all/user/:id", verifytoken, async (req, res) => {
     try {
         const allUsersInDb = await Organization.find();
@@ -352,7 +355,7 @@ router.get("/all/user/:id", verifytoken, async (req, res) => {
 
 
 
-// GET FOLLOWING LIST OF LOGGED IN USER
+// ROUTE -10 :-GET FOLLOWING LIST OF LOGGED IN USER
 
 router.get("/get/followings/:id",verifytoken, async(req,res)=>{
     try{
@@ -380,7 +383,7 @@ router.get("/get/followings/:id",verifytoken, async(req,res)=>{
 })
 
 
-// GET FOLLOWERS LIST OF LOGGED IN USER
+// ROUTE-11:- GET FOLLOWERS LIST OF LOGGED IN USER
 
 router.get("/get/followers/:id",async(req,res)=>{
     try{
@@ -408,7 +411,7 @@ router.get("/get/followers/:id",async(req,res)=>{
     }
 })
 
-
+//ROUTE-12 :- GET LIKED POSTS OF A USER
 
 router.put("/likedpost/:id", async (req, res) => {
     try {
@@ -433,7 +436,7 @@ router.put("/likedpost/:id", async (req, res) => {
 });
 
 
-// get users from following who are having stories
+// ROUTE - 13 :- get users from following who are having stories
 router.get("/get/followings_with_stories/:id",async(req,res)=>{
     try{
         const user = await Organization.findById(req.params.id);
@@ -472,7 +475,7 @@ router.get("/get/followings_with_stories/:id",async(req,res)=>{
 })
 
 
-
+// ROUTE - 14 :- ADD STORY TO USER PROFILE
 
 router.post("/add/story",verifytoken,async(req,res)=>{
     const user = await Organization.findById(req.user.id);
@@ -497,7 +500,7 @@ router.post("/add/story",verifytoken,async(req,res)=>{
     }
 })
 
-// get story of a user from his id
+// ROUTE - 15 :- get story of a user from his id
 
 router.get("/viewstory/:id",async(req,res)=>{
     const user = await Organization.findById(req.params.id);
@@ -508,6 +511,7 @@ router.get("/viewstory/:id",async(req,res)=>{
     return res.status(200).json({Image:user.Stories[0],Description:user.StoryDescription});
 })
 
+// ROUTE - 16 :- GET ALL USERS
 
 router.get("/get/allusers",async(req,res)=>{
     console.log("all users route");
