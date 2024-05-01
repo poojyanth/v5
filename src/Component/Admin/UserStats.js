@@ -3,6 +3,9 @@ import { useNavigate } from 'react-router-dom';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faCircleExclamation, faTrash } from '@fortawesome/free-solid-svg-icons';
 import defaultUser from "../Images/blank-profile-picture-973460_960_720.webp";
+import axios from 'axios';
+import { useSelector } from 'react-redux';
+
 
 const serverLog = {
   width: '75vw',
@@ -40,6 +43,12 @@ const serverLogHeader = {
 
 const UserStats = ({totalUsers }) => {
 
+  const userDetails = useSelector((state)=>state.user);
+  const BACKEND_URI = process.env.REACT_APP_BACKEND_URI;
+  let user = userDetails.user;
+  let id =user.user._id;
+  const jwt_here=user.jwttoken
+
   const handleUserMouseOver = (e,user) => {
     const UserData = document.querySelector('.UserData')
     UserData.style.display = 'block'
@@ -71,6 +80,28 @@ const UserStats = ({totalUsers }) => {
 
   const navigate = useNavigate()
 
+  const handleDelete = (id) => {
+
+    console.log(id)
+    console.log(BACKEND_URI)
+
+    async function deleteUser() {
+      try {
+        const response = await axios.get(`${BACKEND_URI}/api/admin/delete/user/${id}`,{
+          headers:{
+            jwttoken: jwt_here
+          }
+        });
+        console.log(response)
+        window.location.reload()
+      } catch (error) {
+        console.log("ERROR OCCURRED IN CATCH BLOCK:", error);
+      }
+    }
+    deleteUser()
+
+  }
+
   return (
     <>
       <div className='adminContainer serverLog' style={{serverLog}} >
@@ -97,7 +128,7 @@ const UserStats = ({totalUsers }) => {
                         <td style={{width: '10%'}}>{user.followers.length}</td>
                         <td style={{width: '10%'}}>{user.following.length}</td>
                         <td style={{width: '10%'}}><FontAwesomeIcon className="faCircleExclamation" style={{margin: '0 5px'}} icon={faCircleExclamation}/>
-                        <FontAwesomeIcon style={{margin: '0 5px'}} className='faTrash'  icon={faTrash} /></td>        
+                        <FontAwesomeIcon style={{margin: '0 5px'}} className='faTrash'  icon={faTrash} onClick={(e) => handleDelete(user._id)}/></td>        
                       </tr>
                       <div className='UserData'></div>
                     </>

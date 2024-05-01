@@ -152,10 +152,37 @@
     outline: none;
 }
 
-.Comment{
-    height: 100px;
-}
-
 .postpage_likeicon{
     height: 50%;
 }
+/* Styles for Comments */
+.Comment {
+    margin-bottom: 20px;
+    padding: 10px;
+    border-bottom: 1px solid #ccc;
+    border-radius: 5px;
+  }
+  
+  .CommentUser {
+    display: flex;
+    align-items: center;
+    margin-bottom: 10px;
+  }
+  
+  .CommentUserImage {
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    margin-right: 10px;
+  }
+
+  .CommentUserName{
+    margin: 5px;
+    font-weight: bold;
+  }
+  
+  .CommentText {
+    font-size: 16px;
+    line-height: 1.5;
+  }
+  

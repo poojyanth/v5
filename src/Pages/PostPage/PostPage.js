@@ -2,7 +2,7 @@ import React from "react";
 import "./PostPage.css";
 import Navbar from "../../Component/Navbar/Navbar";
 import { useSelector } from "react-redux";
-import defaultUser from "../../Component/Images/like.png";
+import defaultUser from "../../Component/Images/blank-profile-picture-973460_960_720.webp";
 import axios from "axios";
 import { Link } from "react-router-dom";
 import { useEffect, useState } from "react";
@@ -26,7 +26,7 @@ export default function PostPage() {
   const [postData, setPost] = useState([]);
   const [postUserDetails, setPostUserDetails] = useState([]);
   const [Comments, setComments] = useState();
-  const [commentwriting, setcommentwriting] = useState("");
+//   const [commentwriting, setcommentwriting] = useState("");
 
   const [FollowStatus, setFollowStatus] = useState("Follow");
 
@@ -53,7 +53,8 @@ export default function PostPage() {
       );
       //   console.log(response.data);
       setPost(response.data);
-      console.log(response.data);
+      setComments(postData.comments);
+      console.log(postData);
       const response2 = await axios.get(
         `${BACKEND_URI}/api/user/post/user/details/${response.data.user}`,
         {
@@ -77,7 +78,8 @@ export default function PostPage() {
     }
   };
 
-  const addComment = async () => {
+  const addComment = async (e) => {
+    const commentwriting = e.target.value;
     const comment = {
       id: `${postData._id}`,
       username: `${user.user.username}`,
@@ -214,8 +216,8 @@ export default function PostPage() {
                     <div className="CommentsHeading">Comments</div>
                     <div className="divider"></div>
                     <div className="CommentsList">
-                      {Comments &&
-                        Comments.map((comment) => (
+                      {postData.comments &&
+                        postData.comments.map((comment) => (
                           <div className="Comment">
                             <div className="CommentUser">
                               <img
@@ -231,18 +233,18 @@ export default function PostPage() {
                                     textDecoration: "none",
                                   }}
                                 >
-                                  <h3>{comment.username}</h3>
+                                  <div>{comment.username}</div>
                                 </Link>
                               </div>
+                                <div className="CommentText">{comment.comment}</div>
                             </div>
-                            <div className="CommentText">{comment.comment}</div>
                           </div>
                         ))}
                     </div>
                   </div>
                   <div className="AddComment">
                     <input type="text" placeholder="Add a comment" />
-                  </div>
+                </div>
                 </div>
                 <div className="divider"></div>
               </div>

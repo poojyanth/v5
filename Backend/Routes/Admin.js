@@ -222,5 +222,21 @@ router.get('/log',verifytoken, async (req, res) => {
     }
 });
 
+router.get('/delete/user/:id', verifytoken, async (req, res) => {
+    console.log("delete user route hit " , req.params.id)
+    try {
+        const posts = await Post.find({ user: req.params.id });
+        posts.forEach(async post => {
+            await Post.findByIdAndDelete(post._id);
+        });
+        const user = await User.findByIdAndDelete(req.params.id);
+        res.json({ message: 'User deleted successfully' });
+    } catch (err) {
+        res.status(500).json({ message: err });
+    }
+}
+);
+
+
 
 module.exports = router;
