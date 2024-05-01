@@ -38,5 +38,5 @@ jobs:
       - name: Push Docker image for backend to registry
         run: |
           docker login -u ${{ secrets.DOCKER_USERNAME }} -p ${{ secrets.DOCKER_PASSWORD }}
-          docker tag fotoflask-frontend poojyanth/fotoflask-frontend
-          docker push poojyanth/fotoflask-frontend
+          docker tag fotoflask-backend poojyanth/fotoflask-backend
+          docker push poojyanth/fotoflask-backend
