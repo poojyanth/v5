@@ -146,6 +146,7 @@ router.post("/login", [
     }
     })
 
+// ROUTER-3:- follow user
 
 router.put("/follow/:id" , verifytoken , async(req , res)=>{
     console.log("follow route");
@@ -167,6 +168,8 @@ router.put("/follow/:id" , verifytoken , async(req , res)=>{
         return res.status(400).json("You can't follow yourself")
     }
 })
+
+// ROUTER-4:- followings posts
 
 router.get("/followingposts/:id", verifytoken, async (req, res) => {
     try {
@@ -190,6 +193,7 @@ router.get("/followingposts/:id", verifytoken, async (req, res) => {
     }
   });
   
+  // ROUTER-5:- update user details
   
 router.put("/update/:id",verifytoken, async (req, res) => {
 
@@ -216,7 +220,7 @@ router.put("/update/:id",verifytoken, async (req, res) => {
 
 })
 
-
+  // ROUTER-6:- delete user
 
 router.delete("/delete/:id",verifytoken, async (req, res) => {
 
@@ -237,6 +241,8 @@ router.delete("/delete/:id",verifytoken, async (req, res) => {
 })
 
 
+  // ROUTER-7:- post user details
+
 router.get("/post/user/details/:id",async(req,res)=>{
     try{
     const user = await User.findById(req.params.id);
@@ -252,6 +258,7 @@ router.get("/post/user/details/:id",async(req,res)=>{
 })
 
 // GET USER DETAILS WITH USERID
+  // ROUTER-8:- user details by id
 
 router.get("/user/details/:id",verifytoken,async(req,res)=>{
     try{
@@ -269,7 +276,7 @@ router.get("/user/details/:id",verifytoken,async(req,res)=>{
 
 })
 
-
+ // ROUTER-9:- get all users
 
 router.get("/all/user/:id", verifytoken, async (req, res) => {
     try {
@@ -295,6 +302,8 @@ router.get("/all/user/:id", verifytoken, async (req, res) => {
         res.status(500).send("Internal Server Error");
     }
 });
+
+ // ROUTER-10:- get followings list of logged in user
 
 router.get("/get/followings/:id",verifytoken, async(req,res)=>{
     try{
@@ -323,6 +332,7 @@ router.get("/get/followings/:id",verifytoken, async(req,res)=>{
 
 
 // GET FOLLOWERS LIST OF LOGGED IN USER
+ // ROUTER-11:- get followers list of logged in user
 
 router.get("/get/followers/:id",async(req,res)=>{
     try{
@@ -350,7 +360,7 @@ router.get("/get/followers/:id",async(req,res)=>{
     }
 })
 
-
+ // ROUTER-12:- liked posts
 
 router.put("/likedpost/:id", async (req, res) => {
     try {
@@ -376,6 +386,9 @@ router.put("/likedpost/:id", async (req, res) => {
 
 
 // get users from following who are having stories
+
+ // ROUTER-13:- get followings with stories
+
 router.get("/get/followings_with_stories/:id",async(req,res)=>{
     try{
         const user = await User.findById(req.params.id);
@@ -413,7 +426,7 @@ router.get("/get/followings_with_stories/:id",async(req,res)=>{
     }
 })
 
-
+ // ROUTER-14:- add story
 
 
 router.post("/add/story",verifytoken,async(req,res)=>{
@@ -440,6 +453,7 @@ router.post("/add/story",verifytoken,async(req,res)=>{
 })
 
 // get story of a user from his id
+ // ROUTER-15:- view story
 
 router.get("/viewstory/:id",async(req,res)=>{
     const user = await User.findById(req.params.id);
@@ -450,6 +464,7 @@ router.get("/viewstory/:id",async(req,res)=>{
     return res.status(200).json({Image:user.Stories[0],Description:user.StoryDescription});
 })
 
+ // ROUTER-16:- get all users
 
 router.get("/get/allusers",async(req,res)=>{
     console.log("all users route");
@@ -469,7 +484,7 @@ router.get("/get/allusers",async(req,res)=>{
     }
 })
 
-
+ // ROUTER-17:- get story viewers
 
 // get story viewers(their username , profile picture) (array) of logged in user in leftbar
 
@@ -509,6 +524,7 @@ router.get("/getstoryviewers",verifytoken,async(req,res)=>{
 
 
 // addd viewer when they viewed your story 
+ // ROUTER-18:- add viewer
 
 router.put("/:id/addviewer",verifytoken,async(req,res)=>{
  
@@ -529,7 +545,7 @@ router.put("/:id/addviewer",verifytoken,async(req,res)=>{
 
 });
 
-
+ // ROUTER-19:- upload profile photo
 // Profile Photo Upload
 
 router.post("/upload/profilepic",verifytoken,uploadprofilepic.single('profilepicture'),async(req,res)=>{
