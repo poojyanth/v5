@@ -44,7 +44,7 @@ function App() {
           <Route exact path="/" element={user!== null ? <Home/>: <Navigate to={"/landingpage"}/>} />
           <Route exact path="/landingpage" element={<LandingPage/>}/>
           <Route exact path="/organization/:id" element={user!== null && user.user.type===2 ? <Organization/>: <Navigate to={"/landingpage"}/>}/>
-          <Route exact path="/profilepage/:id" element={user!== null && user.user.type!==2 ? <Profile/>: <Navigate to={"/landingpage"}/>}/>
+          <Route exact path="/profilepage/:id" element={user!== null ? <Profile/>: <Login/>}/>
           <Route exact path="/signup" element={user!== null ? <Navigate to={"/"}/> : <Signup/>}/>
           <Route exact path="/login" element={user!== null ? <Navigate to={"/"}/> : <Login/>}/>  
           <Route exact path="/postpage/:postid" element={user!== null ? <PostPage/> : <Navigate to={"/landingpage"}/>}/>
