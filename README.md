@@ -46,7 +46,7 @@ Open the hosted website:
 The website is now up and running! 
 
 Now, all you need to do is to access it. 
-- Open a browser and type localhost:4000
+- Open a browser and type localhost:3010
 
 Team: 
 - 🟠 Poojyanth Reddy 
@@ -58,4 +58,4 @@ Team:
 
 The Database Dump file are located in `private/database`
 
-Github repository Link : [FotoFlask](https://github.com/fotoflask/V2.git)
+Github repository Link : [FotoFlask](https://github.com/fotoflask/V5.git)
