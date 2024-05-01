@@ -9,6 +9,7 @@ const { body, validationResult } = require('express-validator');
 const Organization = require('../Modals/User2');
 const { verifytoken } = require('../middleware/verifytoken');
 const Post = require('../Modals/Post');
+const User = require('../Modals/User');
 
 
 // ROUTE-1 :- CREATE NEW USER
@@ -531,6 +532,31 @@ router.get("/get/allusers",async(req,res)=>{
     }
 })
 
+// ROUTE - 17 :- GET 3 RANDOM POSTS FROM USERS OF TYPE 2
+
+router.get("/get/ads", async (req, res) => {
+    try {
+        // Get three random users of type 2
+        const randomUsers = await User.aggregate([
+            { $match: { type: 2 } },
+            { $sample: { size: 2 } }
+        ]);
+
+        // Extract user ids from randomUsers
+        const userIds = randomUsers.map(user => user._id);
+
+
+        // Get three random posts from these random users
+        const randomPosts = await Post.aggregate([
+            { $match: { user: { $in: userIds } } },
+            { $sample: { size: 2 } }
+        ]);
+        console.log(randomPosts);
+        return res.status(200).json({ randomPosts: randomPosts });
+    } catch (error) {
+        return res.status(400).send("SOME ERROR OCCURRED IN try-catch");
+    }
+});
 
 
 
