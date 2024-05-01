@@ -8,6 +8,22 @@ const path = require('path');
 const helmet = require('helmet');
 const morgan = require('morgan');
 const csrf = require('csurf'); 
+const swaggerJsDoc = require('swagger-jsdoc');
+const swaggerUi = require('swagger-ui-express');
+
+const swaggerOptions = {
+  definition: {
+    openapi: '3.0.0',
+    info: {
+      title: 'User API',
+      version: '1.0.0',
+    },
+  },
+  apis: ['./Routes/*.js'], // path to the API docs
+};
+
+const swaggerDocs = swaggerJsDoc(swaggerOptions);
+
 require('dotenv').config();
 
 const MONGOOSE_URI = process.env.MONGOOSE_URI;
@@ -22,15 +38,15 @@ const csrfProtection = csrf({cookie: true});
 
 
 const loggerMiddleware = morgan((tokens, req, res) => {
-  const timestamp = new Date().toISOString();
-  const logData = {
-    timestamp,
-    ip: tokens['client-ip'](req, res),
-    method: tokens.method(req, res), 
-    path: tokens.url(req, res),
-  };
-
-  return JSON.stringify(logData) + '\n';
+    const timestamp = new Date().toISOString();
+    const logData = {
+        timestamp,
+        ip: tokens['client-ip'](req, res),
+        method: tokens.method(req, res), 
+        path: tokens.url(req, res),
+    };
+    
+    return JSON.stringify(logData) + '\n';
 }, { stream: accessLogStream });
 
 
@@ -41,13 +57,15 @@ const app = express();
 app.use((err, req, res, next) => {
     console.error(err.stack);
     res.status(500).json({ error: 'Internal Server Error' });
-  });
+});
 
-  mongoose.connect(MONGOOSE_URI)
-  .then(()=>{console.log("MONGO DB CONNECTED SUCCESSFULLY")})
-  .catch((err) => {
+app.use('/api-docs', swaggerUi.serve, swaggerUi.setup(swaggerDocs));
+
+mongoose.connect(MONGOOSE_URI)
+.then(()=>{console.log("MONGO DB CONNECTED SUCCESSFULLY")})
+.catch((err) => {
     console.error("Error connecting to MongoDB:", err);
-  })
+})
 
 app.use(express.json());
 const server = app.listen(PORT,()=>{
