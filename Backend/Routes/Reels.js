@@ -8,6 +8,7 @@ const ReelComment = require('../Modals/ReelComment');
 
 
 // ADD NEW REEL
+// ROUTER-1:- Add new Reel
 router.post("/addnewreel",verifytoken, async (req, res) => {
 
     try {
@@ -30,7 +31,7 @@ router.post("/addnewreel",verifytoken, async (req, res) => {
 
 
 // GET ALL REELS IN DATA BASE
-
+// ROUTER-2:- Get All Reel
 router.get("/getAllReels",async(req,res)=>{
     try{
 
@@ -51,6 +52,7 @@ router.get("/getAllReels",async(req,res)=>{
 
 // GET ALL REELS OF A PARTICULAR USER
 // METHOD USED :- GET
+// ROUTER-3:- Get Reel with id
 router.get("/get/reels/:id", async (req, res) => {
     try {
      const user_reels = await Reel.find({user:req.params.id});
@@ -69,7 +71,7 @@ router.get("/get/reels/:id", async (req, res) => {
 })
 
 
-
+// ROUTER-4:- React reels
 
 // REACTION_5 OF A REEL
 router.put("/:id/react_5_reel",verifytoken,async(req,res)=>{
@@ -94,7 +96,7 @@ router.put("/:id/react_5_reel",verifytoken,async(req,res)=>{
 
 
 
-// ROUTE-6:- ADD A COMMENT TO A REEL
+// ROUTE-5:- ADD A COMMENT TO A REEL
 // METHOD :- PUT
 
 router.put("/:id/commentreel",verifytoken,async(req,res)=>{
@@ -122,7 +124,7 @@ router.put("/:id/commentreel",verifytoken,async(req,res)=>{
 }
 })
 
-
+// ROUTE-6:- Get all comments of a particular reel
 // GET ALL COMMENTS OF A PARTICULAR REEL
 
 router.get("/getreelcomments/:id",async(req,res)=>{
